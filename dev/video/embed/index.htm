@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="user-scalable=no, width=device-width" />
+  <title>Embed video - scraped from brandnewtube</title>
+
+  <style>
+
+    body
+    {
+      font-family: "Arial", Helvetica, serif;
+      background-color: #191919;
+    }
+
+    .videoarea {
+      display: block;
+      margin: 0px auto;
+      width: 96vw;
+      background-color: #232323;
+      padding:1vh 1vw;
+    }
+
+    .videoarea .videoscreen {
+      text-align:center;
+    }
+
+    .videoarea .videoscreen embed {
+      width: 95vw;
+      height: calc(95vw * 0.57);
+    }
+
+    .videoarea .playlist {
+    }
+
+    .videoarea .playlist.menu ul
+    {
+      margin:0px;
+      padding:0px;
+    }
+
+    .videoarea .playlist.menu ul li
+    {
+      list-style-type:none;
+      background-color:#232323;
+      color:#C7C7C7
+    }
+    .videoarea .playlist.menu ul li a
+    {
+      display:block;
+      padding:12px 20px;
+      font-size:1.1em;
+      line-height:1.2em;
+      text-decoration: none;
+      color:#a0a0a0;
+    }
+    .videoarea .playlist.menu ul li:hover
+    {
+      background-color:#282828;
+    }
+    .videoarea .playlist.menu ul li:hover a
+    {
+      color:#D7D7D7;
+    }
+    .videoarea .playlist.menu ul li.active
+    {
+      border-left:3px solid green;
+    }
+    .videoarea .playlist.menu ul li.active a
+    {
+      color:green;
+    }
+
+    .videometa
+    {
+      text-align:left;
+      padding:10px;
+      color:#a0a0a0;
+    }
+    .videometa,
+    h3
+    {
+      font-size:0.9em;
+    }
+    p {
+      font-size:1.2em;
+    }
+    button.dwnldbut
+    {
+      background-color: transparent;
+      color:#a0a0a0;
+      border:1px solid #a0a0a0;
+      border-radius:12px;
+      padding:3px 6px;
+      float:right;
+      cursor:hand;
+      cursor:pointer;
+    }
+
+
+
+    .catlist
+    {
+      max-height:50vh;
+      overflow-y:auto;
+    }
+    .catlist li
+    {
+        clear:both;
+    }
+    .thumb
+    {
+      width:40%;
+      float:left;
+      margin-right:2%;
+    }
+    .thumb img
+    {
+      max-width:100%;
+      height:auto;
+    }
+
+    @media screen and (min-width: 860px) {
+
+      .videoarea {
+        display: flex;
+        flex-direction: row;
+        margin: 0px auto;
+        width: 90vw;
+        max-width: 1400px;
+        padding:1.5vh 0.5vw 0.5vh;
+      }
+
+      .videoarea .videoscreen {
+        flex: 3;
+        text-align:center;
+      }
+
+      .videoarea .videoscreen embed {
+        width: 45vw;
+        max-width: 1024px;
+        height: calc(45vw * 0.57);
+        max-height: calc(1024px * 0.57);
+      }
+
+      .videoarea .playlist {
+        flex: 2;
+      }
+
+    }
+  </style>
+
+
+  <script type="text/javascript" src="https://webbouwer.org/lib/js/jquery/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://webbouwer.org/lib/js/jquery/jquery-migrate.min.js"></script>
+  <!-- <script type="text/javascript" src="https://pandame.nl/lib/isotope.min.js"></script> -->
+
+
+</head>
+
+<body>
+
+<!-- //src="http://www.youtube.com/watch?v=nOEw9iiopwI" type="video/youtube"
+
+<video id="my-video_html5" style="width: 725px; height: 407.813px;" poster="https://bnt-cdn.b-cdn.net/upload/photos/2022/02/SWyXFc82efr24iHGU2jA_04_3466214b81eb360c9fb6095dfc5f37dc_image.png" preload="none" src="https://bnt-cdn.b-cdn.net/upload/videos/2022/02/v8MpaAJWHwsaRRpzPl1w_04_53fdf4b6d15b1da2a4615b8af75cdb88_video_720p_converted.mp4">
+                                                                              <source src="https://bnt-cdn.b-cdn.net/upload/videos/2022/02/v8MpaAJWHwsaRRpzPl1w_04_53fdf4b6d15b1da2a4615b8af75cdb88_video_1080p_converted.mp4" type="video/mp4" data-quality="1080p" title="1080p" label="1080p" res="1080">
+                                                               <source src="https://bnt-cdn.b-cdn.net/upload/videos/2022/02/v8MpaAJWHwsaRRpzPl1w_04_53fdf4b6d15b1da2a4615b8af75cdb88_video_720p_converted.mp4" type="video/mp4" data-quality="720p" title="720p" label="720p" res="720">
+                                                               <source src="https://bnt-cdn.b-cdn.net/upload/videos/2022/02/v8MpaAJWHwsaRRpzPl1w_04_53fdf4b6d15b1da2a4615b8af75cdb88_video_480p_converted.mp4" type="video/mp4" data-quality="480p" title="480p" label="480p" res="480">
+                                                               <source src="https://bnt-cdn.b-cdn.net/upload/videos/2022/02/v8MpaAJWHwsaRRpzPl1w_04_53fdf4b6d15b1da2a4615b8af75cdb88_video_360p_converted.mp4" type="video/mp4" data-quality="360p" title="360p" label="360p" res="360">
+                                                               <source src="https://bnt-cdn.b-cdn.net/upload/videos/2022/02/v8MpaAJWHwsaRRpzPl1w_04_53fdf4b6d15b1da2a4615b8af75cdb88_video_240p_converted.mp4" type="video/mp4" data-quality="240p" title="240p" label="240p" res="240">
+                                           Your browser does not support HTML5 video.
+
+            </video>
+
+-->
+
+
+
+  <div class="videoarea">
+    <div class="videoscreen">
+      <!-- <embed src='https://brandnewtube.com/embed/2YHf75I8Lawztht' width='1024px' height='576px' frameborder="0" allowfullscreen="true"></embed> -->
+      <div class="videometa">
+      </div>
+    </div>
+    <div class="playlist menu">
+      <ul class="selectlist">
+
+
+<li><a href="https://brandnewtube.com/watch/qu82ReVTW5rBrLT" data-url="https://brandnewtube.com/embed/qu82ReVTW5rBrLT">Short reminder what's happening</a></li>
+<li><a href="https://brandnewtube.com/watch/s1cKxnO8iIWp6gX" data-url="https://brandnewtube.com/embed/s1cKxnO8iIWp6gX">Compare Australia/Niger Deathrates</a></li>
+<li><a href="https://brandnewtube.com/watch/B9zx5GXJB42rG9Y" data-url="https://brandnewtube.com/embed/B9zx5GXJB42rG9Y">Dr Vernon Coleman Medical Proof the Covid Jab is "Murder".</a></li>
+        <li><a href="https://brandnewtube.com/watch/9zssdThYNS732c7" data-url="https://brandnewtube.com/embed/9zssdThYNS732c7">Dr. Sean Brooks The vaccinated are going to die</a></li>
+        <li><a href="https://brandnewtube.com/watch/FXeRkgMAIjR2Xov" data-url="https://brandnewtube.com/embed/FXeRkgMAIjR2Xov">Grand Jury Day 5 The court of Public Opinion</a></li>
+        <li><a href="https://brandnewtube.com/watch/cWsHzA3uO21emR5" data-url="https://brandnewtube.com/embed/cWsHzA3uO21emR5">Grand Jury Day 4 The court of Public Opinion</a></li>
+        <li><a href="https://brandnewtube.com/watch/BOyfIAnKmsEw4WV" data-url="https://brandnewtube.com/embed/BOyfIAnKmsEw4WV">Grand Jury Day 3 The court of Public Opinion</a></li>
+        <li><a href="https://brandnewtube.com/watch/LFIdoYC8eMxeYZV" data-url="https://brandnewtube.com/embed/LFIdoYC8eMxeYZV">Grand Jury Day 2 The court of Public Opinion</a></li>
+        <li><a href="https://brandnewtube.com/watch/2YHf75I8Lawztht" data-url="https://brandnewtube.com/embed/2YHf75I8Lawztht">Grand Jury Day 1 The court of Public Opinion</a></li>
+
+        <li><a href="https://brandnewtube.com/watch/ggkcTJ8OsqNFFsx" data-url="https://brandnewtube.com/embed/ggkcTJ8OsqNFFsx">Media about Ukraine - 2017 BBC documentation</a></li>
+
+        <li><a href="https://www.bitchute.com/watch/J4HUyN43AuMQ/" data-url="https://www.bitchute.com/embed/J4HUyN43AuMQ/">Science about HIV - 1989 Channel 4</a></li>
+
+        <!--
+        <li><a href="https://www.youtube.com/watch?v=7Dlh_7-Uwx8" data-url="https://www.youtube.com/embed/7Dlh_7-Uwx8">Puzzling Ancient Indian Texts Appear To Explain Everything BEFORE Recorded History</a></li>
+        -->
+      </ul>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <script>
+
+  jQuery(function ($) {
+
+    $(document).ready(function(){ //$(window).load(function(){ //
+
+
+      $('body').on("touchend click", '.playlist ul li a, .videocolumn', function(e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        //$('.videoscreen embed').attr('src', $(this).data('url'));
+        //$('.videoscreen embed').load();
+        $('.playlist ul li').removeClass('active');
+        var el = $(this).parent();
+        el.addClass('active');
+        $('.videoscreen').html("<embed src='"+$(this).data('url')+"' autostart='1' showstatusbar='1' enabled='1' allowfullscreen='1' showdisplay='1' showcontrols='1' width='1024px' height='576px'></embed><div class='videometa'></div>");
+
+
+        var xurl = $(this).attr('href');
+
+        if( xurl.includes("youtube") ){
+          // youtube
+          // https://stackoverflow.com/questions/10066638/get-youtube-information-via-json-for-single-video-not-feed-in-javascript
+          var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://www.youtube.com/oembed?url='+xurl+'&format=json');
+            xhr.send();
+            xhr.onreadystatechange = function () {
+
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        console.log( xhr.responseText );
+                        var data = JSON.parse(xhr.responseText);
+                        var html = '<h3>'+data.title+'</h3>';
+                        //html += '<div class="meta">'+ data.find('#primary-inner #count').html() +' <a href="'+xurl+'">Watch on Brandnewtube.com</a></div>';
+                        //html +=  '<div class="desc">'+data.find('#primary-inner #description').html()+'</div>';
+                        $('.videometa').html( html );
+                    }
+            }
+
+          /*
+          xurl = $(this).data('url');
+          $('body').append( $('<iframe id="datawindow" src="'+xurl+'"></iframe>') );
+          var data = $('body').find("iframe#datawindow").contents();
+          console.log( data );
+          var html = '<h3>'+data.find('#primary-inner h1.title').html()+'</h3>';
+          html += '<div class="meta">'+ data.find('#primary-inner #count').html() +' <a href="'+xurl+'">Watch on Brandnewtube.com</a></div>';
+          html +=  '<div class="desc">'+data.find('#primary-inner #description').html()+'</div>';
+          $('.videometa').html( html );
+          */
+          /*
+          $.ajax({
+            url: xurl,
+            dataType: 'text',
+            success: function(data) {
+              console.log( data );
+              var html = '<h3>'+data.find('#primary-inner h1.title').html()+'</h3>';
+              html += '<div class="meta">'+ data.find('#primary-inner #count').html() +' <a href="'+xurl+'">Watch on Brandnewtube.com</a></div>';
+              html +=  '<div class="desc">'+data.find('#primary-inner #description').html()+'</div>';
+              $('.videometa').html( html );
+            }
+          });
+          */
+
+        }
+        if( xurl.includes("brandnewtube") ){
+
+        var xhr = new XMLHttpRequest();
+          xhr.open('GET', xurl);
+          xhr.send();
+          xhr.onreadystatechange = function () {
+
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                      //console.log( xhr.responseText );
+                        // brandnewtube
+                        var html = '<h3>'+$(xhr.responseText).find('.pt_video_info .video-big-title').html()+'</h3>';
+                        html += '<div class="meta">'+ $(xhr.responseText).find('.pt_video_info .video-views').html() +' <a href="'+xurl+'">Watch on Brandnewtube.com</a>';
+                        html += ' <button class="dwnldbut" data-url="'+xurl+'">.mp4 download link</button></div>';
+                        html +=  '<div class="desc">'+$(xhr.responseText).find('.watch-video-description').html()+'</div>';
+                        $('.videometa').html( html );
+                  }
+          }
+
+
+        }
+      });
+
+      var getBNTSourceByID = function(vidID){
+        if( vidID ){
+          var xhr = new XMLHttpRequest();
+          var url = "https://brandnewtube.com/watch/"+vidID;
+          xhr.open('GET', url);
+          xhr.send();
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var html = ''+$(xhr.responseText).find('#my-video').html()+'';
+                alert(html);
+            }
+          }
+        }
+      }
+      var getBNTSourceByUrl = function(durl){
+        if( durl ){
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', durl);
+          xhr.send();
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var htmlcode= $(xhr.responseText).find('#my-video').html();
+                $(xhr.responseText).find('#my-video').find('source:first-child').each(function(){
+                  console.log( $(xhr.responseText).find('#my-video').html() );
+                  //window.location.href = $(this).attr('src');
+                  window.open($(this).attr('src'), '_blank');
+
+                  /*
+                  var element = document.createElement('a');
+                  element.setAttribute('href','data:text/plain;charset=utf-8, ' + encodeURIComponent('Download'));
+                  element.setAttribute('download', $(this).attr('src') );
+                  document.body.appendChild(element);
+                  element.click();
+                  document.body.removeChild(element);
+                  */
+
+                });
+
+                //alert(htmlcode);
+            }
+          }
+        }
+      }
+
+      $('body').on("touchend click", '.dwnldbut', function(e) {
+        var durl = $(this).data('url');
+        getBNTSourceByUrl(durl);
+      });
+
+      var getBNTVideoId = function(url){
+        //var VID_REGEX = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        //return url.test(VID_REGEX)[1];
+
+        //var pattern = new RegExp('/(?:brandnewtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/');
+        //return !!pattern.test(url);
+
+        //var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/|brandnewtube\.com\/(?:embed\/|v\/|watch\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+        //return (url.match(p)) ? RegExp.$1 : false ;
+        function findLastIndex(str, x)
+        {
+            let index = -1;
+            for (var i = 0; i < str.length; i++){
+                if (str[i] == x)
+                    index = i;
+            }
+            return index;
+        }
+        var endidx = findLastIndex(url, '_');
+        var videoid = url.substring( endidx , url.indexOf('.html')).replace('_','');
+        console.log(videoid);
+        return videoid;
+      }
+
+      var getBNTCat = function( catID = false ){
+
+        var listurl = '';
+        if( catID ){
+          listurl = "https://brandnewtube.com/videos/category/"+catID;
+        }else{
+          listurl = "https://brandnewtube.com/videos/category/659"; //explosive topics
+        }
+
+        if( listurl ){
+        var xhr = new XMLHttpRequest();
+          xhr.open('GET', listurl);
+          xhr.send();
+          xhr.onreadystatechange = function () {
+
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var html = '<h3>'+$(xhr.responseText).find('.mat_header h1').html()+'</h3><ul class="catlist">';
+
+                $.each( $(xhr.responseText).find('.video-wrapper'), function(key, value) {
+                  url = $(this).find('.video-title a').attr('href');
+                  var vidid = getBNTVideoId(url);
+                  //html += '<div id="'+vidid+'" class="videocolumn" data-url="https://brandnewtube.com/embed/'+vidid+'"><h4>'+$(this).find('.video-title h4').html()+'</h4>';
+                  ///html += '<div>'+$(this).find('.video-thumb a').html()+'</div></div>';
+
+                  html += '<li><a id="'+vidid+'" href="https://brandnewtube.com/watch/'+vidid+'" data-url="https://brandnewtube.com/embed/'+vidid+'">';
+                  html += '<span class="thumb">'+$(this).find('.video-thumb a').html()+'</span><span class="title">'+$(this).find('.video-title h4').html()+'</span>';
+                  html += '</a></li>';
+                });
+                html += '</ul>';
+
+                //$('.contentlist').html( html );
+                $('.playlist').append( html );
+            }
+
+          }
+        }
+      }
+
+      getBNTCat();
+      $('.playlist ul li:first-child a').trigger('click');
+
+    });
+
+
+  });
+  </script>
+  <!--
+//view-source:https://iandevlin.github.io/mdn/video-player-styled/
+<video width='560px' height='315px' frameborder="0" allowfullscreen controls>
+<source src="https://brandnewtube.com/embed/2YHf75I8Lawztht" type="">
+</video>
+
+
+
+
+  <iframe loading="lazy" src="https://brandnewtube.com/embed/9zssdThYNS732c7" frameborder="0" allowfullscreen></iframe>
+-->
+
+
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!--Video sourcehttp://thenewcode.com/792/Create-A-Simple-HTML5-Video-Playlist-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Panda Me</title>
+<style>
+.loadcontainer
+{
+position:absolute;
+display:block;
+width:96%;
+height:60vw;
+padding:5px;
+margin:0px auto;
+background-color:#FFFFFF;
+z-index:999;
+}
+.blockcontainer
+{
+display:none;
+position:relative;
+display:block;
+width:96%;
+padding:5px;
+margin:0px auto;
+}
+.item{
+	max-width:360px;
+	height:280px;
+}
+iframe, object
+{
+position:relative;
+display:block;
+width:100%;
+max-width:360px;
+height:280px;
+}
+
+ul.filter-menu
+{
+list-style-type:none;
+text-align:center;
+}
+ul.filter-menu li
+{
+display:inline-block;
+padding:8px 12px;
+background-color:black;
+color:#FFCCFF;
+text-transform:uppercase;
+font-weight:300;
+border-radius:12px;
+cursor:hand;
+cursor:pointer;
+}
+
+@media only screen and (min-width: 960px) {
+iframe, object
+{
+width:560px;
+height:360px;
+}
+}
+</style>
+
+<script type="text/javascript" src="https://pandame.nl/lib/jquery.min.js"></script>
+<script type="text/javascript" src="https://pandame.nl/lib/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="https://pandame.nl/lib/isotope.min.js"></script>
+
+
+
+</head>
+
+<body>
+
+<div class="topcontainer">
+<div align="center"><img src="media/pandame_pixel_small.jpg" alt="Panda Me" /></div>
+<ul class="filter-menu">
+<li class="filter" data-filter="*">all</li>
+<li class="filter" data-filter=".info">info</li>
+<li class="filter" data-filter=".talk">talk</li>
+<li class="filter" data-filter=".story">story</li>
+<li class="filter" data-filter=".debate">debate</li>
+<li class="filter" data-filter=".document">document</li>
+<li class="filter" data-filter=".media">media</li>
+<li class="filter" data-filter=".opinion">opinion</li>
+</ul>
+</div>
+
+<div class="blockcontainer">
+
+<!-- <iframe src="info.htm" frameborder="0" allowfullscreen></iframe> -->
+<div class="item media" data-category="media">
+<iframe loading="lazy" src="https://brandnewtube.com/embed/nHoxqAGWNZcEgew" frameborder="0" allowfullscreen></iframe></div>
+<div class="item debate" data-category="info">
+	<iframe  loading="lazy" src="https://brandnewtube.com/embed/QljrmbjAx3WYQjw" frameborder="0" allowfullscreen></iframe></div>
+<div class="item opinion" data-category="info">
+	<iframe   loading="lazy" src="https://www.youtube.com/embed/eben2pVK76Q?start=863" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<div class="item media" data-category="media" data-category="media">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/iqt4hLlBVgEoBGY" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item talk" data-category="talk">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/5KL8mCLn8YTMx5L" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item info" data-category="info" >
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/etukNhI1XfYwEng" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item media" data-category="media">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/iUMTwPjrY6FtnBh" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item info" data-category="info" >
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/9zssdThYNS732c7" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item document" data-category="document">
+<!-- <iframe src="https://www.bitchute.com/embed/wZdMneQ545cm/" frameborder="0" allowfullscreen></iframe> -->
+	<iframe loading="lazy" src="https://www.cdc.gov/csels/dls/locs/2021/07-21-2021-lab-alert-Changes_CDC_RT-PCR_SARS-CoV-2_Testing_1.html" frameborder="0" ></iframe>
+</div>
+<div class="item media">
+	<iframe class="info" data-category="info" loading="lazy" src="https://brandnewtube.com/embed/ikyrQCBOYjPNMps" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item debate" data-category="info">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/aIhV3T14AlxwzFB" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item media">
+	<iframe class="story" data-category="story" loading="lazy" src="https://brandnewtube.com/embed/KPhhS56nKgiXNFK" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item opinion" data-category="opinion">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/VwsoljcmhAxMVrN" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item info" data-category="info" loading="lazy">
+	<iframe class="info" data-category="info" loading="lazy" src="https://brandnewtube.com/embed/B9zx5GXJB42rG9Y" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item document" data-category="document" >
+	<object loading="lazy" data="download/BNT162b2-ADVERSE_EVENT _REPORTS.pdf" ></object>
+</div>
+<div class="item story" data-category="story">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/jjhMWszFroD7AQZ" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item info" data-category="info">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/anVjxCenLZdttc9" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item talk" data-category="talk">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/Krx7bnvuLp7BFcu" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item talk" data-category="info">
+	<iframe loading="lazy" src="https://www.youtube.com/embed/hWdKRNaH2Fw" title="YouTube video player" frameborder="0" allowfullscreen></iframe></div>
+<div class="item debate" data-category="talk">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/cYpcbpctd5uaI6F" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item debate" data-category="info">
+	<iframe loading="lazy" src="https://www.youtube.com/embed/hq55vOwKpTM" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item info" data-category="info">
+	<iframe loading="lazy" src="https://brandnewtube.com/embed/ZpM1DkEMiUJ9qc8" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="item document" data-category="document">
+	<object loading="lazy"data="download/Scenarios_for_the_Future_of_Technology_and_International_develpment-Rockefeller_Foundation.pdf" ></object>
+</div>
+<!-- <iframe src="https://brandnewtube.com/embed/SJO25a8WIfVtkKa" frameborder="0" allowfullscreen></iframe> -->
+</div>
+<p align="center" style="clear:both;">Oops, Panda me! </p>
+
+<script>
+
+jQuery(function ($) {
+$(window).load(function(){ //$(document).ready(function(){
+
+	// init Isotope
+var $grid = $('.blockcontainer');
+$grid.isotope({
+	  itemSelector: '.item',
+		animationEngine: 'best-available',
+    transitionDuration: '0.9s'/*,
+	  layoutMode: 'fitRows',
+	  getSortData: {
+		//name: '.name',
+		//symbol: '.symbol',
+		//number: '.number parseInt',
+		category: '[data-category]',
+		weight: function( itemElem ) {
+		  var weight = $( itemElem ).find('.weight').text();
+		  return parseFloat( weight.replace( /[\(\)]/g, '') );
+		}
+	  }*/
+});
+
+
+$('.filter-menu').on( 'click', '.filter', function() {
+  var filterValue = $(this).attr('data-filter');
+  $grid.isotope({ filter: filterValue });
+});
+
+
+});
+});
+</script>
+</body>
+</html>
