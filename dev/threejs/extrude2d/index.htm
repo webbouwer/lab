@@ -1,0 +1,2213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ThreeJS Extrude Polygons</title>
+</head>
+<style>
+body
+{
+margin:0;
+padding:0;
+}
+.outermargin 
+{
+	width:100%;
+	max-width:1200px;
+	margin:0px auto;
+}
+#mapsection
+{
+	background-color:#cecece;
+}
+#my-canvas
+{
+	background-color:#efefef;
+}
+.copyright
+{
+	text-align:center;
+}
+</style>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script> -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/controls/OrbitControls.min.js"></script>
+
+
+<body>
+
+<script>
+////data
+var data = {
+  "map": {
+    "width": 760,
+    "height": 760
+  },
+  "regions": {
+    "0": {
+      "name": "Alphen a.d. Rijn",
+      "points": [{
+        "x": 563,
+        "y": 310
+      }, {
+        "x": 578,
+        "y": 350
+      }, {
+        "x": 579,
+        "y": 356
+      }, {
+        "x": 557,
+        "y": 388
+      }, {
+        "x": 533,
+        "y": 399
+      }, {
+        "x": 540,
+        "y": 423
+      }, {
+        "x": 530,
+        "y": 426
+      }, {
+        "x": 524,
+        "y": 435
+      }, {
+        "x": 515,
+        "y": 436
+      }, {
+        "x": 512,
+        "y": 447
+      }, {
+        "x": 508,
+        "y": 438
+      }, {
+        "x": 477,
+        "y": 439
+      }, {
+        "x": 476,
+        "y": 427
+      }, {
+        "x": 450,
+        "y": 423
+      }, {
+        "x": 449,
+        "y": 439
+      }, {
+        "x": 414,
+        "y": 446
+      }, {
+        "x": 390,
+        "y": 429
+      }, {
+        "x": 387,
+        "y": 418
+      }, {
+        "x": 392,
+        "y": 411
+      }, {
+        "x": 392,
+        "y": 365
+      }, {
+        "x": 403,
+        "y": 340
+      }, {
+        "x": 411,
+        "y": 350
+      }, {
+        "x": 420,
+        "y": 338
+      }, {
+        "x": 421,
+        "y": 321
+      }, {
+        "x": 480,
+        "y": 309
+      }, {
+        "x": 512,
+        "y": 308
+      }, {
+        "x": 514,
+        "y": 303
+      }, {
+        "x": 533,
+        "y": 323
+      }, {
+        "x": 532,
+        "y": 333
+      }, {
+        "x": 545,
+        "y": 320
+      }, {
+        "x": 552,
+        "y": 313
+      }]
+    },
+    "1": {
+      "name": "Waddinxveen",
+      "points": [{
+        "x": 452,
+        "y": 426
+      }, {
+        "x": 474,
+        "y": 430
+      }, {
+        "x": 475,
+        "y": 441
+      }, {
+        "x": 492,
+        "y": 441
+      }, {
+        "x": 501,
+        "y": 457
+      }, {
+        "x": 511,
+        "y": 459
+      }, {
+        "x": 511,
+        "y": 469
+      }, {
+        "x": 530,
+        "y": 475
+      }, {
+        "x": 513,
+        "y": 488
+      }, {
+        "x": 500,
+        "y": 494
+      }, {
+        "x": 497,
+        "y": 498
+      }, {
+        "x": 492,
+        "y": 497
+      }, {
+        "x": 484,
+        "y": 501
+      }, {
+        "x": 471,
+        "y": 514
+      }, {
+        "x": 436,
+        "y": 481
+      }, {
+        "x": 450,
+        "y": 465
+      }]
+    },
+    "2": {
+      "name": "Bodegraven-Reeuwijk",
+      "points": [{
+        "x": 606,
+        "y": 366
+      }, {
+        "x": 563,
+        "y": 385
+      }, {
+        "x": 558,
+        "y": 392
+      }, {
+        "x": 536,
+        "y": 400
+      }, {
+        "x": 543,
+        "y": 425
+      }, {
+        "x": 532,
+        "y": 428
+      }, {
+        "x": 525,
+        "y": 437
+      }, {
+        "x": 517,
+        "y": 438
+      }, {
+        "x": 513,
+        "y": 451
+      }, {
+        "x": 506,
+        "y": 441
+      }, {
+        "x": 496,
+        "y": 442
+      }, {
+        "x": 502,
+        "y": 455
+      }, {
+        "x": 513,
+        "y": 457
+      }, {
+        "x": 513,
+        "y": 468
+      }, {
+        "x": 541,
+        "y": 475
+      }, {
+        "x": 545,
+        "y": 482
+      }, {
+        "x": 545,
+        "y": 494
+      }, {
+        "x": 559,
+        "y": 498
+      }, {
+        "x": 564,
+        "y": 499
+      }, {
+        "x": 570,
+        "y": 510
+      }, {
+        "x": 592,
+        "y": 510
+      }, {
+        "x": 618,
+        "y": 494
+      }, {
+        "x": 615,
+        "y": 483
+      }, {
+        "x": 622,
+        "y": 484
+      }, {
+        "x": 636,
+        "y": 462
+      }, {
+        "x": 652,
+        "y": 450
+      }, {
+        "x": 662,
+        "y": 447
+      }, {
+        "x": 671,
+        "y": 438
+      }, {
+        "x": 643,
+        "y": 437
+      }, {
+        "x": 635,
+        "y": 440
+      }, {
+        "x": 638,
+        "y": 433
+      }, {
+        "x": 638,
+        "y": 428
+      }, {
+        "x": 632,
+        "y": 428
+      }, {
+        "x": 633,
+        "y": 384
+      }]
+    },
+    "3": {
+      "name": "Nieuwkoop",
+      "points": [{
+        "x": 564,
+        "y": 382
+      }, {
+        "x": 582,
+        "y": 355
+      }, {
+        "x": 565,
+        "y": 308
+      }, {
+        "x": 551,
+        "y": 311
+      }, {
+        "x": 534,
+        "y": 328
+      }, {
+        "x": 534,
+        "y": 320
+      }, {
+        "x": 514,
+        "y": 300
+      }, {
+        "x": 521,
+        "y": 271
+      }, {
+        "x": 527,
+        "y": 272
+      }, {
+        "x": 536,
+        "y": 253
+      }, {
+        "x": 546,
+        "y": 256
+      }, {
+        "x": 550,
+        "y": 242
+      }, {
+        "x": 556,
+        "y": 248
+      }, {
+        "x": 568,
+        "y": 236
+      }, {
+        "x": 580,
+        "y": 233
+      }, {
+        "x": 593,
+        "y": 221
+      }, {
+        "x": 602,
+        "y": 219
+      }, {
+        "x": 613,
+        "y": 233
+      }, {
+        "x": 612,
+        "y": 257
+      }, {
+        "x": 621,
+        "y": 257
+      }, {
+        "x": 649,
+        "y": 286
+      }, {
+        "x": 657,
+        "y": 286
+      }, {
+        "x": 686,
+        "y": 309
+      }, {
+        "x": 672,
+        "y": 317
+      }, {
+        "x": 672,
+        "y": 340
+      }, {
+        "x": 657,
+        "y": 341
+      }, {
+        "x": 653,
+        "y": 338
+      }, {
+        "x": 643,
+        "y": 337
+      }, {
+        "x": 638,
+        "y": 331
+      }, {
+        "x": 617,
+        "y": 340
+      }, {
+        "x": 616,
+        "y": 354
+      }, {
+        "x": 605,
+        "y": 363
+      }]
+    },
+    "4": {
+      "name": "Kaag en Braassem",
+      "points": [{
+        "x": 548,
+        "y": 213
+      }, {
+        "x": 548,
+        "y": 241
+      }, {
+        "x": 545,
+        "y": 253
+      }, {
+        "x": 535,
+        "y": 250
+      }, {
+        "x": 526,
+        "y": 270
+      }, {
+        "x": 519,
+        "y": 269
+      }, {
+        "x": 511,
+        "y": 300
+      }, {
+        "x": 510,
+        "y": 307
+      }, {
+        "x": 479,
+        "y": 307
+      }, {
+        "x": 422,
+        "y": 319
+      }, {
+        "x": 413,
+        "y": 309
+      }, {
+        "x": 413,
+        "y": 299
+      }, {
+        "x": 403,
+        "y": 305
+      }, {
+        "x": 396,
+        "y": 292
+      }, {
+        "x": 394,
+        "y": 281
+      }, {
+        "x": 398,
+        "y": 275
+      }, {
+        "x": 401,
+        "y": 258
+      }, {
+        "x": 410,
+        "y": 258
+      }, {
+        "x": 413,
+        "y": 251
+      }, {
+        "x": 408,
+        "y": 240
+      }, {
+        "x": 410,
+        "y": 231
+      }, {
+        "x": 422,
+        "y": 234
+      }, {
+        "x": 434,
+        "y": 231
+      }, {
+        "x": 444,
+        "y": 235
+      }, {
+        "x": 451,
+        "y": 237
+      }, {
+        "x": 465,
+        "y": 236
+      }, {
+        "x": 478,
+        "y": 231
+      }, {
+        "x": 493,
+        "y": 221
+      }, {
+        "x": 504,
+        "y": 216
+      }, {
+        "x": 511,
+        "y": 221
+      }, {
+        "x": 519,
+        "y": 221
+      }, {
+        "x": 528,
+        "y": 211
+      }]
+    },
+    "5": {
+      "name": "Leiderdorp",
+      "points": [{
+        "x": 391,
+        "y": 283
+      }, {
+        "x": 393,
+        "y": 292
+      }, {
+        "x": 402,
+        "y": 307
+      }, {
+        "x": 411,
+        "y": 303
+      }, {
+        "x": 411,
+        "y": 311
+      }, {
+        "x": 419,
+        "y": 319
+      }, {
+        "x": 419,
+        "y": 338
+      }, {
+        "x": 411,
+        "y": 346
+      }, {
+        "x": 401,
+        "y": 336
+      }, {
+        "x": 388,
+        "y": 334
+      }, {
+        "x": 381,
+        "y": 326
+      }, {
+        "x": 379,
+        "y": 312
+      }, {
+        "x": 374,
+        "y": 307
+      }, {
+        "x": 373,
+        "y": 294
+      }, {
+        "x": 377,
+        "y": 291
+      }, {
+        "x": 377,
+        "y": 280
+      }]
+    },
+    "6": {
+      "name": "Teylingen",
+      "points": [{
+        "x": 391,
+        "y": 280
+      }, {
+        "x": 396,
+        "y": 272
+      }, {
+        "x": 399,
+        "y": 256
+      }, {
+        "x": 408,
+        "y": 256
+      }, {
+        "x": 410,
+        "y": 250
+      }, {
+        "x": 405,
+        "y": 238
+      }, {
+        "x": 408,
+        "y": 229
+      }, {
+        "x": 400,
+        "y": 222
+      }, {
+        "x": 382,
+        "y": 207
+      }, {
+        "x": 382,
+        "y": 189
+      }, {
+        "x": 372,
+        "y": 182
+      }, {
+        "x": 334,
+        "y": 219
+      }, {
+        "x": 338,
+        "y": 227
+      }, {
+        "x": 330,
+        "y": 234
+      }, {
+        "x": 333,
+        "y": 238
+      }, {
+        "x": 326,
+        "y": 244
+      }, {
+        "x": 330,
+        "y": 252
+      }, {
+        "x": 331,
+        "y": 253
+      }, {
+        "x": 342,
+        "y": 248
+      }, {
+        "x": 346,
+        "y": 249
+      }, {
+        "x": 355,
+        "y": 249
+      }, {
+        "x": 355,
+        "y": 260
+      }, {
+        "x": 355,
+        "y": 273
+      }]
+    },
+    "7": {
+      "name": "Noordwijk",
+      "points": [{
+        "x": 413,
+        "y": 105
+      }, {
+        "x": 358,
+        "y": 80
+      }, {
+        "x": 282,
+        "y": 225
+      }, {
+        "x": 293,
+        "y": 232
+      }, {
+        "x": 305,
+        "y": 236
+      }, {
+        "x": 311,
+        "y": 242
+      }, {
+        "x": 320,
+        "y": 237
+      }, {
+        "x": 330,
+        "y": 231
+      }, {
+        "x": 335,
+        "y": 227
+      }, {
+        "x": 330,
+        "y": 220
+      }, {
+        "x": 348,
+        "y": 201
+      }, {
+        "x": 372,
+        "y": 178
+      }, {
+        "x": 382,
+        "y": 167
+      }, {
+        "x": 393,
+        "y": 145
+      }, {
+        "x": 399,
+        "y": 131
+      }]
+    },
+    "8": {
+      "name": "Hillegom",
+      "points": [{
+        "x": 421,
+        "y": 97
+      }, {
+        "x": 414,
+        "y": 108
+      }, {
+        "x": 406,
+        "y": 123
+      }, {
+        "x": 399,
+        "y": 137
+      }, {
+        "x": 409,
+        "y": 146
+      }, {
+        "x": 422,
+        "y": 157
+      }, {
+        "x": 435,
+        "y": 145
+      }, {
+        "x": 442,
+        "y": 131
+      }, {
+        "x": 442,
+        "y": 124
+      }, {
+        "x": 449,
+        "y": 109
+      }, {
+        "x": 455,
+        "y": 103
+      }, {
+        "x": 444,
+        "y": 95
+      }, {
+        "x": 432,
+        "y": 94
+      }, {
+        "x": 424,
+        "y": 100
+      }]
+    },
+    "9": {
+      "name": "Lisse",
+      "points": [{
+        "x": 399,
+        "y": 140
+      }, {
+        "x": 420,
+        "y": 159
+      }, {
+        "x": 419,
+        "y": 163
+      }, {
+        "x": 418,
+        "y": 187
+      }, {
+        "x": 413,
+        "y": 209
+      }, {
+        "x": 407,
+        "y": 211
+      }, {
+        "x": 403,
+        "y": 221
+      }, {
+        "x": 385,
+        "y": 206
+      }, {
+        "x": 385,
+        "y": 189
+      }, {
+        "x": 376,
+        "y": 181
+      }]
+    },
+    "10": {
+      "name": "Oegstgeest",
+      "points": [{
+        "x": 353,
+        "y": 251
+      }, {
+        "x": 341,
+        "y": 251
+      }, {
+        "x": 330,
+        "y": 256
+      }, {
+        "x": 332,
+        "y": 261
+      }, {
+        "x": 328,
+        "y": 276
+      }, {
+        "x": 309,
+        "y": 279
+      }, {
+        "x": 317,
+        "y": 283
+      }, {
+        "x": 315,
+        "y": 296
+      }, {
+        "x": 317,
+        "y": 305
+      }, {
+        "x": 324,
+        "y": 295
+      }, {
+        "x": 333,
+        "y": 295
+      }, {
+        "x": 340,
+        "y": 287
+      }, {
+        "x": 353,
+        "y": 287
+      }, {
+        "x": 360,
+        "y": 277
+      }, {
+        "x": 353,
+        "y": 275
+      }]
+    },
+    "11": {
+      "name": "Katwijk",
+      "points": [{
+        "x": 328,
+        "y": 235
+      }, {
+        "x": 330,
+        "y": 238
+      }, {
+        "x": 322,
+        "y": 244
+      }, {
+        "x": 326,
+        "y": 250
+      }, {
+        "x": 328,
+        "y": 258
+      }, {
+        "x": 326,
+        "y": 274
+      }, {
+        "x": 304,
+        "y": 278
+      }, {
+        "x": 314,
+        "y": 285
+      }, {
+        "x": 313,
+        "y": 296
+      }, {
+        "x": 315,
+        "y": 307
+      }, {
+        "x": 310,
+        "y": 314
+      }, {
+        "x": 293,
+        "y": 305
+      }, {
+        "x": 286,
+        "y": 303
+      }, {
+        "x": 285,
+        "y": 297
+      }, {
+        "x": 278,
+        "y": 297
+      }, {
+        "x": 256,
+        "y": 270
+      }, {
+        "x": 281,
+        "y": 228
+      }, {
+        "x": 295,
+        "y": 236
+      }, {
+        "x": 303,
+        "y": 238
+      }, {
+        "x": 310,
+        "y": 246
+      }]
+    },
+    "12": {
+      "name": "Leiden",
+      "points": [{
+        "x": 362,
+        "y": 277
+      }, {
+        "x": 374,
+        "y": 278
+      }, {
+        "x": 374,
+        "y": 288
+      }, {
+        "x": 371,
+        "y": 293
+      }, {
+        "x": 371,
+        "y": 307
+      }, {
+        "x": 378,
+        "y": 313
+      }, {
+        "x": 378,
+        "y": 324
+      }, {
+        "x": 369,
+        "y": 332
+      }, {
+        "x": 369,
+        "y": 336
+      }, {
+        "x": 350,
+        "y": 351
+      }, {
+        "x": 337,
+        "y": 363
+      }, {
+        "x": 337,
+        "y": 354
+      }, {
+        "x": 333,
+        "y": 350
+      }, {
+        "x": 335,
+        "y": 343
+      }, {
+        "x": 332,
+        "y": 322
+      }, {
+        "x": 325,
+        "y": 321
+      }, {
+        "x": 318,
+        "y": 331
+      }, {
+        "x": 313,
+        "y": 331
+      }, {
+        "x": 313,
+        "y": 324
+      }, {
+        "x": 310,
+        "y": 316
+      }, {
+        "x": 317,
+        "y": 308
+      }, {
+        "x": 325,
+        "y": 296
+      }, {
+        "x": 334,
+        "y": 296
+      }, {
+        "x": 341,
+        "y": 288
+      }, {
+        "x": 354,
+        "y": 288
+      }]
+    },
+    "13": {
+      "name": "Voorschoten",
+      "points": [{
+        "x": 326,
+        "y": 323
+      }, {
+        "x": 331,
+        "y": 325
+      }, {
+        "x": 333,
+        "y": 344
+      }, {
+        "x": 330,
+        "y": 350
+      }, {
+        "x": 315,
+        "y": 367
+      }, {
+        "x": 312,
+        "y": 373
+      }, {
+        "x": 299,
+        "y": 386
+      }, {
+        "x": 286,
+        "y": 379
+      }, {
+        "x": 277,
+        "y": 372
+      }, {
+        "x": 285,
+        "y": 362
+      }, {
+        "x": 295,
+        "y": 351
+      }, {
+        "x": 302,
+        "y": 341
+      }, {
+        "x": 310,
+        "y": 330
+      }, {
+        "x": 312,
+        "y": 334
+      }, {
+        "x": 320,
+        "y": 333
+      }]
+    },
+    "14": {
+      "name": "Wassenaar",
+      "points": [{
+        "x": 311,
+        "y": 328
+      }, {
+        "x": 308,
+        "y": 315
+      }, {
+        "x": 285,
+        "y": 304
+      }, {
+        "x": 284,
+        "y": 298
+      }, {
+        "x": 277,
+        "y": 298
+      }, {
+        "x": 255,
+        "y": 272
+      }, {
+        "x": 227,
+        "y": 311
+      }, {
+        "x": 197,
+        "y": 349
+      }, {
+        "x": 220,
+        "y": 379
+      }, {
+        "x": 220,
+        "y": 384
+      }, {
+        "x": 212,
+        "y": 389
+      }, {
+        "x": 215,
+        "y": 394
+      }, {
+        "x": 223,
+        "y": 390
+      }, {
+        "x": 229,
+        "y": 391
+      }, {
+        "x": 242,
+        "y": 382
+      }, {
+        "x": 252,
+        "y": 394
+      }, {
+        "x": 275,
+        "y": 372
+      }, {
+        "x": 285,
+        "y": 358
+      }, {
+        "x": 296,
+        "y": 347
+      }, {
+        "x": 301,
+        "y": 337
+      }]
+    },
+    "15": {
+      "name": "Leidschendam-Voorburg",
+      "points": [{
+        "x": 331,
+        "y": 353
+      }, {
+        "x": 335,
+        "y": 357
+      }, {
+        "x": 335,
+        "y": 369
+      }, {
+        "x": 349,
+        "y": 392
+      }, {
+        "x": 352,
+        "y": 404
+      }, {
+        "x": 337,
+        "y": 408
+      }, {
+        "x": 336,
+        "y": 415
+      }, {
+        "x": 318,
+        "y": 420
+      }, {
+        "x": 292,
+        "y": 438
+      }, {
+        "x": 279,
+        "y": 421
+      }, {
+        "x": 266,
+        "y": 425
+      }, {
+        "x": 260,
+        "y": 422
+      }, {
+        "x": 231,
+        "y": 448
+      }, {
+        "x": 225,
+        "y": 442
+      }, {
+        "x": 238,
+        "y": 431
+      }, {
+        "x": 224,
+        "y": 423
+      }, {
+        "x": 253,
+        "y": 398
+      }, {
+        "x": 275,
+        "y": 375
+      }, {
+        "x": 299,
+        "y": 389
+      }, {
+        "x": 315,
+        "y": 372
+      }, {
+        "x": 317,
+        "y": 368
+      }]
+    },
+    "16": {
+      "name": "Zoeterwoude",
+      "points": [{
+        "x": 378,
+        "y": 326
+      }, {
+        "x": 388,
+        "y": 337
+      }, {
+        "x": 399,
+        "y": 338
+      }, {
+        "x": 398,
+        "y": 348
+      }, {
+        "x": 389,
+        "y": 364
+      }, {
+        "x": 389,
+        "y": 411
+      }, {
+        "x": 384,
+        "y": 416
+      }, {
+        "x": 363,
+        "y": 400
+      }, {
+        "x": 358,
+        "y": 402
+      }, {
+        "x": 357,
+        "y": 407
+      }, {
+        "x": 353,
+        "y": 401
+      }, {
+        "x": 352,
+        "y": 392
+      }, {
+        "x": 336,
+        "y": 367
+      }, {
+        "x": 371,
+        "y": 338
+      }, {
+        "x": 372,
+        "y": 332
+      }]
+    },
+    "17": {
+      "name": "Zoetermeer",
+      "points": [{
+        "x": 362,
+        "y": 402
+      }, {
+        "x": 359,
+        "y": 407
+      }, {
+        "x": 351,
+        "y": 406
+      }, {
+        "x": 338,
+        "y": 410
+      }, {
+        "x": 339,
+        "y": 417
+      }, {
+        "x": 319,
+        "y": 422
+      }, {
+        "x": 293,
+        "y": 440
+      }, {
+        "x": 292,
+        "y": 448
+      }, {
+        "x": 288,
+        "y": 448
+      }, {
+        "x": 295,
+        "y": 455
+      }, {
+        "x": 318,
+        "y": 457
+      }, {
+        "x": 323,
+        "y": 471
+      }, {
+        "x": 335,
+        "y": 470
+      }, {
+        "x": 339,
+        "y": 482
+      }, {
+        "x": 363,
+        "y": 481
+      }, {
+        "x": 387,
+        "y": 459
+      }, {
+        "x": 398,
+        "y": 459
+      }, {
+        "x": 399,
+        "y": 452
+      }, {
+        "x": 406,
+        "y": 444
+      }, {
+        "x": 386,
+        "y": 428
+      }, {
+        "x": 386,
+        "y": 421
+      }, {
+        "x": 375,
+        "y": 411
+      }]
+    },
+    "18": {
+      "name": "Pijnacker-Nootdorp",
+      "points": [{
+        "x": 317,
+        "y": 459
+      }, {
+        "x": 321,
+        "y": 473
+      }, {
+        "x": 333,
+        "y": 473
+      }, {
+        "x": 338,
+        "y": 483
+      }, {
+        "x": 330,
+        "y": 493
+      }, {
+        "x": 320,
+        "y": 499
+      }, {
+        "x": 324,
+        "y": 509
+      }, {
+        "x": 320,
+        "y": 519
+      }, {
+        "x": 323,
+        "y": 524
+      }, {
+        "x": 315,
+        "y": 527
+      }, {
+        "x": 318,
+        "y": 532
+      }, {
+        "x": 292,
+        "y": 555
+      }, {
+        "x": 295,
+        "y": 559
+      }, {
+        "x": 280,
+        "y": 569
+      }, {
+        "x": 274,
+        "y": 556
+      }, {
+        "x": 269,
+        "y": 553
+      }, {
+        "x": 262,
+        "y": 521
+      }, {
+        "x": 267,
+        "y": 512
+      }, {
+        "x": 265,
+        "y": 497
+      }, {
+        "x": 259,
+        "y": 489
+      }, {
+        "x": 267,
+        "y": 482
+      }, {
+        "x": 263,
+        "y": 474
+      }, {
+        "x": 257,
+        "y": 476
+      }, {
+        "x": 252,
+        "y": 471
+      }, {
+        "x": 269,
+        "y": 455
+      }]
+    },
+    "19": {
+      "name": "Rijswijk",
+      "points": [{
+        "x": 223,
+        "y": 444
+      }, {
+        "x": 229,
+        "y": 450
+      }, {
+        "x": 227,
+        "y": 453
+      }, {
+        "x": 234,
+        "y": 460
+      }, {
+        "x": 228,
+        "y": 465
+      }, {
+        "x": 237,
+        "y": 489
+      }, {
+        "x": 211,
+        "y": 506
+      }, {
+        "x": 206,
+        "y": 497
+      }, {
+        "x": 197,
+        "y": 503
+      }, {
+        "x": 182,
+        "y": 469
+      }]
+    },
+    "20": {
+      "name": "Delft",
+      "points": [{
+        "x": 250,
+        "y": 483
+      }, {
+        "x": 212,
+        "y": 507
+      }, {
+        "x": 207,
+        "y": 515
+      }, {
+        "x": 210,
+        "y": 519
+      }, {
+        "x": 216,
+        "y": 516
+      }, {
+        "x": 224,
+        "y": 522
+      }, {
+        "x": 210,
+        "y": 538
+      }, {
+        "x": 221,
+        "y": 560
+      }, {
+        "x": 236,
+        "y": 558
+      }, {
+        "x": 239,
+        "y": 567
+      }, {
+        "x": 246,
+        "y": 565
+      }, {
+        "x": 248,
+        "y": 569
+      }, {
+        "x": 259,
+        "y": 565
+      }, {
+        "x": 258,
+        "y": 559
+      }, {
+        "x": 266,
+        "y": 558
+      }, {
+        "x": 273,
+        "y": 575
+      }, {
+        "x": 278,
+        "y": 570
+      }, {
+        "x": 273,
+        "y": 559
+      }, {
+        "x": 268,
+        "y": 555
+      }, {
+        "x": 260,
+        "y": 521
+      }, {
+        "x": 265,
+        "y": 511
+      }, {
+        "x": 264,
+        "y": 499
+      }]
+    },
+    "21": {
+      "name": "Midden Delftland",
+      "points": [{
+        "x": 265,
+        "y": 561
+      }, {
+        "x": 271,
+        "y": 575
+      }, {
+        "x": 267,
+        "y": 578
+      }, {
+        "x": 262,
+        "y": 575
+      }, {
+        "x": 242,
+        "y": 581
+      }, {
+        "x": 243,
+        "y": 587
+      }, {
+        "x": 206,
+        "y": 604
+      }, {
+        "x": 181,
+        "y": 632
+      }, {
+        "x": 160,
+        "y": 629
+      }, {
+        "x": 146,
+        "y": 615
+      }, {
+        "x": 131,
+        "y": 592
+      }, {
+        "x": 148,
+        "y": 582
+      }, {
+        "x": 167,
+        "y": 573
+      }, {
+        "x": 165,
+        "y": 562
+      }, {
+        "x": 178,
+        "y": 566
+      }, {
+        "x": 190,
+        "y": 553
+      }, {
+        "x": 175,
+        "y": 544
+      }, {
+        "x": 159,
+        "y": 531
+      }, {
+        "x": 206,
+        "y": 500
+      }, {
+        "x": 210,
+        "y": 508
+      }, {
+        "x": 204,
+        "y": 514
+      }, {
+        "x": 209,
+        "y": 522
+      }, {
+        "x": 216,
+        "y": 518
+      }, {
+        "x": 220,
+        "y": 522
+      }, {
+        "x": 207,
+        "y": 538
+      }, {
+        "x": 213,
+        "y": 549
+      }, {
+        "x": 219,
+        "y": 563
+      }, {
+        "x": 234,
+        "y": 561
+      }, {
+        "x": 238,
+        "y": 569
+      }, {
+        "x": 245,
+        "y": 568
+      }, {
+        "x": 248,
+        "y": 571
+      }, {
+        "x": 260,
+        "y": 567
+      }, {
+        "x": 261,
+        "y": 561
+      }]
+    },
+    "22": {
+      "name": "Westland",
+      "points": [{
+        "x": 196,
+        "y": 504
+      }, {
+        "x": 156,
+        "y": 531
+      }, {
+        "x": 173,
+        "y": 544
+      }, {
+        "x": 187,
+        "y": 554
+      }, {
+        "x": 178,
+        "y": 563
+      }, {
+        "x": 171,
+        "y": 562
+      }, {
+        "x": 163,
+        "y": 559
+      }, {
+        "x": 164,
+        "y": 572
+      }, {
+        "x": 148,
+        "y": 580
+      }, {
+        "x": 128,
+        "y": 591
+      }, {
+        "x": 134,
+        "y": 601
+      }, {
+        "x": 129,
+        "y": 604
+      }, {
+        "x": 123,
+        "y": 597
+      }, {
+        "x": 118,
+        "y": 605
+      }, {
+        "x": 96,
+        "y": 586
+      }, {
+        "x": 92,
+        "y": 574
+      }, {
+        "x": 96,
+        "y": 570
+      }, {
+        "x": 66,
+        "y": 553
+      }, {
+        "x": 60,
+        "y": 548
+      }, {
+        "x": 62,
+        "y": 538
+      }, {
+        "x": 47,
+        "y": 528
+      }, {
+        "x": 42,
+        "y": 519
+      }, {
+        "x": 66,
+        "y": 490
+      }, {
+        "x": 87,
+        "y": 464
+      }, {
+        "x": 97,
+        "y": 444
+      }, {
+        "x": 104,
+        "y": 450
+      }, {
+        "x": 115,
+        "y": 481
+      }, {
+        "x": 134,
+        "y": 472
+      }, {
+        "x": 146,
+        "y": 490
+      }, {
+        "x": 166,
+        "y": 477
+      }, {
+        "x": 182,
+        "y": 497
+      }, {
+        "x": 180,
+        "y": 501
+      }, {
+        "x": 185,
+        "y": 505
+      }, {
+        "x": 190,
+        "y": 501
+      }]
+    },
+    "23": {
+      "name": "Gouda",
+      "points": [{
+        "x": 531,
+        "y": 477
+      }, {
+        "x": 540,
+        "y": 478
+      }, {
+        "x": 543,
+        "y": 484
+      }, {
+        "x": 543,
+        "y": 496
+      }, {
+        "x": 563,
+        "y": 501
+      }, {
+        "x": 568,
+        "y": 511
+      }, {
+        "x": 574,
+        "y": 527
+      }, {
+        "x": 566,
+        "y": 525
+      }, {
+        "x": 553,
+        "y": 519
+      }, {
+        "x": 545,
+        "y": 523
+      }, {
+        "x": 549,
+        "y": 529
+      }, {
+        "x": 542,
+        "y": 531
+      }, {
+        "x": 532,
+        "y": 528
+      }, {
+        "x": 526,
+        "y": 534
+      }, {
+        "x": 510,
+        "y": 534
+      }, {
+        "x": 501,
+        "y": 526
+      }, {
+        "x": 493,
+        "y": 522
+      }, {
+        "x": 501,
+        "y": 514
+      }, {
+        "x": 497,
+        "y": 509
+      }, {
+        "x": 500,
+        "y": 498
+      }, {
+        "x": 514,
+        "y": 491
+      }]
+    },
+    "24": {
+      "name": "Zuidplas",
+      "points": [{
+        "x": 498,
+        "y": 501
+      }, {
+        "x": 492,
+        "y": 499
+      }, {
+        "x": 485,
+        "y": 504
+      }, {
+        "x": 471,
+        "y": 517
+      }, {
+        "x": 462,
+        "y": 510
+      }, {
+        "x": 433,
+        "y": 481
+      }, {
+        "x": 448,
+        "y": 464
+      }, {
+        "x": 449,
+        "y": 442
+      }, {
+        "x": 414,
+        "y": 449
+      }, {
+        "x": 411,
+        "y": 470
+      }, {
+        "x": 412,
+        "y": 480
+      }, {
+        "x": 407,
+        "y": 488
+      }, {
+        "x": 405,
+        "y": 523
+      }, {
+        "x": 397,
+        "y": 539
+      }, {
+        "x": 397,
+        "y": 550
+      }, {
+        "x": 402,
+        "y": 561
+      }, {
+        "x": 399,
+        "y": 567
+      }, {
+        "x": 406,
+        "y": 572
+      }, {
+        "x": 420,
+        "y": 564
+      }, {
+        "x": 423,
+        "y": 543
+      }, {
+        "x": 437,
+        "y": 538
+      }, {
+        "x": 441,
+        "y": 545
+      }, {
+        "x": 437,
+        "y": 562
+      }, {
+        "x": 443,
+        "y": 567
+      }, {
+        "x": 428,
+        "y": 576
+      }, {
+        "x": 443,
+        "y": 601
+      }, {
+        "x": 459,
+        "y": 616
+      }, {
+        "x": 470,
+        "y": 615
+      }, {
+        "x": 474,
+        "y": 596
+      }, {
+        "x": 480,
+        "y": 592
+      }, {
+        "x": 467,
+        "y": 571
+      }, {
+        "x": 500,
+        "y": 557
+      }, {
+        "x": 513,
+        "y": 536
+      }, {
+        "x": 508,
+        "y": 536
+      }, {
+        "x": 503,
+        "y": 530
+      }, {
+        "x": 489,
+        "y": 523
+      }, {
+        "x": 499,
+        "y": 514
+      }, {
+        "x": 494,
+        "y": 509
+      }]
+    },
+    "25": {
+      "name": "Krimpenerwaard",
+      "points": [{
+        "x": 570,
+        "y": 512
+      }, {
+        "x": 576,
+        "y": 528
+      }, {
+        "x": 567,
+        "y": 529
+      }, {
+        "x": 554,
+        "y": 521
+      }, {
+        "x": 548,
+        "y": 523
+      }, {
+        "x": 551,
+        "y": 529
+      }, {
+        "x": 544,
+        "y": 533
+      }, {
+        "x": 532,
+        "y": 530
+      }, {
+        "x": 526,
+        "y": 536
+      }, {
+        "x": 516,
+        "y": 536
+      }, {
+        "x": 501,
+        "y": 559
+      }, {
+        "x": 470,
+        "y": 572
+      }, {
+        "x": 483,
+        "y": 591
+      }, {
+        "x": 477,
+        "y": 598
+      }, {
+        "x": 471,
+        "y": 617
+      }, {
+        "x": 461,
+        "y": 619
+      }, {
+        "x": 458,
+        "y": 625
+      }, {
+        "x": 477,
+        "y": 649
+      }, {
+        "x": 458,
+        "y": 655
+      }, {
+        "x": 438,
+        "y": 657
+      }, {
+        "x": 426,
+        "y": 662
+      }, {
+        "x": 437,
+        "y": 675
+      }, {
+        "x": 465,
+        "y": 680
+      }, {
+        "x": 482,
+        "y": 679
+      }, {
+        "x": 504,
+        "y": 679
+      }, {
+        "x": 528,
+        "y": 670
+      }, {
+        "x": 542,
+        "y": 670
+      }, {
+        "x": 562,
+        "y": 660
+      }, {
+        "x": 581,
+        "y": 645
+      }, {
+        "x": 595,
+        "y": 642
+      }, {
+        "x": 617,
+        "y": 635
+      }, {
+        "x": 641,
+        "y": 611
+      }, {
+        "x": 659,
+        "y": 611
+      }, {
+        "x": 675,
+        "y": 615
+      }, {
+        "x": 666,
+        "y": 585
+      }, {
+        "x": 650,
+        "y": 564
+      }, {
+        "x": 625,
+        "y": 530
+      }, {
+        "x": 659,
+        "y": 523
+      }, {
+        "x": 650,
+        "y": 507
+      }, {
+        "x": 633,
+        "y": 507
+      }, {
+        "x": 624,
+        "y": 511
+      }, {
+        "x": 612,
+        "y": 512
+      }, {
+        "x": 611,
+        "y": 502
+      }, {
+        "x": 594,
+        "y": 513
+      }]
+    }
+  }
+};
+
+// https://dustinpfister.github.io/2021/06/01/threejs-shape/
+// https://muffinman.io/blog/three-js-extrude-svg-path/
+// https://syntaxbytetutorials.com/three-js-raycasting-for-mouse-picking/
+
+// setup threejs
+var container, camera, scene, renderer, controls;
+
+var mouse, raycaster, memobj = [];
+
+init(data);
+animate();
+
+function init(data) {
+
+  renderer = new THREE.WebGLRenderer({
+    alpha: true
+  });
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  scene = new THREE.Scene();
+
+  raycaster = new THREE.Raycaster();
+  mouse = new THREE.Vector2()
+
+  camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 1, 1500);
+  camera.position.set(0, 0, 500);
+
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  //controls.minDistance = 200;
+  //controls.maxDistance = 900;
+
+  scene.add(new THREE.AmbientLight(0x222222));
+
+  var light = new THREE.PointLight(0xeeeeee);
+  light.position.copy(camera.position);
+  scene.add(light);
+  //console.log(data.regions);
+
+  for (var d in data.regions) {
+    //console.log(data.regions[d]);
+    let shape = addShape(data.regions[d].points, data.map.width, data.map.height);
+    //shape.position.set(0, 0, 0);
+    shape.scale.y *= -1; // normalize center (I) ..
+    scene.add(shape);
+  }
+
+  window.addEventListener('resize', onWindowResize, false);
+
+  renderer.domElement.addEventListener('click', onClick, false);
+
+}
+
+
+// extrude shape and add material
+function addShape(points, w, h) {
+
+  let poly = makePolygon(points, w, h);
+
+  let extrudeSettings = {
+    amount: 10,
+    steps: 1,
+    material: 1,
+    extrudeMaterial: 0,
+    bevelEnabled: true,
+    bevelThickness: 1,
+    bevelSize: 3,
+    bevelSegments: 8,
+  };
+
+  let geometry = new THREE.ExtrudeGeometry(poly, extrudeSettings);
+
+  //geometry.rotateX(Math.PI * 1); // normalize center (II)
+  //geometry.center();
+
+  var randomColor = (function newcolor(m, s, c) {
+    return s[m.floor(m.random() * s.length)] +
+      (c && newcolor(m, s, c - 1));
+  })(Math, '78954', 4);
+
+  let colorr = '#' + randomColor;
+
+  let material = new THREE.MeshLambertMaterial({
+    color: colorr,
+    wireframe: false
+  });
+
+  let mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(material));
+
+  return mesh;
+
+}
+
+// draw points to create polygon shape
+function makePolygon(points, w, h) {
+
+  let poly = new THREE.Shape();
+
+  poly.moveTo((points[0].x - w / 2), (points[0].y - h / 2)); // startingpoint
+  for (c = 1; c < points.length; c++) {
+    poly.lineTo((points[c].x - w / 2), (points[c].y - h / 2));
+  }
+
+  return poly;
+}
+
+
+function animate() {
+
+  requestAnimationFrame(animate);
+
+  controls.update();
+
+  update();
+
+  render();
+
+
+}
+
+
+function update() {
+
+	resetMaterials();
+	hoverPieces();
+
+}
+
+function render() {
+  renderer.render(scene, camera);
+}
+
+
+
+
+function resetMaterials() {
+
+  for (let i = 0; i < scene.children.length; i++) {
+
+    if (memobj[i]) {
+
+			//console.log(memobj[i]);
+
+			//scene.children[i].material.color.set(memobj[i]);
+      //scene.children[i].material.opacity = scene.children[i].userData.currentSquare == selectedPiece ? 0.5 : 1.0;
+    }
+
+  }
+
+}
+
+function hoverPieces() {
+
+  raycaster.setFromCamera(mouse, camera);
+
+	var intersects = raycaster.intersectObject(scene, true);
+
+	/*
+	if (intersects.length > 0) {
+
+    var object = intersects[0].object;
+
+    object.material.color.set(Math.random() * 0xffffff);
+
+  }
+	*/
+	/*
+  const intersects = raycaster.intersectObjects(scene.children);
+  for (let i = 0; i < intersects.length; i++) {
+    intersects[i].object.material.transparent = true;
+    intersects[i].object.material.opacity = 0.5;
+  }
+	*/
+}
+
+function onMouseMove(event) {
+
+    // calculate mouse position in normalized device coordinates
+    // (-1 to +1) for both components
+
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+}
+
+window.addEventListener('mousemove', onMouseMove, false);
+/*
+document.addEventListener("mousemove", () => {
+
+  mouse.x = event.clientX; // Gets Mouse X
+  mouse.y = event.clientY; // Gets Mouse Y
+  //console.log([mouse.x, mouse.y]); // Prints data
+  raycaster.setFromCamera(mouse, camera);
+
+  var intersects = raycaster.intersectObject(scene, true);
+
+  if (intersects.length > 0) {
+
+    var object = intersects[0].object;
+
+    object.material.color.set(Math.random() * 0xffffff);
+
+  }
+
+
+});
+*/
+
+function onClick() {
+
+  event.preventDefault();
+
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+
+  var intersects = raycaster.intersectObject(scene, true);
+
+  if (intersects.length > 0) {
+
+    var object = intersects[0].object;
+
+    object.material.color.set(Math.random() * 0xffffff);
+
+  }
+
+  render();
+
+}
+
+
+function onWindowResize() {
+
+  windowHalfX = window.innerWidth / 2;
+  windowHalfY = window.innerHeight / 2;
+
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+}
+
+
+</script>
+<div class="copyright">Polygon Map ThreeJS - <a href="https://jsfiddle.net/webbouwer/mkvh8j7z/34/">https://jsfiddle.net/webbouwer/mkvh8j7z/34/</a> Copyright 2022 Oddsized Interactive</div>
+</body>
+</html>

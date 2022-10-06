@@ -1,0 +1,170 @@
+{
+	"metadata": {
+		"type": "App"
+	},
+	"project": {
+		"shadows": true,
+		"shadowType": 1,
+		"vr": false,
+		"physicallyCorrectLights": false,
+		"toneMapping": 0,
+		"toneMappingExposure": 1
+	},
+	"camera": {
+		"metadata": {
+			"version": 4.5,
+			"type": "Object",
+			"generator": "Object3D.toJSON"
+		},
+		"object": {
+			"uuid": "96b8f703-bb0a-4bb4-b291-2ed7ca6e3079",
+			"type": "PerspectiveCamera",
+			"name": "Camera",
+			"layers": 1,
+			"matrix": [0.5877620681401872,0,-0.8090338381400187,0,-0.3001600902138181,0.9286286507054784,-0.2180659288649996,0,0.75129200148704,0.3710105511827427,0.5458126962728835,0,8.447673425232116,4.171714815948618,6.137224142320734,1],
+			"fov": 50,
+			"zoom": 1,
+			"near": 0.01,
+			"far": 1000,
+			"focus": 10,
+			"aspect": 1.826381059751973,
+			"filmGauge": 35,
+			"filmOffset": 0
+		}
+	},
+	"scene": {
+		"metadata": {
+			"version": 4.5,
+			"type": "Object",
+			"generator": "Object3D.toJSON"
+		},
+		"geometries": [
+			{
+				"uuid": "fb740432-2d59-48a8-be2f-86f41463d9e7",
+				"type": "BoxGeometry",
+				"width": 1,
+				"height": 1,
+				"depth": 1,
+				"widthSegments": 1,
+				"heightSegments": 1,
+				"depthSegments": 1
+			},
+			{
+				"uuid": "3896cb97-29b9-45f9-ad9b-7b3e9c98152e",
+				"type": "BoxGeometry",
+				"width": 1,
+				"height": 1,
+				"depth": 1,
+				"widthSegments": 1,
+				"heightSegments": 1,
+				"depthSegments": 1
+			}],
+		"materials": [
+			{
+				"uuid": "37811a90-a17b-43fb-88c5-b0d9283b72ae",
+				"type": "MeshStandardMaterial",
+				"color": 6592832,
+				"roughness": 1,
+				"metalness": 0,
+				"emissive": 3836199,
+				"envMapIntensity": 1,
+				"depthFunc": 3,
+				"depthTest": true,
+				"depthWrite": true,
+				"colorWrite": true,
+				"stencilWrite": false,
+				"stencilWriteMask": 255,
+				"stencilFunc": 519,
+				"stencilRef": 0,
+				"stencilFuncMask": 255,
+				"stencilFail": 7680,
+				"stencilZFail": 7680,
+				"stencilZPass": 7680
+			},
+			{
+				"uuid": "b9512514-c3b5-45d7-b7e5-bba6d936d02e",
+				"type": "MeshStandardMaterial",
+				"color": 8405056,
+				"roughness": 1,
+				"metalness": 0,
+				"emissive": 6435121,
+				"envMapIntensity": 1,
+				"depthFunc": 3,
+				"depthTest": true,
+				"depthWrite": true,
+				"colorWrite": true,
+				"stencilWrite": false,
+				"stencilWriteMask": 255,
+				"stencilFunc": 519,
+				"stencilRef": 0,
+				"stencilFuncMask": 255,
+				"stencilFail": 7680,
+				"stencilZFail": 7680,
+				"stencilZPass": 7680
+			}],
+		"object": {
+			"uuid": "325f6e1e-0563-42b3-935f-b4212b085cf2",
+			"type": "Scene",
+			"name": "Scene",
+			"layers": 1,
+			"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+			"background": 10808547,
+			"children": [
+				{
+					"uuid": "f64c1ac8-30d9-4ffa-9f4d-f5bdcfb55928",
+					"type": "PointLight",
+					"name": "PointLight",
+					"castShadow": true,
+					"layers": 1,
+					"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.8002067644118778,12.295830579131223,0,1],
+					"color": 16048108,
+					"intensity": 1,
+					"distance": 0,
+					"decay": 1,
+					"shadow": {
+						"radius": 2.26,
+						"camera": {
+							"uuid": "20013d19-4e21-40b9-9d69-080ef3b8416c",
+							"type": "PerspectiveCamera",
+							"layers": 1,
+							"fov": 90,
+							"zoom": 1,
+							"near": 0.5,
+							"far": 500,
+							"focus": 10,
+							"aspect": 1,
+							"filmGauge": 35,
+							"filmOffset": 0
+						}
+					}
+				},
+				{
+					"uuid": "15d86978-b9a1-4e66-bbf1-d022e71e7e17",
+					"type": "Mesh",
+					"name": "Box",
+					"receiveShadow": true,
+					"layers": 1,
+					"matrix": [48.89833909247443,0,0,0,0,0.44550213638941244,0,0,0,0,70.11935381655617,0,-3.967573688414441,-0.2848909560222317,0.08695202724463869,1],
+					"geometry": "fb740432-2d59-48a8-be2f-86f41463d9e7",
+					"material": "37811a90-a17b-43fb-88c5-b0d9283b72ae"
+				},
+				{
+					"uuid": "69f35185-edae-41f5-bdab-e2e5ac128a39",
+					"type": "Mesh",
+					"name": "Box",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.027533178715156703,1.3147987062655249,2.826724387062117,1],
+					"geometry": "3896cb97-29b9-45f9-ad9b-7b3e9c98152e",
+					"material": "b9512514-c3b5-45d7-b7e5-bba6d936d02e"
+				}],
+			"fog": {
+				"type": "FogExp2",
+				"color": 14272482,
+				"density": 0.05
+			}
+		}
+	},
+	"scripts": {}
+}
