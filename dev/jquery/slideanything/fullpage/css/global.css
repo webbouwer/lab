@@ -1,0 +1,225 @@
+*
+{
+padding:0;
+margin:0;
+}
+
+html,
+body
+{
+width:100%;
+}
+body
+{
+background-color: #0099CC; 
+color:#232323;
+}
+div#pagenav-placer
+{
+position:absolute;
+top:60%;
+right:10px;
+z-index:899;
+}
+div#pagenav
+{
+display:block;
+}
+div.topbarfixed
+{
+position:fixed;
+top:10px;
+right:10px;
+}
+.active
+{
+background-color: #CCCCCC; 
+}
+div#gototop
+{
+position:fixed;
+bottom:10px;
+right:10px;
+}
+div#loadscreen
+{
+position:fixed;
+background-color: #0099CC;
+color:#232323;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:999;
+}
+div#loadscreen div.infobox
+{
+width:20%;
+margin:20% auto;
+text-align:center;
+}
+
+div#topcontent
+{
+position:fixed;
+width:100%;
+top:0;
+left:0;
+z-index:800;
+}
+
+div#home,
+div#info,
+div#portfolio,
+div#services,
+div#network
+{
+}
+
+.page-section-content
+{
+position:relative;
+}
+
+div.content-padding
+{
+position:relative;
+padding-top:120px;
+}
+
+/* see anythinglsider.css */
+
+/* animated objects */
+#info_object1
+{
+position:absolute;
+left:70%;
+height:200px;
+width:20%;
+background-color: #CCCCCC;
+}
+
+#services_object1
+{
+position:absolute;
+left:70%;
+height:200px;
+width:20%;
+background-color: #CCCCCC;
+}
+
+
+
+
+
+
+
+/* anything slider */
+
+li.panel div.slidebox
+{
+width:92%;
+margin:0px 4%;
+}
+
+
+
+/* Custom Slides */
+ul#slider li.slide1
+{
+background-image:url(../images/img_bridge01.jpg);
+background-position:center;
+background-repeat:no-repeat;
+}
+ul#slider li.panel div.slidebox div.slidecolumn
+{
+width:32%;
+float:left;
+}
+ul#slider li.slide2
+{
+background-image:url(../images/img_bridge02.jpg);
+background-position:center bottom;
+background-repeat:no-repeat;
+}
+ul#slider li.slide3
+{
+background-image:url(../images/img_bridge03.jpg);
+background-position:center;
+background-repeat:no-repeat;
+}
+ul#slider li.slide4
+{
+background-image:url(../images/img_bridge04.jpg);
+background-position:center;
+background-repeat:no-repeat;
+}
+
+
+
+
+
+
+
+
+
+/* Scrollable global */
+.scrollable {
+position:relative;
+overflow:hidden;
+width: 100%;
+height:100%;
+min-height:240px;
+clear:both;
+}
+.scrollable .items {
+width:20000em !important;
+position:absolute !important;
+height:100%;
+}
+.items div.item {
+float:left !important;
+height:100%;
+/*background-color: #006699;*/
+}
+
+/* Scrollable navi's */
+
+.scrollable .prev,
+.scrollable .next
+{
+position:absolute;
+top:50%;
+z-index:99;
+}
+.scrollable .prev
+{
+left:5%;
+}
+.scrollable .next
+{
+right:5%;
+}
+div.navibox
+{
+position:absolute;
+bottom:20px;
+left:5%;
+width:90%;
+}
+.navi a {
+width:16px;
+height:16px;
+float:left;
+margin:3px;
+background-color:#00CCCC;
+display:block;
+font-size:1px;
+}
+.navi a:hover {
+background-color: #00CC66;
+}
+.navi a.active {
+background-color: #009900;     
+}
+

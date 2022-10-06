@@ -1,0 +1,41 @@
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+</script>
+<style>
+
+iframe#cdatablock
+{
+width:90vw;
+height:80vh;
+}
+
+
+</style>
+</head>
+<body>
+<!--
+<iframe id="cdatablock" src="https://www.floraxchange.nl/Account/Kweker/3064/MenM-Garden#catalogus"></iframe>
+-->
+        
+    <iframe id="cdatablock" src="https://www.floraxchange.nl/Account/Kweker/3064/MenM-Garden#catalogus">
+       <?php //echo file_get_contents("https://www.floraxchange.nl/Account/Kweker/3064/MenM-Garden#catalogus"); ?>
+    </iframe>
+    
+<div id="productlist">
+</div>
+ <script> 
+     jQuery(function($){
+
+        $("#cdatablock").bind("load",function(){
+            //var iframe = $('iframe#cdatablock'); // or some other selector to get the iframe
+	        //iframe.contents().find('.panel-item-card').clone().appendTo('#productlist');
+            var iframe = document.getElementById("cdatablock");
+            iframe.contentWindow.html().find('.panel-item-card').firstChild().clone().appendTo('#productlist');  
+         
+         }); 
+     });
+</script>  
+</body>
+</html>

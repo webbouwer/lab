@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Collect and combine cards ">
+  <meta name="keywords" content="card, card collect, card collection, card search, combine cards, deck, deck builder">
+  <meta name="author" content="webbouwer">
+  <meta name="copyright" content="Webbouwer Oddsized Interactive">
+
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+
+<title>Pokemon TCG cards</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #loadercontainer
+    {
+      position:absolute;
+      width:100vw;
+      height:100vh;
+      background-color: rgba(0,0,0,0.6);
+      z-index:999;
+    }
+    #loader
+    {
+      margin:10vh auto 0;
+      padding:4vh 2vw;
+      text-align:center;
+      width:320px;
+      min-height:80px;
+      background-color: #0D1117;
+      color: #ededed;
+    }
+
+    li.card {
+      padding:3px;
+    }
+    li.card  a
+    {
+      display:block;
+    }
+
+    li.card  h3 {
+
+    }
+
+    li.card .imagebox {
+      display: none;
+      -webkit-transition: all 600ms;
+            transition: all 600ms;
+    }
+    li.card .imagebox img{
+
+    }
+
+    li.card:hover
+    {
+      background-color:#e4e4e4;
+    }
+
+    li.card:hover .imagebox {
+      display: block;
+      position: fixed;
+      top: 5vh;
+      right: 5vw;
+      max-width:90vw;
+      z-index: 99;
+    }
+    li.card:hover .imagebox img{
+      max-width:90vw;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main">
+    <div id="cloak"><div id="loader">Loading</div></div>
+    <div id="header"><h1>Pokemon TCG collection</h1></div>
+      <div id="infobar"></div>
+    <div id="setlist"></div>
+    <div id="cardlist"></div>
+  </div>
+  <script>
+
+
+    var source = 'https://api.pokemontcg.io/v2/sets';
+    var sets = [];
+    var cards = [];
+    var promises = [];
+    //var missing = []; // to re-fetch silently
+    var datalist = '';
+    var count = 0;
+    var show = 0;
+    var pp = 25;
+    var scrollall = true;
+    getSetData(source);
+
+
+    async function getSetData(source) {
+
+      fetch(source)
+        .then(r => r.json().then(data => ({
+          status: r.status,
+          body: data
+        })))
+        .then(obj => extendData(obj));
+
+    }
+
+    async function extendData(json) {
+
+      var jsondata = json.body.data;
+
+      jsondata.sort((a, b) => (a.releaseDate < b.releaseDate) ? 1 : -1);
+      let paz = 3;
+      let m = 0;
+      for (var d = 0; d < jsondata.length; d++) {
+        m++;
+        sets.push(jsondata[d]);
+        let src = fetch( 'https://api.pokemontcg.io/v2/cards?q=set.id:'+jsondata[d].id );
+        if( m ==  paz){
+          m = 0;
+          await src;
+        }
+        //await src;
+        promises.push(src);
+        document.getElementById("loader").innerHTML = d +' sets loaded..';
+
+      }
+
+      document.getElementById("loader").innerHTML = promises.length +' sets, loading card data..';
+
+        /*
+        const allData = Promise.all(promises)
+          .then((responses) => responses.map(r => r.json()));
+
+        allData.then((res) => gatherData(res));
+*/
+        await Promise.all(promises).then((responses) => responses.map(r => r.json())).then((res) => gatherData(res));
+    }
+
+
+
+    function gatherData(data) {
+
+      for (var c = 0; c < data.length; c++) {
+        var m = data[c];
+        let jdata = Promise.resolve(m);
+        jdata.then((obj) => cardBundle( obj ));
+      }
+
+      loader();
+
+    }
+
+    async function cardBundle(obj) {
+
+      var jsondata = obj.data; //.cards;
+
+      for (var c = 0; c < jsondata.length; c++) {
+
+        //jsondata[c].imageUrl = // or use .images.small
+        cards.push(jsondata[c]);
+        count++;
+        document.getElementById("loader").innerHTML = count +' cards loaded';
+
+      }
+    }
+
+    function displaySetSelect(list){
+
+      let menu = '<select name="setselectbox" id="setselectbox" onchange="displaySetofCards();">';
+
+      menu += '<option class="set" value="showall">List all cards</option>';
+
+      for (var c = 0; c < list.length; c++) {
+
+        menu += '<option class="set" value="'+list[c].id+'">';
+        menu += list[c].name;
+        menu += '</option>';
+      }
+
+      menu += '</select>';
+      document.getElementById("setlist").innerHTML = menu;
+
+    }
+
+    function displaySetofCards(){
+
+      let uid = document.getElementById('setselectbox').value;
+
+      if(uid == 'showall'){
+        scrollall = true;
+        document.getElementById("cardlist").innerHTML = '';
+
+        from = 0;
+        show = pp;
+        document.getElementById("infobar").innerHTML = 'Total '+count+' cards';
+        displayCards(cards);
+
+      }else{
+        scrollall = false;
+        document.getElementById("cardlist").innerHTML = '';
+
+        const list = cards.filter(element => element.set.id === uid);
+
+        document.getElementById("infobar").innerHTML = 'Total '+list.length+' cards';
+        let sethtml = '';
+        for (var c = 0; c < list.length; c++) {
+          sethtml += listcardHTML(list[c]);
+        }
+        document.getElementById("cardlist").innerHTML = sethtml;
+      }
+
+    }
+
+    function displayCards(list){
+
+      let from = show;
+      show = show + pp;
+
+      for (var c = from; c < show; c++) {
+
+        datalist += listcardHTML(list[c]);
+
+      }
+
+      document.getElementById("cardlist").innerHTML += datalist;
+
+    }
+
+    function listcardHTML(obj){
+
+      html = '<li class="card">';
+      html += '<h3>' + obj.id + '. ' + obj.name + '</h3>';
+      html += '<ul class="meta"><li>Type: ' + obj.types + '</li><li>Level: ' + obj.level + '</li><li>HP: ' + obj.hp + '</li></ul>';
+      html += '<div class="imagebox"><img src="'+obj.images.small+'"  width="480" height="auto" /></div>';
+      html += '</li>';
+      return html;
+
+    }
+
+    function loader(){
+    	if( count < promises.length - 1){
+        setTimeout(function(){
+    			loader();
+        },3000);
+      }else{
+        document.getElementById("cloak").style = "display:none;";
+      	document.getElementById("infobar").innerHTML = 'Total '+count+' cards';
+        displaySetSelect(sets);
+        displayCards(cards);
+        console.log(cards);
+      }
+    }
+
+    window.addEventListener('scroll', () => {
+      if (
+        window.scrollY + window.innerHeight >= document.body.offsetHeight - 1000
+        && scrollall
+      ) {
+        displayCards(cards);
+      }
+    });
+
+  </script>
+  </div>
+</body>
+
+</html>

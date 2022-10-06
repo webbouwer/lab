@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en-US" class="no-js no-svg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vertical scrollbox</title>
+
+<script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+ <script
+			  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+			  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			  crossorigin="anonymous"></script>
+<style>
+*
+{
+margin:0; 
+padding: 0;
+}
+html,
+body
+{
+position: relative;
+height:100%;
+}
+ul{
+list-style: none;
+}
+
+.dragging{
+overflow:hidden;
+cursor:-moz-grab;
+}
+
+.fullscreenbox
+{
+position: relative;
+width:100%;
+min-height:100%;
+background-color:#e9e9e9;
+}
+
+/** default vertical scroll element props */
+.verticalScroll{
+position:relative;
+overflow: hidden;  
+}
+
+.verticalScroll ul li{
+width: 100%;
+display:block;
+background:#efefef;
+color:#333;
+border-bottom:1px solid #ddd;
+text-align:center;
+line-height: 2.4; 
+font-size: 30px;
+font-weight:bold;
+font-family: Helvetica Neue, times, serif;
+}
+
+.verticalScroll.dragging  ul li
+{
+opacity:0.5;
+}
+
+.ui-state-hover {
+background:lightyellow;   
+}
+.ui-state-active {
+background:lightgray   
+}
+ 
+/** custom vertical scroll style props */
+.verticalScroll
+{
+	min-height:100%;
+    width:20%;
+	z-index:99;
+    float:left;
+}
+
+#scrollbox_1
+{
+}
+#scrollbox_2
+{
+}
+#scrollbox_3
+{
+}
+#scrollbox_4
+{
+}
+#scrollbox_5
+{
+}
+</style>
+
+</head>
+<body>
+
+      
+	<div class="fullscreenbox"> 
+		
+		 <div id="scrollbox_1" class="verticalScroll">
+			<ul>
+				<li>1 test bar 1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+			</ul>
+		</div>
+		
+		<div id="scrollbox_2" class="verticalScroll">
+			<ul>
+				<li>1 test bar 2</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+			</ul>
+		</div>
+		
+		<div id="scrollbox_3" class="verticalScroll">
+			<ul>
+				<li>1 test bar 3</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+			</ul>
+		</div>
+
+		<div id="scrollbox_4" class="verticalScroll">
+			<ul>
+				<li>1 test bar 4</li> 
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+			</ul>
+		</div>
+
+		<div id="scrollbox_5" class="verticalScroll">
+			<ul>
+				<li>1 test bar 5</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>  
+			</ul>
+		</div>
+		
+    </div>
+	
+   
+<script>
+	
+jQuery(function($){ 
+    
+    $(document).on('ready', function(){
+		/** Scroll Y */
+		$(".verticalScroll").rowScroll();
+	});
+    
+	$.fn.swap = function(b){ 
+		// method from: http://blog.pengoworks.com/index.cfm/2008/9/24/A-quick-and-dirty-swap-method-for-jQuery
+		b = jQuery(b)[0]; 
+		var a = this[0]; 
+		var t = a.parentNode.insertBefore(document.createTextNode(''), a); 
+		b.parentNode.insertBefore(a, b); 
+		t.parentNode.insertBefore(b, t); 
+		t.parentNode.removeChild(t); 
+		return this; 
+	};
+
+    $.fn.extend({
+        
+        rowScroll:function (){
+            
+            $(this).each(function(){
+                
+				
+				// box & animation properties
+                var box = $(this);
+
+				box.outerHeight( box.parent().outerHeight() );
+				
+                box.data('inview', 5) // count columns/rows in box view
+                .data('delay', 10) // interval (delay) milliseconds 
+		        .data('speed', randomSpeed( 3 )) // speed / stepsize in pixels / d in millisec
+		        .data('touching', false); // is touching
+		          
+                var ul = box.find("ul");
+                ul.outerHeight( box.outerHeight() );
+        
+                var li = ul.find("li");
+                li.height( ul.outerHeight() / box.data('inview') );
+                li.width( ul.outerWidth() );
+                
+                var h = li.size()* li.outerHeight();
+                li.clone().appendTo(ul);
+                 
+                var s = box.data('speed'), l;
+
+				// touch scroll speed
+				var currentY;
+				var lastY = 0;
+				var lastT;
+				
+				
+					
+				
+				// mouse draggable
+				box.draggable({ 
+					revert: true, 
+					helper: "clone" 
+				});
+				
+				box.droppable({
+						accept: ".dragging",
+						activeClass: "ui-state-hover",
+						hoverClass: "ui-state-active",
+						drop: function( event, ui ) {
+
+							var draggable = ui.draggable, droppable = $(this),
+								dragPos = draggable.position(), dropPos = droppable.position();
+
+							//draggable.css({});
+							//droppable.css({});
+
+							draggable.swap(droppable);
+						}
+					});
+					
+				
+				box.on('touchstart', function (e){
+					
+					
+                    $(this)
+					.data('down', true)
+					.addClass("dragging");
+					
+					e.preventDefault();
+					
+				}).bind('touchmove', function (e){
+					
+					if( $(this).data('down') == true) {
+						
+						clearTimeout(lastT); // use timer and distance
+						currentY = e.originalEvent.touches[0].clientY;
+						
+						if(lastY == 0) {
+							lastY = currentY;
+						}else{
+							//currentY < > lastY
+							$(this).data('speed', Math.floor( (lastY - currentY) * 0.5 )  );
+						}
+						lastY = currentY;
+						lastT = setTimeout(function() {
+							lastY = 0;
+						}, 150);
+					}
+					e.preventDefault();
+					
+				}).on('touchend', function (e){
+                    $(this)
+                    .data('down', false)
+					.removeClass("dragging");
+					e.preventDefault();
+				});
+				
+             	// mouse down scroll speed
+				box.on('click', function (e) {
+					
+					if( $(this).hasClass('dragging') ){
+						$(this).removeClass("dragging");
+                    $(this)
+                    .data('down', false)
+                    .removeClass("dragging"); 
+					e.preventDefault();
+					}else{
+						$(this).addClass("dragging");
+					
+					
+                    $(this) 
+                    .data('down', true)
+                    .data('y', e.clientY)
+                    .data('x', e.clientX)
+					.data('speed', 0 )
+                    .data('scrollTop', $(this).scrollTop() );
+                    }
+					e.preventDefault();
+                    return false;
+                }).on( 'mouseup', function (e) {
+					
+                }).on('mousemove mouseout', function (e) {
+                    if( $(this).data('down') == true) {
+                        
+						//$(this).scrollTop( $(this).data('scrollTop') + $(this).data('y') - e.clientY ); // hook cursor
+						box.data('speed', ( $(this).data('y') - e.clientY ) / 30 ); // move speed
+						
+                    }
+					
+                }); 
+				
+				
+				
+				// scroll functions
+                function randomSpeed( num ){
+                    var speed = Math.floor( (Math.random() * num  -  Math.random() * num) + 1 );
+                    if(speed == 0){
+                        speed = Math.floor( (Math.random() * num) + 1 );
+                    }
+                    return speed;
+                }
+				
+                function autoScroll(){
+					
+                    l = box.scrollTop();
+					
+                    if( $(this).data('down') == true){
+						
+						s = 0; // stop speed
+						
+					}else{
+						
+                        s = box.data('speed');
+                        if( s == 0){
+                            box.data('speed', randomSpeed( 3 ));
+                            s = box.data('speed');
+                        }
+                        if(l >= h && s >= 0 ){
+                            box.scrollTop(0);
+                        }else if( l <= 0 && s <= 0){
+                            box.scrollTop( h );
+                        }else{
+                            box.scrollTop(l + s );
+                        }
+						
+                    }
+					
+                }
+                
+                var scrolling = setInterval(autoScroll, box.data('delay'));
+                
+                $(window).on( 'resize', function(){
+                    
+                    var ul=box.find("ul");
+                    var li =ul.find("li");
+                    li.height( ul.outerHeight() / box.data('inview') );
+                    li.width( ul.outerWidth() );
+                    var h = li.size()* li.outerHeight();
+                    
+                });
+                
+            });
+            
+        }
+        
+    });
+	
+	
+
+    
+});
+	
+	 
+	
+   /*
+                box.on('mouseenter touchstart', function(e) { 
+                    e.preventDefault();
+                    e.stopPropagation(); 
+		              s = 0;
+                    box.data('touching', true); 
+                });
+				
+				box.on('mouseleave touchend touchleave mouseup', function(e) {
+                    e.preventDefault();
+                    s = box.data('speed');
+                   	box.data('touching', false); 
+                });
+				box.on('mousedown touchstart', function (event) {
+                    $(this)
+                    //.data('touching', true) 
+                    .data('down', true)
+                    .data('y', event.clientY)
+                    .data('scrollTop', $(this).scrollTop() )
+                    .addClass("dragging");
+					event.preventDefault();
+                    return false;
+                }).on( 'mouseup touchend', function (event) {
+					
+                    $(this)
+                    //.data('touching', false)
+                    .data('down', false)
+                    .removeClass("dragging");  
+					
+					event.preventDefault();
+                }).on('mousemove mouseout touchleave touchmove', function (event) {
+					event.preventDefault();
+                    if( $(this).data('down') == true) {
+                        //$(this).scrollTop( $(this).data('scrollTop') + $(this).data('y') - event.clientY );
+                        box.data('speed', ( $(this).data('y') - event.clientY ) / 30 );
+                    }
+					
+					event.preventDefault();
+                }).on( 'mousewheel', function (event, delta) {
+		          //$(this).scrollTop( $(this).scrollTop() - (delta * 30) );
+                });
+				
+				
+				*/
+				
+                /* box.on('click', function(){
+                if( box.data('touching') == false ){
+                box.data('touching, true); 
+                }else{
+                box.data('touching, false);
+                }
+                });*/
+	
+	
+
+</script> 
+
+
+</body></html>

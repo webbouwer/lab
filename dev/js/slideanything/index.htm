@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<!--
+	SOURCES 2011-11-03 10:13 pm
+	-------------------------------------------------------------------------------
+	HTML5 Semantics 
+	- http://www.netsetters.nl/2011/07/semantisch-web-html5-semantische-elementen/
+	CSS3 Queries 
+	- http://webdesignerwall.com/tutorials/css3-media-queries
+	- http://webdesignerwall.com/tutorials/responsive-design-with-css3-media-queries
+	- http://www.vanseodesign.com/css/media-queries/
+	Screen sizes 
+	- http://gameclosure.com/2011/04/04/solving-the-screen-size-problem-with-html5/
+-->
+
+<html class="no-js">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>HTML5/CSS3 crossbrowser setup</title>
+    
+    <!-- 	Original screen width 
+            (i.e. iphone 3 pretends to have a 960 screen width and scales the site image to the viewers landscape or portrait) 
+            .. could use minimum-scale=1.0, maximum-scale=1.0 .. to prevent zoom add ', user-scalable=no '
+    -->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    
+    <!-- 	CSS element defaults with normalizer.css -->
+    <link href="css/normalize.css" type="text/css" rel="stylesheet" />
+    
+    <!-- 	HTML5/javascript element default with modernizr.js -->
+    <script type="text/javascript" language="javascript" src="js/modernizr.custom.97941.js"></script>
+    <!-- older IE versions: declare css3 queries and html5 tags through js -->
+        <!--[if lt IE 9]> 
+        <script src="js/html5.js"></script>
+        <script src="js/cssmediaqueries.js"></script>
+        <![endif]-->
+     
+    <!-- 	Default CSS stylesheet -->
+    <link href="css/basic.css" type="text/css" rel="stylesheet" />
+    
+    <!-- javascript enabled interface stylesheet(s) -->
+    <link href="css/extended.css" type="text/css" rel="stylesheet" />
+    
+	<!-- 1) big - min width 960px -->
+    <link rel="stylesheet" media="screen and (min-width: 961px)" href="big.css" />
+    
+	<!-- 2) big/medium  landscape - min width 480px -->
+    <link rel="stylesheet" media="screen and (min-width: 480px) and (max-width: 960px)" href="medium.css" />
+    
+	<!-- 3) medium/small  portrait - min width 320px -->
+    <link rel="stylesheet" media="screen and (min-width: 320px) and (max-width: 479px)" href="small.css" />
+    
+	<!-- 2) big/medium   portrait - min width 480px -->
+    <link rel="stylesheet" media="screen and (min-width: 480px) and (max-width: 960px) and (orientation:portrait)" href="medium_portrait.css" />
+     
+    <!-- 3) medium/small  landscape - min width 320px -->
+    <link rel="stylesheet" media="screen and (min-width: 320px) and (max-width: 479px) and (orientation:landscape)" href="small_landscape.css" />
+    
+    <!-- 4) small - max width 319px -->
+    <link rel="stylesheet" media="screen and (max-width: 319px)" href="tiny.css" />
+      
+	<!-- jquery minimal -->
+	<script type="text/javascript" language="javascript" src="js/jquery.min.js"></script>
+
+	<!-- jquery Anything Slider | http://css-tricks.com/examples/AnythingSlider/ | https://github.com/ProLoser/AnythingSlider/wiki/Setup -->
+	<link rel="stylesheet" href="css/anythingslider.css">
+	<script type="text/javascript" language="javascript" src="js/jquery.anythingslider.min.js"></script>
+    
+    <!-- Anything Slider optional plugins -->
+ 	<script src="js/jquery.easing.1.2.js"></script>
+    
+    <!-- Anything Slider optional FX extension -->
+ 	<script type="text/javascript" language="javascript" src="js/jquery.anythingslider.fx.min.js"></script>
+    
+    <!-- AnythingSlider initialization -->
+	<script type="text/javascript" language="javascript">
+	if ( window.jQuery ) { // check jquery availabillity
+				
+		// DOM Ready
+		$(function(){
+			
+				/* Anything Slider Innit */
+				$('#slider').anythingSlider({
+					
+					theme: 'fullscreen', // name of this setting/theme
+					// resizeContents: false, // makes variable box height 
+					expand: true, // strech to screensize
+					
+					//width               : null,      // Override the default CSS width
+				  	//height              : null,      // Override the default CSS height
+				  	//resizeContents      : true,      // If true, solitary images/objects in the panel will expand to fit the viewport
+				
+				  	// Navigation
+				  	startPanel          : 1,         // This sets the initial panel
+				  	hashTags            : false,      // Should links change the hashtag in the URL? - see navigation formatter
+				  	buildArrows         : false,      // If true, builds the forwards and backwards buttons
+				  	buildNavigation     : true,      // If true, buildsa list of anchor links to link to each panel
+				  	buildStartStop		: true,
+					
+				  	forwardText         : "&raquo;", // Link text used to move the slider forward (hidden by CSS, replaced with arrow image)
+				  	backText            : "&laquo;", // Link text used to move the slider back (hidden by CSS, replace with arrow image)
+				
+				  	// Slideshow options
+				  	autoPlay            : true,      // This turns off the entire slideshow FUNCTIONALY, not just if it starts running or not
+				  	startStopped        : false,     // If autoPlay is on, this can force it to start stopped
+				  	pauseOnHover        : false,      // If true & the slideshow is active, the slideshow will pause on hover
+				  	resumeOnVideoEnd    : true,      // If true & the slideshow is active & a youtube video is playing, it will pause the autoplay until the video has completed
+				  	stopAtEnd           : false,     // If true & the slideshow is active, the slideshow will stop on the last page
+				  	playRtl             : false,     // If true, the slideshow will move right-to-left
+				  	startText           : "Start",   // Start button text
+				  	stopText            : "Stop",    // Stop button text
+				  	delay               : 4800,      // How long between slideshow transitions in AutoPlay mode (in milliseconds)
+				  	animationTime       : 800,       // How long the slideshow transition takes (in milliseconds)
+				  	easing              : "swing",    // Anything other than "linear" or "swing" requires the easing plugin
+					
+					
+        			// set this delay to fade out the current slide before animating
+        			// set here to match the fade time
+        			//delayBeforeAnimate : 500,			 	
+					
+					onSlideComplete : function(slider){ // update the hash AFTER the slide is in view (so we can animate)
+						window.location.hash = '#' + slider.$currentPage[0].id;
+						$('#current').html(window.location.hash); // get current
+					},
+					navigationFormatter : function(i, panel){
+					return ['Title test 1', 'Title 2', 'Option 3', 'Title 4'][i - 1];
+					}
+					
+				})
+				.anythingSliderFx({
+				// base FX definitions
+				// '.selector' : [ 'effect(s)', 'size', 'time', 'easing' ]
+				// 'size', 'time' and 'easing' are optional parameters, but must be kept in order if added
+				'.textSlide h3'       : [ 'top fade', '200px', '600', 'easeOutExpo' ],
+				'.textSlide li'       : [ 'listLR', 'auto', '600', 'easeOutExpo' ],
+				/*
+				// target the entire panel and fade will take 500ms
+				// set opacity (value after the 'fade'),
+				// the value must be between 0 and 1
+				// (1 = 100% opacity and is the default)
+				'.panel' : [ 'fade', '', 500, 'easeInOutCirc' ]
+				*/
+				
+				// http://proloser.github.com/AnythingSlider/demos.html#&panel3-4
+				
+				});
+	   
+	   
+	   
+	   			/* Scroll Innit */
+				$(window).scroll(function(){
+					/* slider animation control */
+					if($(this).scrollTop() < 20) {
+						$('#slider').data('AnythingSlider').startStop(true);
+					}
+					if($(this).scrollTop() > 20) {
+						$('#slider').data('AnythingSlider').startStop(false);
+					}
+					
+					/* nav(sticky footer) placement */
+					var scrllhght = $('#subnavbar').height();
+					if($(this).scrollTop() > scrllhght) {
+						// A) 
+						$('#subnavbar').css({ position: "fixed", bottom: 0});
+						
+						/* B) calculated bottom (no  fixed position available)
+						$('#subnavbar').css({ display: "block", position: "fixed"}); //  'normal' css
+						$('#subnavbar').css('top', ( $(window).height() - scrllhght) + "px");
+						*/
+						// add fixed bar height to end (margin) of scrollable content (relative footer element)
+						$('#bottomcontent').css('margin-bottom', scrllhght + "px");
+						
+					}
+					if($(this).scrollTop() < scrllhght) {
+						// A) 
+						$('#subnavbar').css({ position: "relative" });
+						/* B) 
+						$('#subnavbar').css({ display: "none" });
+						*/
+						// restore normal bottom margin
+						$('#bottomcontent').css('padding-bottom', "0px");
+						
+					}
+				}); 
+		 
+		});
+	}
+    </script>
+
+    <!-- Older IE stylesheet, to reposition navigation arrows, added AFTER the theme stylesheet -->
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" href="css/anythingslider-ie.css" type="text/css" media="screen" />
+	<![endif]-->
+      
+</head>
+
+<body>
+
+
+	<!-- page main header -->
+    <header id="topcontent">
+    	
+        <div class="outermargin">
+            
+            <div class="innerpadding">
+                <!-- page top headers -->
+                <hgroup id="pageheader">                </hgroup>
+                
+                <!-- page top navigation -->  
+                <nav id="navbar"> 
+                    navigation bar on top                </nav>
+            </div>
+       </div> 
+          
+<!-- Simple AnythingSlider -->
+
+            <ul id="slider">
+        
+                <li id="webdesign" class="panel slide1">
+                	<div class="textSlide">
+                        <h3>JQuery</h3>
+                        <p>A great javascript library</p>
+                        <ul>
+                         <li>html and css controle</li>
+                         <li>Interface functionality</li>
+                        </ul>
+                	</div>
+                </li>
+        
+                <li id="interactief" class="panel slide2">
+                	<div class="textSlide">
+                        <h3>Modernizer</h3>
+                        <p>Make them browsers understand</p>
+                        <ul>
+                         <li>Use only available functionality</li>
+                         <li>Extend older browsers capabillities</li>
+                        </ul>
+                	</div>
+                </li>
+        
+                <li id="ontwerp" class="panel slide3">
+                	<div class="textSlide">
+                        <h3>HTML5 en CSS3</h3>
+                        <ul>
+                         <li>More and faster styling methodes</li>
+                         <li>HTML and Javascript as one</li>
+                        </ul>
+                	</div>
+                </li>
+        
+                <li id="template" class="panel slide4">
+                	<div class="textSlide">
+                        <h3>Anything Slider</h3>
+                        <ul>
+                         <li>A great JQuery extension</li>
+                         <li> Boundles adjustabillity</li>
+                        </ul>
+                	</div>
+                </li> 
+        
+            </ul>
+        
+            <!-- END AnythingSlider -->
+        
+    </header>
+    
+    <!-- page sub navigation -->  
+    <nav id="subnavbar"> 
+    	<div class="outermargin">
+        	<div class="innerpadding">
+    			extra nav bar should stick to bottom when scrolled beyond
+        	</div>
+    	</div>
+    </nav> 
+    
+   	<!-- page content -->
+    <section>
+    	
+    	<article>
+            <header>
+                <h1>This page is testing my layout definition pattern</h1>        
+            </header>
+          
+            
+            <div>
+            	<p>Text area </p>
+            </div>	
+        </article>
+        
+        <aside>
+        </aside>
+   	</section>
+    
+
+   	<!-- page footer -->
+	<footer id="bottomcontent" class="outermargin">
+    	<div class="innerpadding">
+            <aside>
+                Footer text for testing
+            </aside>
+		</div>   
+    </footer>
+</body>
+
+</html>

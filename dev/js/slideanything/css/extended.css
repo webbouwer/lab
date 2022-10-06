@@ -1,0 +1,23 @@
+/* CSS (incl. modernizer) */
+h1
+{
+background-color:#CC0000;
+color:#FFFFFF;
+}
+.js h1
+{
+background-color:#009900;
+color:#FFFFFF;
+}
+
+.no-js .js_on,
+.js .js_off,
+.no-js #slider
+{
+display:none;
+}
+.no-js .js_off,
+.js .js_on
+{
+display:inline;
+}

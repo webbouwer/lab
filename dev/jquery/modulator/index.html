@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<title>Webdesign Templates with HTML5, CSS3 and Javascript</title>
+
+<style>
+body
+{
+  background-image:url('https://webbouwer.org/bg.jpg');
+  background-position:center;
+}
+.frame-container {
+  position:relative;
+  background-color: #383838;
+  padding: 8px 8px 40px;
+  font-size: 25px;
+  text-align: center;
+  transition: all 0.2s;
+  margin: 8vh auto;
+  width: 90%;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+.frame-container,
+.frame-container.size_0
+{
+  width: 96%;
+  max-width:968px;
+  height: 564px;
+}
+.frame-container.size_1
+{
+  width: 540px;
+  max-width: 96%;
+  height:90vh;
+  margin-top:15px;
+  margin-bottom:15px;
+}
+.frame-container.size_2
+{
+  width: 320px;
+  height: 540px;
+}
+.frame-container iframe
+{
+  width: 100%;
+  height: 100%;
+  background-color:#ffffff;
+  border:none;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.homebutton
+{
+  border: 1px solid #171717;
+  border-top: 1px solid #272727;
+  width: 48px;
+  height: 16px;
+  margin: 6px auto;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
+}
+.sizebutton
+{
+  position:absolute;
+  border: 1px solid #171717;
+  border-top: 1px solid #272727;
+  width: 12px;
+  height: 10px;
+  bottom: 10px;
+  left: 4%;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  z-index:800;
+}
+.resizebox
+{
+  position:absolute;
+  border: 1px solid #171717;
+  border-top: 1px solid #272727;
+  width: 16px;
+  height: 16px;
+  bottom: 2px;
+  left: 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.menubutton
+{
+  position:absolute;
+  border-top: 4px solid #171717;
+  border-bottom: 4px solid #171717;
+  width: 22px;
+  height: 12px;
+  bottom: 10px;
+  right: 6%;
+  z-index:800;
+}
+.menubox
+{
+  position:absolute;
+  border-bottom: 4px solid #171717;
+  width: 100%;
+  height: 1px;
+  bottom: 4px;
+  left: 0px;
+}
+
+
+
+#mobimenu
+{
+  position:absolute;
+  z-index:999;
+  width:calc(100% - 16px);
+  bottom:40px;
+  background-color:#ffffff !important;
+  display:none;
+  font-family: "Helvetica", Arial, Verdana;
+  transition: all 0.2s;
+}
+#mobimenu ul
+{
+  padding:4px 0px;
+  width:96%;
+  margin:0px auto;
+}
+
+#mobimenu ul li
+{
+  list-style: none;
+  padding:2px 0px;
+  margin:0px;
+  width:100%;
+  text-align:center;
+  font-size:0.6em;
+}
+#mobimenu ul li a,
+#mobimenu input.searchbox
+{
+  display:block;
+  text-decoration:none;
+  font-weight:600;
+  padding:4px;
+  color:#494949;
+}
+#mobimenu ul li a:hover
+{
+  color:#171717;
+  background-color:#efefef;
+}
+
+#mobimenu.open
+{
+  display:block;
+}
+.closemenu
+{
+  font-size:0.7em;
+  position:absolute;
+  top:4px;
+  right:3%;
+  color:#494949;
+}
+.closemenu:hover
+{
+  color:#171717;
+}
+
+</style>
+		
+</head>
+
+<body>
+<iframe name="mobiframe" width="100%" height="300" src="https://webdesigndenhaag.net" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+<script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+jQuery(function($){
+
+	function buildMobileFrame(){
+		$("iframe").wrap("<div class='frame-container'/>");
+		$(".frame-container").append("<div class='homebutton' />");
+		$(".frame-container").append("<div class='sizebutton'><div class='resizebox' /></div>");
+		$(".frame-container").append("<div class='menubutton'><div class='menubox' /></div>");
+	}
+
+  function setFrameMenu(){
+  
+  	var nav = $("<div id='mobimenu'></div>");
+  	var menu = $("<ul></ul>");
+    nav.append('<div class="closemenu">x</div>');
+  	var urls = [
+    
+    { 'title' : 'Webdesign', 'url' : 'https://webdesigndenhaag.net' },
+    { 'title' : 'Oddsized', 'url' : 'https://oddsized.com' }, 
+    { 'title' : 'Webbouwer', 'url' : 'https://webbouwer.org/blog'}
+    ];
+    
+    
+    // camera: jsfiddle.net/webbouwer/dm5xst23/embedded/result/dark
+  
+    urls.forEach(function( v ){
+      menu.append('<li><a href="'+v.url+'" target="mobiframe">'+v.title+'</a></li>');
+    });
+    nav.append(menu);
+    $(".frame-container").append(nav);
+    
+    // search / goto
+    // nav.append("<input class='searchbox' name='searchbox' type='text' placeholder='www address' />");
+    // var domain = jsonurl.replace('http://', '').replace('https://', '').split(/[/?#]/)[0];
+  
+		
+  
+ }
+ 
+ 
+	var framesize = 2;
+	var mobilewidth = 640;
+  
+  
+	function initFrameSize(){
+    $(".frame-container").removeClass( "size_1 size_2 size_0" );
+    $(".frame-container").addClass( "size_2" );
+  }
+ 
+	function isTouch(){
+	   var el = document.createElement('div');
+	   el.setAttribute('ongesturestart', 'return;');
+	   if(typeof el.ongesturestart == "function"){
+     	el.remove();
+		  return true;
+	   }else{
+     	el.remove();
+		  return false
+	   }
+	}
+  
+  $(document).ready(function() {
+  
+ 		buildMobileFrame();
+    setFrameMenu();
+  
+    if( isTouch() || $(window).width() < mobilewidth){
+      $(".frame-container").addClass("mobile");
+      framesize = 2;
+    }
+    
+  	$("body").on("click", ".menubutton", function(e){
+    	$("#mobimenu").toggleClass('open');
+    });
+    
+    $("body").on("click", ".closemenu", function(e){
+    	$("#mobimenu").removeClass('open');
+    });
+    
+    $("body").on("click", ".sizebutton", function(e){
+			
+      /*if(	!$(e.target).is('.framebutton') 
+      		&& !$(e.target).is('.#mobimenu *')
+      		&& !$(e.target).is('.closemenu'))  {*/
+      
+      framesize++;
+
+      if( $(window).width() > mobilewidth ){
+
+        if(framesize == 3){
+        	framesize = 0;
+        }
+
+        $(".frame-container").removeClass( "size_1 size_2 size_0" );
+        $(".frame-container").addClass( "size_" + framesize);
+
+      }else{
+
+        if(framesize == 0 || framesize == 3){
+          framesize = 1;
+        }
+
+        $(".frame-container").removeClass( "size_1 size_2 size_0" );
+        $(".frame-container").addClass( "size_" + framesize );
+
+      }
+
+
+      //console.log(framesize);
+    });
+
+    initFrameSize();
+    console.log('Ready!');
+    
+  });
+  
+    
+  $(window).resize(function(){
+  
+    if( $(window).width() < mobilewidth ){
+			$(".frame-container").removeClass( "size_1 size_2 size_0" );
+      $(".frame-container").addClass( "size_2");
+    }
+	  
+    if(isTouch()){
+    	$(".frame-container").addClass("mobile");
+    }else{
+    	$(".frame-container").removeClass("mobile");
+    }	  
+
+	});
+  
+});
+
+</script>
+    </body>
+
+</html>

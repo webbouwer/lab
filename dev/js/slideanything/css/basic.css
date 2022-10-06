@@ -1,0 +1,108 @@
+/* core defaults (after normalize.js) */
+html,
+body
+{
+height:100%;
+width:100%;
+}
+
+
+h1,h2,h3
+{
+margin:0;
+padding:2% 3%;
+}
+p,ul
+{
+margin:0;
+padding:1% 3%;
+}
+
+.outermargin
+{
+width:100%;
+margin:0 auto; 
+}
+
+header#topcontent
+{
+width:100%;
+height:100%;
+}
+
+header#topcontent div.outermargin
+{
+position:absolute;/* fixed */
+top:0px;
+z-index:99;
+}
+
+header#topcontent div.outermargin div.innerpadding
+{
+background-color: #006600;
+color:#FFFFFF;
+padding:1% 3%;
+}
+
+nav#subnavbar
+{
+background-color: #2F2F2F;
+color:#FFFFFF;
+width:100%;
+}
+nav#subnavbar div.outermargin
+{
+min-height:180px;
+}
+nav#subnavbar div.outermargin div.innerpadding
+{
+padding:1% 3%;
+}
+
+footer#bottomcontent
+{
+width:100%;
+background-color: #006600;
+color:#FFFFFF;
+}
+footer#bottomcontent div.innerpadding
+{
+padding:1% 3%;
+}
+
+
+
+
+/*	query pattern example
+
+ 	- 4 style types
+		- big landscape
+		- big/medium (landscape/portrait)
+		- medium/small (landscape/portrait) 
+		- small portrait
+	- from big to small
+	- smaller screens checked on orientation
+*/
+
+@media screen and (min-width: 961px) {
+	/* 1) big - static width 960px - center */
+}
+@media screen and (min-width: 480px) and (max-width: 960px) {
+	/* 2) big/medium (landscape) */
+}
+@media screen and (min-width: 320px) and (max-width: 479px) {
+	/* 3) medium/small (portrait) */
+
+}
+@media screen and (min-width: 480px) and (max-width: 960px) and (orientation:portrait){
+	/* 2) big/medium (portrait) */
+
+}
+@media screen and (min-width: 320px) and (max-width: 479px) and (orientation:landscape){
+	/* 3) medium/small (landscape) */ 
+
+}
+@media screen and (max-width: 319px) {
+	/* 4) small */
+
+}

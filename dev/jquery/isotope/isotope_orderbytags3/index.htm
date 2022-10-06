@@ -1,0 +1,499 @@
+<!DOCTYPE HTML> 
+    <html lang="en-us" dir="ltr">
+        <head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <link rel="shortcut icon" href="images/favicon.ico" >
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"> 
+        <meta http-equiv="content-language" content="en" />
+        <meta name="description" content="html setup page" />
+        <meta name="keywords" content="html,html5,css,css3,setup,blanc" />
+        <meta name="robots" content="all" />
+        <meta name="robots" content="index, nofollow" />
+        <meta name="author" content="Webdesign Den Haag" />
+        <meta name="copyright" content="Webdesign Den Haag" />
+		<title>Webdesign Den Haag</title>
+        <!-- older IE versions: declare css3 queries and html5 tags through js --> 
+		<!--[if lt IE 9]><script src="js/html5.js"></script><script src="js/cssmediaqueries.js"></script><![endif]-->
+		
+        <link href="css/global.css" type="text/css" rel="stylesheet" />
+		<!-- jquery libs (http://code.jquery.com/jquery-1.11.2.min.js) -->
+		<script src="js/jquery-1.11.2-min.js" type="text/javascript" language="javascript"></script>
+		<script src="js/isotope.js" type="text/javascript" language="javascript"></script>
+		<script src="js/imagesloaded.js" type="text/javascript" language="javascript"></script>
+	
+<script type="text/javascript" language="javascript"> 
+
+/*
+	http://jsfiddle.net/QJABf/
+	http://jsfiddle.net/desandro/DJVX2/2/
+*/		
+$(function() {
+
+	$(document).ready(function(){
+	
+		// taglib = [] all tags
+		// catlib = [[]] all (sub)categories
+		
+		// basefilter = [];
+		// usefilter = [];
+		
+		// 
+	});	
+	
+	$(window).load(function() {
+	
+  
+	
+		var allTags = ['tag1','tag2','tag3','tag4','tag5'];
+		var basefilter = [];//['tag2','tag3'];
+		
+		var filter = basefilter;
+		if(window.location.hash) {
+			var hashvars = getHashUrlVars(); 
+			if( hashvars.tags  ){
+				filter = hashvars.tags.split(',');
+			}
+		}
+		setNewHash( filter.join() );
+		
+		var filterClass = '*';
+		if( filter.length > 0 ){
+			filterClass = '.'+filter.join(',.');
+		}
+			
+		
+		buildTagListMenu( allTags );
+		
+		activeFilterMenu( filter );
+		
+		var $container = $('#itemcontainer'), 
+		$colWidth = $container.width()/7,
+		$currCat = '';
+			
+		// init isotope 
+		$container.isotope({
+		
+			itemSelector: '.item',
+		  	layoutMode: 'masonry',
+			animationEngine: 'best-available',
+			transitionDuration: '0.8s',
+		  	masonry: {
+			//isFitWidth: true,
+			//columnWidth: '.base',
+			gutter: 0,
+		  	},
+		  	getSortData: {
+		  		byCategory: function (elem) { // sort randomly
+			  			return $(elem).data('category') === $currCat ? 0 : 1;
+			  	},
+				byTagWeight: '.matchweight parseInt',
+			},
+			sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], 
+			sortAscending: {
+					  //byCategory: true, // name ascendingly
+					  byTagWeight: false, // weight descendingly 
+			},
+		});
+	
+  		//$container.isotope({ filter: filterClass }).isotope('updateSortData').isotope( 'layout' );
+	      	
+		setColumnWidth(); // ! important to get the column width for first layout
+		
+		
+		
+		
+		// on tagbutton click (tag) 
+		
+		$('body').on( 'click', '#tag-filters .tagbutton', function(event){
+		
+			if (event.preventDefault) {
+				event.preventDefault();
+			} else {
+				event.returnValue = false;
+			}
+			
+    		var $this = $(this);
+			var tag  = $this.attr('data-tag');
+			$this.toggleClass('selected');
+			
+			filter = [];
+			$('#tag-filters .tagbutton.selected').each( function( index ){
+				filter[index] = $(this).data('tag');
+			});
+			
+			activeFilterMenu( filter );
+			
+			setNewHash( filter.join() );
+        	
+			filterClass = '*';
+			if( filter.length > 0 ){
+				filterClass = '.'+filter.join(',.');
+			}
+			//$container.isotope({ filter: filterClass }).isotope('updateSortData').isotope( 'layout' );
+	  		$container
+			.isotope({ filter: filterClass })
+			.isotope('updateSortData')
+	        .isotope('reloadItems')
+	        .isotope({ 
+				sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], 
+				sortAscending: {
+					  //byCategory: true, // name ascendingly
+					  byTagWeight: false, // weight descendingly 
+				},
+			}); // 'original-order'
+			
+			
+			
+	        $('html, body').animate({scrollTop:0}, 400);
+			
+  		});	
+		
+		
+		// on active filter click (tag) 
+		$('body').on( 'click', '#active-filters .tagbutton', function(event){
+			if (event.preventDefault) {
+				event.preventDefault();
+			} else {
+				event.returnValue = false;
+			}
+			$('#tag-filters .'+ $(this).data('tag') ).trigger('click');
+		});
+		
+		
+		
+		
+		
+		// on container click (item) 
+		$container.on('click', '.item', function(event){
+		
+			if (event.preventDefault) {
+				event.preventDefault();
+			} else {
+				event.returnValue = false;
+			}
+			
+    		var $this = $(this);
+			
+    		$currCat = $this.attr('data-category'); //alert($this.find('.itemcontent').text());
+			
+			filter = $this.attr('data-tags').split(',');
+			
+			setNewHash( filter.join() );
+			
+			activeFilterMenu( filter );
+			
+			$this.addClass('active');
+			 
+	      	filterClass = '*';
+			if( filter.length > 0 ){
+				filterClass = '.'+filter.join(',.');
+			}
+			
+	  		$container
+	  	  	//.isotope({ masonry: { columnWidth: $colWidth } })
+	        .prepend($this)
+			.isotope({ filter: filterClass })
+			.isotope('updateSortData')
+	        .isotope('reloadItems')
+	        .isotope({ 
+				sortBy: [ 'byCategory', 'byTagWeight' ], 
+				sortAscending: {
+				  byCategory: true, // name ascendingly
+				  byTagWeight: false, // weight descendingly 
+				}
+			});  // 'original-order'
+			
+			setColumnWidth(); 
+			
+			
+	        $('html, body').animate({scrollTop:0}, 400);
+ 
+  		});
+	
+	
+		// on reset 
+		$('#reset-button').on('click', '', function(event){
+		
+			if (event.preventDefault) {
+				event.preventDefault();
+			} else {
+				event.returnValue = false;
+			}
+			
+			$('.item').removeClass('active');
+			var $base =  $('.base');
+			
+			filter = basefilter;
+			
+			setNewHash( filter.join() );
+			
+			activeFilterMenu( filter );
+			
+			filterClass = '*';
+			if( filter.length > 0 ){
+				filterClass = '.'+filter.join(',.');
+			}
+			
+			$container
+			.prepend($base)
+			.isotope({ filter: filterClass })
+			.isotope('updateSortData')
+	        .isotope('reloadItems')
+	        .isotope({ 
+				sortBy: [ 'byCategory', 'byTagWeight' ], 
+				sortAscending: {
+				  byCategory: true, // name ascendingly
+				  byTagWeight: false, // weight descendingly 
+				}
+			});  // 'original-order'
+			
+			setColumnWidth(); 		
+				  
+			$('html, body').animate({scrollTop:0}, 400);
+			
+		});
+		
+		
+		// add weight to tag relation
+		function newTagWeight( obj, filter ){
+		
+			var tags = $(obj).data('tags').split(',');	
+			var newSize = 'size-s';
+			$(obj).removeClass('size-l size-m size-s');
+			
+			if( tags.length > 0  && filter.length > 0){
+				var mc = 0;
+				
+				
+					for(i=0;i<tags.length;i++){
+						//if( basefilter[tags[i]] ){
+						if( $.inArray( tags[i], filter ) > -1 ){
+							mc++;
+						}
+					}
+					$(obj).find('.matchweight').text(mc);
+				
+				
+					var percent = 100 / filter.length * mc;
+					
+					if( percent > 85 ){
+						newSize = 'size-l';
+					}else if( percent > 55 ){
+						newSize = 'size-m';
+					}
+				
+				//console.log('match:' + newSize );
+			}else{// restore weight to tag count vs empty filter
+				$(obj).find('.matchweight').text(tags.length);
+			}
+			
+			$(obj).addClass(newSize);
+			
+		}
+		
+		// add tag menu
+		function buildTagListMenu( tags ){
+			var tagmenu = '<div id="tag-filters">';
+			for(i=0;i<tags.length;i++){
+				tagmenu += '<a href="#" class="tagbutton '+tags[i]+'" data-tag="'+tags[i]+'">'+tags[i]+'</a>';
+			}
+			tagmenu += '</div>';
+			$('body').prepend(tagmenu); 
+		}
+		
+		// active tag menu
+		function activeFilterMenu( filter ){
+			
+			if( $('#active-filters').length < 1 ){
+				$('body').prepend('<div id="active-filters"></div>');
+			}
+				
+			$('#tag-filters .tagbutton').each( function(){
+				$(this).removeClass('selected');
+				if( $.inArray( $(this).data('tag') , filter ) > -1 ){ 
+					$(this).addClass('selected');
+				}
+			});
+			$('#active-filters').html('');
+			$('#tag-filters .tagbutton.selected').each( function(){
+				$(this).clone().appendTo('#active-filters');
+			});
+			$('.item').each( function(){
+				$(this).removeClass('active');
+				newTagWeight( this, filter );
+			});
+			
+			
+			console.log('new filter:' + filter.join() );
+			//for(i=0;i<filter.length;i++){
+				//$('#active-filters').append('<a href="#" class="tagactive '+filter[i]+'" data-tag="'+filter[i]+'">'+filter[i]+'</a>');
+			//}
+		}
+		
+		
+		function getHashUrlVars(){
+			var vars = [], hash;
+			var hashes = window.location.href.slice(window.location.href.indexOf('#') + 1).split('&');
+			for(var i = 0; i < hashes.length; i++)
+			{
+				hash = hashes[i].split('=');
+				vars.push(hash[0]);
+				vars[hash[0]] = hash[1];
+			}
+			return vars;
+		}
+		
+		
+		function setNewHash( filter ){
+			var newhash = '#';
+            if( filter != ''){
+            	newhash += 'tags='+filter; 
+            }
+            if(history.pushState) {
+            	history.pushState(null, null, newhash );
+            }else{
+                location.hash = newhash;
+            }
+		}
+		
+		
+		
+		// on resize 
+		var resizeId;
+		
+		$(window).resize(function() {
+				clearTimeout(resizeId);
+				resizeId = setTimeout(doneResizing, 20);
+		});
+	 
+		function doneResizing(){
+			setColumnWidth(); 
+		}
+	 
+		function setColumnWidth(){
+		
+			var w = $container.width();
+			if(w > 640) { 
+			$colWidth = w/7; 
+			}else{ 
+			$colWidth = w/3; 
+			}
+			
+			
+			$container.isotope({ masonry: { columnWidth: $colWidth } }).isotope( 'layout' );
+		}
+		
+	
+	});
+	
+
+	
+});
+	
+</script>
+</head>
+
+<body> 
+	<div id="pagecontainer">
+                <div id="reset-button" class="button">reset</div>
+		<div id="contentcontainer">
+			<div id="itemcontainer">
+				<div class="item base size-s tag1 tag2 tag3 tag4 tag5" data-category="info" data-tags="tag1,tag2,tag3,tag4,tag5">
+                	<div class="matchweight">5</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/1696337-200.png" alt="info 1"/></div> 
+					<div class="main">
+					support@webdesigndenhaag.net<br/>
+					</div></div>
+				</div>
+				<div class="item size-m tag1 tag2 tag3 tag4" data-category="info" data-tags="tag1,tag2,tag3,tag4">
+                	<div class="matchweight">4</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/417460-200.png" alt="info 2"/></div> 
+					<div class="main">
+					We love to make a special site for you: 
+                                        Embrace your clients with style and confidence!
+
+					</div></div>
+				</div>
+				<div class="item size-s tag1 tag2 tag3 tag5" data-category="info" data-tags="tag1,tag2,tag3,tag5">
+                	<div class="matchweight">4</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/247206-200.png" alt="info 3"/></div> 
+					<div class="main">info</div></div>
+				</div>
+				<div class="item size-s tag1 tag2 tag4 tag5" data-category="webdesign" data-tags="tag1,tag2,tag4,tag5">
+                	<div class="matchweight">4</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/1647733-200.png" alt="design 4"/></div> 
+					<div class="main">webdesign</div></div>
+				</div>
+				<div class="item size-l tag1 tag2 tag3" data-category="webdesign" data-tags="tag1,tag2,tag3">
+                	<div class="matchweight">3</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/940660-200.png" alt="design 5"/></div> 
+					<div class="main"><h3>Example text </h3>
+                    Three women are dressed like Baiana, a popular figure of Brazilian culture. Their dresses are made of plastic materials in bright green, red, blue and purple. Their skirts are made of brightly colored plastic buckets, which together with iron rings, forms a kind of crinoline. Around their bodies hang plastic necklaces; they also wear goggles and scarfs. This all results in a loud, eye-catching dress, that sounds like a brass band at a Brazilian carnaval; the bright colours and materials contrast sharply with the old, pastel tones of Prague’s inner city.
+<br /><br />
+At Wenceslas Square the women stop for a staged picture. Passersby seize the opportunity to take a selfie with the performers. The Baiana women gladly interrupt their performance to pose for photographs. The reality of being a tourist attraction wins over being an art project.
+<br /><br />skirts are made of brightly colored plastic buckets, which together with iron rings, forms a kind of crinoline. Around their bodies hang plastic necklaces; they also wear goggles and scarfs. This all results in a loud, eye-catching dress, that sounds like a brass band at a Brazilian carnaval; the bright colours and materials contrast sharply with the old, pastel tones of Prague’s inner city.
+<br /><br />
+At Wenceslas Square the women stop for a staged picture. Passersby seize the opportunity to take a selfie with the performers. The Baiana women gladly interrupt their performance to pose for photographs. The reality of being a tourist attraction wins over being an art project.
+<br /><br />skirts are made of brightly colored plastic buckets, which together with iron rings, forms a kind of crinoline. Around their bodies hang plastic necklaces; they also wear goggles and scarfs. This all results in a loud, eye-catching dress, that sounds like a brass band at a Brazilian carnaval; the bright colours and materials contrast sharply with the old, pastel tones of Prague’s inner city.
+<br /><br />
+At Wenceslas Square the women stop for a staged picture. Passersby seize the opportunity to take a selfie with the performers. The Baiana women gladly interrupt their performance to pose for photographs. The reality of being a tourist attraction wins over being an art project.
+
+                    </div></div>
+				</div>
+				<div class="item size-m tag3 tag4 tag5" data-category="webdevelopment" data-tags="tag3,tag4,tag5">
+                	<div class="matchweight">3</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/1679111-200.png" alt="development 6"/></div> 
+					<div class="main">webdevelopment</div></div>
+				</div>
+				<div class="item size-s tag2 tag3" data-category="info" data-tags="tag2,tag3">
+                	<div class="matchweight">2</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/193961-200.png" alt="info 7"/></div> 
+					<div class="main">info</div></div>
+				</div>
+				<div class="item size-m tag4 tag5" data-category="webdesign" data-tags="tag4,tag5">
+                	<div class="matchweight">2</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/995923-200.png" alt="design 8"/></div> 
+					<div class="main">webdesign</div></div>
+				</div>
+				
+				<div class="item size-s tag4 tag5" data-category="webdevelopment" data-tags="tag4,tag5">
+                	<div class="matchweight">2</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/247210-200.png" alt="webdevelopment 9"/></div> 
+					<div class="main">webdevelopment</div></div>
+				</div>
+				<div class="item size-s tag3 tag4 tag5" data-category="webdevelopment" data-tags="tag3,tag4,tag5">
+                	<div class="matchweight">3</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/1336059-200.png" alt="webdevelopment 10"/></div> 
+					<div class="main">webdevelopment</div></div>
+				</div>
+				<div class="item size-s tag1 tag2 tag3 tag4 tag5" data-category="info" data-tags="tag1,tag2,tag3,tag4,tag5">
+                	<div class="matchweight">5</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/19786-200.png" alt="info 11"/></div> 
+					<div class="main">info</div></div>
+				</div>
+				
+				<div class="item size-l tag5" data-category="design" data-tags="tag5">
+                	<div class="matchweight">1</div>
+					<div class="itemcontent">
+					<div class="intro"><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/38636-200.png" alt="design 12"/></div> 
+					<div class="main">design</div></div>
+				</div>
+        
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+</html>

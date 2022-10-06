@@ -1,0 +1,78 @@
+
+
+
+/* items */
+#itemcontainer
+{
+position:relative;
+width:100vw;
+min-height:100vw;
+}
+
+
+.item,
+.base,
+.size-s {
+  width: 14.29%;
+  min-height:150px;
+  /*background: red;*/
+  /*opacity:0.3;*/
+}
+.size-m  {
+  width: 28.57%;
+  min-height:360px;
+}
+.size-l {
+  width: 42.86%;
+  min-height:260px;
+}
+
+
+.itemcontent .main
+{
+display:none;
+}
+
+
+
+
+.item.active {
+  width: 57.1428%;
+  min-height:360px;
+
+  opacity:1;
+}
+
+.item.active .itemcontent .main
+{
+display:block;
+color:white;
+}
+.item.active .itemcontent .intro
+{
+width:auto;
+max-width:100%;
+}
+
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+   -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+          transition-property:         transform, opacity;
+}

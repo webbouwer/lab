@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>jQuery One Page setup</title>
+
+<!-- set original screen width (iphone) -->
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+<!-- include css -->
+<link rel="stylesheet" href="css/anythingslider.css">
+<link href="css/global.css" type="text/css" rel="stylesheet" />
+
+<!-- older IE versions: declare css3 queries and html5 tags through js -->
+<!--[if lt IE 9]> 
+	<script src="js/html5.js"></script>
+	<script src="js/cssmediaqueries.js"></script>
+<![endif]-->
+
+<script type='text/javascript' src='js/detect.js'></script>
+<script type='text/javascript' src='js/jquery.tools.min.js'></script><!-- // jQuery Tools v1.2.7 -->
+<script type='text/javascript' src='js/waypoints.js'></script><!-- // jQuery waypoints v 2.0.2 -->
+<script type='text/javascript' src='js/jquery.scrolling-parallax.js'></script><!-- // jQuery parrallax v 0.1.0 -->
+
+<script type="text/javascript" language="javascript" src="js/jquery.anythingslider.min.js"></script><!-- jquery Anything Slider | http://css-tricks.com/examples/AnythingSlider/ | https://github.com/ProLoser/AnythingSlider/wiki/Setup -->
+<script src="js/jquery.easing.1.2.js"></script><!-- Anything Slider optional plugins -->
+<script type="text/javascript" language="javascript" src="js/jquery.anythingslider.fx.min.js"></script><!-- Anything Slider optional FX extension -->
+<script type='text/javascript' src='js/global.js'></script>
+
+
+</head>
+<body>
+	<div id="page">
+    
+        <div id="home" class="page-section">
+        	<div class="page-section-content">
+            	
+            	<header>
+                    <div id="headerslides">
+                        
+                        <div id="topcontent" class="innerpadding">
+                            <!-- page top headers -->
+                            <hgroup id="pagetitle">
+                            	<h1>Webdesign Den Haag</h1>
+                                <h2>innovatieve interactie</h2>
+                            </hgroup>
+                            
+                            <!-- page top navigation 
+                            <nav id="navbar"> 
+                                navigation bar on top
+                            </nav>
+                            --> 
+                        </div>
+                      
+                        <!-- Simple AnythingSlider -->
+            
+                        <ul id="slider">
+                    
+                            <li id="webdesign" class="panel slide1">
+                                <div class="slidebox">
+                                    <h3>Innovatieve interactie</h3>
+                                    <p>Webdesign en ontwikkeling</p>
+                                    <div class="slidecolumn sbox1">Voor groot en klein - Vormgeving en interactief ontwerp op maat </div>
+                                    <div class="slidecolumn sbox3">Op avontuur - samenwerken in ontwikkeling</div>
+                                    <div class="slidecolumn sbox2">De volgende stap - onderzoek, optimalisatie en onderhoud</div>
+                                    
+                                </div>
+                            </li>
+                    
+                            <li id="interactief" class="panel slide2">
+                                <div class="slidebox">
+                                    <h3>Interactief</h3>
+                                    <p>Interactie design</p>
+                                    <ul>
+                                     <li>Communicatief</li>
+                                     <li>Gebruiksvriendelijk</li>
+                                     <li>Vindbaar</li>
+                                    </ul>
+                                </div>
+                            </li>
+                    
+                            <li id="ontwerp" class="panel slide3">
+                                <div class="slidebox">
+                                    <h3>Ontwerp</h3>
+                                    <p>Ontwerp en realisatie</p>
+                                    <ul>
+                                     <li>Opvallend</li>
+                                     <li>Doeltreffend</li>
+                                     <li>Stijlvol</li>
+                                    </ul>
+                                </div>
+                            </li>
+                    
+                            <li id="ontwikkeling" class="panel slide4">
+                                <div class="slidebox">
+                                    <h3>Ontwikkeling</h3>
+                                    <p>Web ontwikkeling</p>
+                                    <ul>
+                                     <li>Optimalisatie en onderhoud</li>
+                                     <li>Ontwikkeling met standaard code: HTML5/CSS3, Javascript, PHP/MYSQL</li>
+                                     <li></li>
+                                    </ul>
+                                </div>
+                            </li> 
+                    
+                        </ul>
+                    
+                        <!-- END AnythingSlider -->
+                    </div>
+                </header>
+                
+        	</div>
+        </div>
+        <div id="pagenav-placer">
+            <div id="pagenav" class="topnav">
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#info">Info</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#network">Network</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div id="info" class="page-section">
+          	<div id="info_object1">Info object</div>
+        	<div class="page-section-content">
+                <section>
+                    <div class="content-padding">
+                    <h2>Info</h2>
+                    
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div id="portfolio" class="page-section">
+        	<div class="page-section-content">
+                <section>
+                    <div class="content-padding">
+                    <h2>Portfolio</h2>
+                    </div>
+                    <div id="portfolioslides" class="scrollable">
+                        
+                        <div class="prev">prev</div>
+                        <div class="items">
+                            <div class="item">
+                            	Subpage 1    
+                            </div>
+                            <div class="item">
+                                Subpage 2
+                            </div>
+                            <div class="item">
+                            	Subpage 3 
+                            </div>
+                            <div class="item">
+                            	Subpage 4
+                            </div>
+                            <div class="item">
+                            	Subpage 5 
+                            </div> 
+                     	</div>
+                        <div class="next">next</div>
+                        <div class="navibox">
+                        	<div class="navi"></div>
+                        </div>
+                	</div>
+                </section>
+            </div>
+        </div>
+        <div id="services" class="page-section">
+          	<div id="services_object1">Service object</div>
+        	<div class="page-section-content">
+                <section>
+                    <div class="content-padding">
+                    	<h2>Services</h2>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div id="network" class="page-section">
+        	<div class="page-section-content">
+                <footer>
+                    <div class="content-padding">
+                    	<h2>Network</h2>
+                    </div>
+                </footer>
+            </div>
+        </div>
+	</div>
+    <div id="gototop">top</div>
+    <div id="loadscreen">
+    	<div class="infobox">Loading</div>
+    </div>
+</body>
+</html>

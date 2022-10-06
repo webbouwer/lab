@@ -1,0 +1,274 @@
+<!DOCTYPE HTML> 
+    <html lang="en-us" dir="ltr">
+        <head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+        <!-- Tell IE8 or 9 to use latest renderingengine version or use Chroom frame engine -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        
+        <!-- Use charset UTF-8 -->
+                
+        <link rel="shortcut icon" href="images/favicon.ico" >
+        <!-- with animation <link rel="icon" type="image/gif" href="images/anifavicon.gif" > -->
+        
+        <!-- Device original scaling -->
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"> 
+        
+        <!-- Document variables -->
+        <meta http-equiv="content-language" content="en" />
+        <meta name="description" content="html setup page" />
+        <meta name="keywords" content="html,html5,css,css3,setup,blanc" />
+        <meta name="robots" content="all" />
+        <meta name="robots" content="index, nofollow" />
+        <meta name="author" content="Webdesign Den Haag" />
+        <meta name="copyright" content="Webdesign Den Haag" />
+
+	<title>Webdesign Den Haag</title>
+	
+	<!-- older IE versions: declare css3 queries and html5 tags through js --> 
+	<!--[if lt IE 9]> 
+	<script src="js/html5.js"></script>
+	<script src="js/cssmediaqueries.js"></script>
+	<![endif]-->
+	<link href="css/global.css" type="text/css" rel="stylesheet" />
+	<!-- jquery libs (http://code.jquery.com/jquery-1.11.2.min.js) -->
+	<script src="js/jquery-1.11.2-min.js" type="text/javascript" language="javascript"></script>
+	<script src="js/isotope.js" type="text/javascript" language="javascript"></script>
+	<script src="js/imagesloaded.js" type="text/javascript" language="javascript"></script>
+	
+	<!-- functions & plugins -->
+	<script type="text/javascript" language="javascript"> 
+	$(function() {
+	
+	$(document).ready(function(){
+	
+	var $container = $('#itemcontainer'),
+	$colWidth = $container.width()/7,
+	$currCat = '';
+	
+	/*
+	http://jsfiddle.net/QJABf/
+	http://jsfiddle.net/desandro/DJVX2/2/
+	*/
+	
+	$container.isotope({
+	  // options
+	  itemSelector: '.item',
+	  layoutMode: 'masonry',
+	  masonry: {
+  		//columnWidth: '.base',
+  		gutter: 0
+  		//isFitWidth: true
+	  },
+	  getSortData: {
+	  byCategory: function (elem) { // sort randomly
+          return $(elem).data('category') === $currCat ? 0 : 1;
+      	  }
+      	  },
+    	  animationEngine: 'best-available'
+	});
+	
+	setColumnWidth(); // ! important to get the column width for first layout
+	
+	$container.on('click', '.item', function(){
+	
+    	var $this = $(this);
+    	$currCat = $this.attr('data-category');
+		//alert($this.find('.itemcontent').text());
+		
+		$('.item').each( function(){
+		  $(this).removeClass('active');
+		});
+		
+		$this.addClass('active');
+		
+	  	$container
+	  	//.isotope({ masonry: { columnWidth: $colWidth } })
+	    .prepend($this)
+	    .isotope('reloadItems')
+	    .isotope({ sortBy: 'byCategory' }); // 'original-order'
+	          
+	    $('html, body').animate({scrollTop:0}, 400);
+
+  	});
+	
+	$('#reset-button').on('click', '', function(){
+	
+	$('.item').removeClass('active');
+	var $base =  $('.base');
+	$currCat = $base.attr('data-category');
+	$container.prepend($base).isotope('reloadItems').isotope({ sortBy: 'byCategory' }); // 'original-order' 
+				  
+	$('html, body').animate({scrollTop:0}, 400);
+	});
+	
+	$('#topcontainer').on('click', '.selector', function(){
+	
+    	var $this = $(this);
+    	$currCat = $this.attr('data-category');
+		//alert($this.find('.itemcontent').text());
+		
+		$('.item,.selector').removeClass('active');
+		
+		$this.addClass('active');
+		/*
+	  	$container
+	  	//.isotope({ masonry: { columnWidth: $colWidth } })
+	    .isotope('reloadItems')
+	    .isotope({ sortBy: 'byCategory' }); // 'original-order'
+	          
+	    $('html, body').animate({scrollTop:0}, 400);
+		*/
+		$('#'+$currCat+'-start').trigger('click');
+
+  	});
+	
+	
+	/* on resize */
+	var resizeId;
+	$(window).resize(function() {
+    		clearTimeout(resizeId);
+    		resizeId = setTimeout(doneResizing, 20);
+	});
+ 
+	function doneResizing(){
+		setColumnWidth(); 
+	}
+ 
+	function setColumnWidth(){
+	  	var w = $container.width();
+	  	if(w > 640) { 
+	  	$colWidth = w/7; 
+	  	}else{ 
+	  	$colWidth = w/3; 
+	  	}
+    		$container.isotope({ masonry: { columnWidth: $colWidth } });
+	}
+	
+	
+	});
+	
+	
+	
+	
+	$(window).load(function() { // onload
+	});
+	
+	});
+	
+</script>
+</head>
+<body>
+	<div id="pagecontainer">
+    
+		<div id="topcontainer">
+        
+			<div id="info-button" class="logobox mini selector button" data-category="info"><img src="images/img_icon_logo_mini.png" alt="Webdesign Den Haag"/></div>
+			<div id="reset-button" class="button logobox mini"><img src="images/img_icon_circle_arrows.png" alt="Webdesign Den Haag Home"/> <span>RESET</span></div> 
+             
+            <ul id="topmenu">
+               <li>
+                  <div id="webdesign-button" class="selector button" data-category="webdesign">WEBDESIGN</div>
+               </li>
+               <li>
+                  <div id="webdevelopment-button" class="selector button" data-category="webdevelopment">WEBDEVELOPMENT</div>
+               </li>
+               <li>
+                  <div id="portfolio-button" class="selector button" data-category="portfolio">PORTFOLIO</div>
+               </li>
+            </ul>   
+            
+            
+            
+                 
+        </div>
+		<div id="contentcontainer">
+			<div id="itemcontainer">
+				<div class="item base size-s" data-category="info">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_mobile.png" alt="info 1"/></div> 
+					<div class="main">
+					Contact Carl M&uuml;ller<br/>
+					Mobile: +31(0)641611661 <br/>
+					Email: carl@webdesigndenhaag.net<br/>
+					</div></div>
+				</div>
+				<div id="info-start" class="item size-m" data-category="info">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_logo_light.png" alt="info 2"/></div> 
+					<div class="main">
+					We love to make a special site for you: <br />
+                    Embrace your clients with style and confidence!					</div></div>
+				</div>
+				<div class="item size-s" data-category="info">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_talks.png" alt="info 3"/></div> 
+					<div class="main">info</div></div>
+				</div>
+				<div class="item size-s" data-category="webdesign">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_dev1.png" alt="design 4"/></div> 
+					<div class="main">webdesign</div></div>
+				</div>
+				<div class="item size-l" data-category="webdesign">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_pagedesign.png" alt="design 5"/></div> 
+					<div class="main">webdesign</div></div>
+				</div>
+				<div id="webdevelopment-start" class="item size-m" data-category="webdevelopment">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_systemdesign.png" alt="development 6"/></div> 
+					<div class="main">webdevelopment</div></div>
+				</div>
+				<div class="item size-s" data-category="info">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_cloud.png" alt="info 7"/></div> 
+					<div class="main">info</div></div>
+				</div>
+				<div id="webdesign-start" class="item size-m" data-category="webdesign">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_logodesign.png" alt="design 8"/></div> 
+					<div class="main">webdesign</div></div>
+				</div>
+				
+				<div class="item size-s" data-category="webdevelopment">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_dev2.png" alt="webdevelopment 9"/></div> 
+					<div class="main">webdevelopment</div></div>
+				</div>
+				<div class="item size-s" data-category="webdevelopment">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_optimize.png" alt="webdevelopment 10"/></div> 
+					<div class="main">webdevelopment</div></div>
+				</div>
+				<div class="item size-s" data-category="info">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_docs.png" alt="info 11"/></div> 
+					<div class="main">info</div></div>
+				</div>
+				
+				<div id="portfolio-start" class="item size-l" data-category="portfolio">
+					<div class="itemcontent">
+					<div class="intro"><img src="images/img_icon_allsizes.png" alt="design 12"/></div> 
+					<div class="main">Portfolio
+                    </div></div>
+				</div>
+				
+				<div class="item project size-s" data-category="portfolio">
+					<div class="itemcontent">
+					<div class="intro">webdevelopment 13</div> 
+					<div class="main">webdevelopment</div></div>
+				</div>
+				<div class="item project size-s" data-category="portfolio">
+					<div class="itemcontent">
+					<div class="intro">info 14</div> 
+					<div class="main">info</div></div>
+				</div>
+				<div class="item project size-s" data-category="portfolio">
+					<div class="itemcontent">
+					<div class="intro">webdesign 15</div> 
+					<div class="main">webdesign</div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

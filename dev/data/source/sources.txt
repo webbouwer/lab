@@ -1,0 +1,13 @@
+
+
+https://osmdata.openstreetmap.de/data/land-polygons.html
+
+https://datahub.io/core/gdp
+
+
+
+
+https://github.com/hampusborgos/country-flags
+
+https://github.com/dr5hn/countries-states-cities-database
+https://github.com/dr5hn/countries-states-cities-database/blob/master/countries.json

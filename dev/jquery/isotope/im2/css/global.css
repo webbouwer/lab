@@ -1,0 +1,283 @@
+/**/
+
+*
+{
+margin:0;
+padding:0;
+list-style-type:none;
+border:none;
+}
+
+@font-face {
+	font-family: 'Rockwell';
+	src: url('../fonts/rockwell/Rockwell_Extra_Bold.eot'); 
+	src: local('Rockwell'), url('../fonts/rockwell/Rockwell_Extra_Bold.ttf') format('truetype');
+}
+
+.Rockwellfont
+{
+	font-family: "Rockwell", Arial, Helvetica, sans-serif;
+}
+
+
+html,body
+{
+width:100%; 
+height: 100%;
+font-size:90%;
+/*
+background-image:url('../images/bg_surfer_sunset.jpg');
+background-position:center top;
+background-repeat:no-repeat;
+background-size:135%;
+*/
+background-color:#000000;
+}
+
+#pagecontainer
+{
+position:relative;
+height:100%;
+width:100%;
+}
+
+#topcontainer
+{
+position:fixed;
+z-index:99;
+top:0px;
+width:100%;
+color:#B2B4BD;
+background-color:#141414;/* #232323; #363636; */
+text-align:center;
+}
+#topcontainer .logobox
+{
+float:left;
+width:42px;
+}
+#topcontainer ul#topmenu
+{
+width:100%;
+height:42px;
+}
+#topcontainer #reset-button
+{
+float:right;
+width:50px; 
+font-family: "Rockwell", Arial, Helvetica, sans-serif;
+font-weight:lighter;
+font-size:1.19em;
+opacity:0.6;
+}
+
+#topcontainer #reset-button img
+{
+float:left;
+}
+#topcontainer #reset-button span
+{
+display:block;
+padding:12px 4px 8px;
+}
+
+
+#topcontainer ul#topmenu li
+{
+display:inline-block;
+font-family: "Rockwell", Arial, Helvetica, sans-serif;
+font-weight:lighter;
+font-size:1.19em;
+opacity:0.6;
+padding:12px 4px 8px;
+}
+
+#topcontainer ul#topmenu li.toggle
+{
+display:none;
+}
+
+#topcontainer ul#topmenu.minified
+{
+height:auto;
+width:auto;
+}
+#topcontainer ul#topmenu.minified li.option
+{
+display:none;
+font-family: "Rockwell", Arial, Helvetica, sans-serif;
+font-weight:lighter;
+font-size:1.19em;
+opacity:0.6;
+padding:12px 4px 8px;
+}
+#topcontainer ul#topmenu.minified.active li.option
+{
+display:block;
+}
+#topcontainer ul#topmenu.minified li.toggle
+{
+display:block;
+max-width:60%;
+margin:0px auto;
+}
+
+#contentcontainer
+{
+position:relative;
+width:96%;
+max-width:1050px;
+margin:50px auto 0px;
+min-height:100%;
+}
+
+#itemcontainer 
+{
+position:relative;
+width:100%;
+min-height:100%;
+}
+
+.item,
+.base,
+.size-s {
+  width: 14.29%;
+  min-height:150px;
+  /*background: red;*/
+opacity:0.3;
+}
+.size-m  {
+  width: 28.57%;
+  min-height:360px;
+}
+.size-l {
+  width: 42.86%;
+  min-height:260px;
+}
+
+.project
+{
+background-color:#B2B4BD;
+color:#232323;
+}
+
+.itemcontent {
+  /*min-width: 100%;
+  min-height:100%;
+  background: blue;*/
+}
+
+.item.active {
+  width: 57.1428%;
+  min-height:360px;
+}
+.itemcontent .intro
+{
+display:block;
+width:100%;
+}
+.itemcontent .intro img
+{
+display:block;
+width:100%;
+heigth:auto;
+}
+.itemcontent .main
+{
+display:none;
+}
+
+.item.active
+{
+opacity:1;
+}
+
+.item.active .itemcontent .main
+{
+display:block; 
+color:white;
+}
+.item.active .itemcontent .intro
+{
+width:auto;
+max-width:100%;
+}
+.item.active .itemcontent .intro img
+{
+max-width:100%;
+width:auto; 
+heigth:auto;
+}
+
+
+@media screen and (max-width: 580px) {
+
+#topcontainer #topmenu
+{
+/*width:100%;*/
+}
+.item,
+.base,
+.size-s {
+  width: 33.33%;
+  min-height:120px;
+}
+.size-m  {
+  width: 66.66%;
+  min-height:360px;
+}
+.size-l {
+  width: 100%;
+  min-height:240px;
+}
+
+.itemcontent {
+  /*min-width: 100%;
+  min-height:100%;*/
+}
+
+.item.active {
+  width: 100%;
+  min-height:300px;
+}
+
+
+.size-s.active .itemcontent .intro img {
+  width: 30%;
+  height:auto;
+}
+.size-m.active .itemcontent .intro img {
+  width: 88%;
+  margin:0px auto;
+  height:auto;
+}
+.active .itemcontent .intro,
+.active .itemcontent .main {
+  text-align:center;
+}
+
+
+}
+
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+   -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+          transition-property:         transform, opacity;
+}

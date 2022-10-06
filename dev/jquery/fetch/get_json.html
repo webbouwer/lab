@@ -1,0 +1,113 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="description" content="Wepproject JQuery basics">
+		<meta name="author" content="Carl Müller">
+		<meta name="keywords" content="Wepproject, JQuery, basics, HTML, template, html template, minimal, minimal html">
+
+		<title>Wepproject JQuery basics</title>
+
+		<script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+		
+		
+		<script>
+			
+		// js function with Ajax request and Callback (JSON specific)
+		function get_json( url , callback ){
+
+			$.ajax({
+				url: url,
+				dataType: 'json',
+				cache : false,
+				sync: false,
+				success: function(json) {
+
+					callback( json ); // run callback
+
+				}
+			});
+
+
+		}
+
+		// JQuery onready function
+		$(document).ready( function(){
+
+			var url = 'http://webdesigndenhaag.net/lab/wp-json/wp/v2/posts'; // some wordpress posts in JSON
+
+			console.log('loading..');
+
+			get_json( url , function( data ){
+
+				console.log(data);
+
+				if( data.length > 1 ){
+
+					$('#contentbar').html('');
+
+					$.each(data, function(i, item) {
+						console.log(this.title.rendered);
+						console.log(this.content.rendered);
+						$("#contentbar").append("<div class=\"wp-post\"><h3><a href=\""+this.link+"\" target=\"_blank\">"+this.title.rendered+"</a></h3><small>"+this.date+"</small><div class=\"post-content\">"+this.excerpt.rendered+"<a href=\""+this.link+"\" target=\"_blank\">..></a></div></div>");
+						
+						
+					});
+
+
+
+				}
+
+			});
+
+
+		});
+
+		</script>
+		
+		<style>
+		body
+		{
+		max-width: 780px;
+		margin:0px auto; 
+		background-color:white;
+		color:black;
+		}
+		.wp-post img
+		{
+		max-width:280px;
+		height: auto;
+		}
+		</style>
+
+	</head>
+	<body>
+
+		<div id="titlebar">
+
+		  <h1>JQuery basics</h1>
+		  <h2>JQuery CDN lib v3.2.1.min load for WP-API JSON XMLRequest</h2>
+
+		</div>
+
+		<div id="contentbar">
+
+		  <p>
+			loading..
+		  </p>
+
+		</div>
+
+		<div id="footerbar">
+			<p>
+				<b>
+					Thank you for your visit!
+				</b>
+			</p>
+		</div>
+
+	</body>
+
+</html>

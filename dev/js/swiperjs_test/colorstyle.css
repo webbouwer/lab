@@ -1,0 +1,62 @@
+/* color styles */
+
+
+
+.colorshow #pagecontainer
+{
+  background-color: #151515;
+}
+
+/* toggle style */
+.colorshow .custom-control .toggle
+{
+      color: #705843;
+}
+.colorshow .custom-control .toggle label
+{
+    line-height:0.8em;
+    padding:2px;
+}
+
+
+.colorshow .toggle input:checked + .togglebut {
+  color: #08878D;
+  text-decoration: none;
+}
+
+.colorshow .swiper-pagination-bullet {
+  color: #294243;
+  background-color: #151515;
+}
+.colorshow .swiper-pagination-bullet-active {
+  color: #08878D;
+  background-color: #1B1E1E;
+  text-decoration: none;
+}
+
+.colorshow .swiper-container {
+  border: 1px solid #294243;
+}
+
+.colorshow .box1 {
+ color: #705843;
+ background-color: #232323;
+
+}
+
+
+.colorshow .box2 {
+  color: #683F47;
+  background-color: #212121;
+}
+
+
+.colorshow .box3 {
+  color: #47613A;
+  background-color: #1F1F1F;
+}
+
+.colorshow .box4 {
+  color: #294243;
+  background-color: #151515;
+}

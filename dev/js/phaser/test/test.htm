@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        	<title>Phaser Template Javascript</title>
+		  	<meta name="description" content="Basic Phaser template">
+  			<meta name="author" content="Oddsized">
+  			<meta name="keywords" content="HTML5, HTML, template, html template, basic, basic html">
+			<script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js" type="text/javascript"></script>
+			<link href="https://oddsized.com/dev/gamelab/setup.css" type="text/css" />
+			</head>
+	<body>
+	<!-- load scenes above befor setup -->
+	<script>
+	
+	class scene_start extends Phaser.Scene {
+  constructor() {
+    super('scene_start');
+  }
+  preload() {}
+  create() {
+	
+	if( !game.entitylist ){
+		game.entitylist = [];
+		game.entitylist.players = [];
+		game.entitylist.entities = [];
+	}
+	
+	this.player = new gameEntity();
+	this.player.newPlayer(game);
+	
+	this.openingText = this.add.text(
+      this.physics.world.bounds.width / 2,
+      this.physics.world.bounds.height / 2,
+      'Press SPACE to Start', {
+        fontFamily: 'Monaco, Courier, monospace',
+        fontSize: '50px',
+        fill: '#ffffff'
+      },
+    );
+    this.openingText.setOrigin(0.5);
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.gameStarted = false;
+	}
+	update() {
+	 if (!this.gameStarted) {
+      if (this.cursors.space.isDown) {
+        this.gameStarted = true;
+        this.openingText.setVisible(false);
+      }
+		}else{
+    	game.scene.stop('scene_start');
+    	game.scene.start('scene_play');
+		}
+	}
+}	
+
+class scene_play extends Phaser.Scene {
+  constructor() {
+    super('scene_play');
+  }
+  preload() {
+		for(var p = 0; p < game.entitylist.players.length; p++){
+			this.load.spritesheet('player', game.entitylist.players[p].sprite, { 
+				frameWidth: game.entitylist.players[p].sprite_w,
+				frameHeight: game.entitylist.players[p].sprite_h
+			});
+		}
+	}
+	
+  create() { 
+		
+		this.car = this.physics.add.sprite(200, 200, 'player');
+		this.car.setBounce(0.2);
+    this.car.setCollideWorldBounds(true);
+	}
+	update() {
+	
+	
+	}
+}
+
+
+class scene_end extends Phaser.Scene {
+  constructor() {
+    super('scene_end');
+  }
+  preload() {}
+  create() {}
+	update() {}
+}	
+
+
+class gameEntity
+{
+	newPlayer(game){
+			this.id = game.entitylist.length;
+			this.name = 'player_'+this.id;
+			this.sprite = 'https://oddsized.com/dev/gamelab/media/sprite/nabi_walk.png';			
+			this.sprite_w = 64;
+			this.sprite_h = 96;
+			game.entitylist.players = [];
+			game.entitylist.players.push(this);
+			console.log(game.entitylist.players);
+	}
+}
+
+
+
+// load phaser in 'responsive' view
+const config = {
+  type: Phaser.AUTO,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    parent: 'phaser-example',
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 800,
+    height: 600
+  },
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: {
+        y: 300
+      },
+      debug: false
+    }
+  },
+  scene: [
+    scene_start,
+    scene_play,
+    scene_end,
+  ],
+};
+const game = new Phaser.Game(config);
+
+
+	
+	</script>
+	</body>  
+</html>

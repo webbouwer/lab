@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+	       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Swiper test setup</title> 
+        
+        <style>  
+                    html,
+    body {
+      position: relative;
+      height: 100%;
+    }
+
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+            
+    #topbar
+    {
+        position: fixed;
+        width:100%;
+        top:0px;
+        left:0px;
+        text-align: center;
+        z-index: 999;
+    }
+    #topbar ul
+    {
+        margin-top:20px;
+        padding:0px;
+    }
+    #topbar ul li
+            {
+                display: inline-block;
+            }
+
+    #topbar ul li a
+            {
+                display: block;
+                padding:3px;
+            }
+
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide,
+    .content-container{
+      text-align: center;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+    .swiper-container-v {
+      background: #eee;
+    }
+    
+    .swiper-container-h
+    {
+      width:96%;
+      margin:0px auto;
+    }
+    
+            
+            
+    .swiper-container-h .swiper-wrapper
+    {
+      height:40%;
+      margin:1% 0px; 
+    }
+    .swiper-container-h .content-container
+    {
+      height:25%;
+      margin:5% 0px 0px; 
+    }
+    
+    .swiper-pagination-h
+    {
+      position:absolute;
+      top:70%;
+    }
+            
+ 
+            
+            
+
+    .swiper-pagination-bullet-active {
+      background-color: #fff;
+    }
+    
+    a{
+      color: #008AED;
+    }
+    
+    .textbox1
+    {
+      background: rgba(3,0,5,0.8);
+      padding:1% 2%;
+      border-radius:30px;
+      margin: 24% 10px 10px 10px;
+    }
+    
+    .image-01
+    {
+      background-image:url('https://images.unsplash.com/photo-1525869916826-972885c91c1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&dpr=1&auto=format&fit=crop&w=2400&q=80&cs=tinysrgb');
+      background-size:cover;
+      background-position:center;
+      color:white;
+    }
+    
+     .image-02
+    {
+      background-image:url('https://images.unsplash.com/photo-1530090382228-7195e08d7a75?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&dpr=1&auto=format&fit=crop&w=2400&q=80&cs=tinysrgb');
+      background-size:cover;
+      background-position:center;
+      color:white;
+    }
+     .image-03
+    {
+      background-image:url('https://images.unsplash.com/photo-1475522003475-eb5f96f1f930?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&dpr=1&auto=format&fit=crop&w=2400&q=80&cs=tinysrgb');
+      background-size:cover;
+      background-position:center;
+      color:white;
+    }
+    
+      .image-04
+    {
+      background-image:url('https://images.unsplash.com/photo-1534445697460-d3d6bb7798e4?ixlib=rb-1.2.1&dpr=1&auto=format&fit=crop&w=2400&q=80&cs=tinysrgb');
+      background-size:cover;
+      background-position:center;
+      color:white;
+    }
+    
+
+    .color-1 {
+      background-color: #f44336;
+    }
+
+    .color-2 {
+      background-color: #E91E63;
+    }
+
+    .color-3 {
+      background-color: #9C27B0;
+    }
+
+    .color-4 {
+      background-color: #673AB7;
+    }
+
+    .color-5 {
+      background-color: #3F51B5;
+    }
+
+    .color-6 {
+      background-color: #2196F3;
+    }
+            
+            
+    @media screen and (min-width: 560px) { 
+
+    .swiper-container-h .swiper-wrapper
+    {
+      height:40%;
+      margin:2% 0px 2%; 
+    }
+    .swiper-container-h .content-container
+    {
+      height:26%;
+      margin:2% 0px 0px; 
+    }
+    
+    .swiper-pagination-h
+    {
+      position:absolute;
+      top:72%;
+    }
+    
+    }       
+    
+    @media screen and (min-width: 960px) { 
+
+    .swiper-container-h .swiper-wrapper
+    {
+      height:40%;
+      margin:2% 0px; 
+    }
+    .swiper-container-h .content-container
+    {
+      height:20%;
+      margin:3% 0px 0px; 
+    }
+    
+    .swiper-pagination-h
+    {
+      position:absolute;
+      top:74%;
+    }
+    
+    }
+        
+        </style>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/css/swiper.min.css" />
+        
+    </head>
+    <body>
+        
+      <div id="topbar"> 
+        
+            <ul>
+                <li><a href="#slide1">slide1</a></li>
+                <li><a href="#slide2">slide2</a></li>
+                <li><a href="#slide3">slide3</a></li>
+                <li><a href="#slide4">slide4</a></li> 
+            </ul>
+            
+        </div>    
+    <div class="swiper-container swiper-container-v">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide color-1 image-01"  data-hash="slide1">
+    
+    <div class="textbox1" data-swiper-parallax="-800">
+    <h1>Javascript Swiper</h1>
+    <p>
+    made by <a href="https://webdesigndenhaag.net/">Webbouwer</a>
+
+   with <a href="https://idangero.us/swiper">idangero.us/swiper</a> and <a href="https://jquery.com">JQuery</a> and photos from <a href="https://unsplash.com/">unsplash</a> </p>
+    </div>
+    
+    </div>
+    <div class="swiper-slide color-2 image-02" data-hash="slide2">
+    
+      <div class="swiper-container swiper-container-h">
+              
+        <div class="content-container">
+
+          <div>
+            Intro content / nav bar /tabs
+          </div>
+
+        </div>
+        
+        <div class="swiper-wrapper">
+          <div class="swiper-slide color-2" data-swiper-parallax="-200">Horizontal Slide 2-1 </div>
+          <div class="swiper-slide color-6" data-swiper-parallax="-300">Horizontal Slide 2-2</div>
+          <div class="swiper-slide color-5" data-swiper-parallax="-400">Horizontal Slide 2-3</div>
+          <div class="swiper-slide color-3" data-swiper-parallax="-500">Horizontal Slide 2-4</div>
+          <div class="swiper-slide color-2" data-swiper-parallax="-600">Horizontal Slide 2-5 </div>
+          <div class="swiper-slide color-6" data-swiper-parallax="-700">Horizontal Slide 2-6</div>
+          <div class="swiper-slide color-5" data-swiper-parallax="-800">Horizontal Slide 2-7</div>
+          <div class="swiper-slide color-3" data-swiper-parallax="-700">Horizontal Slide 2-8</div>
+          <div class="swiper-slide color-2" data-swiper-parallax="-600">Horizontal Slide 2-9 </div>
+          <div class="swiper-slide color-6" data-swiper-parallax="-500">Horizontal Slide 2-10</div>
+          <div class="swiper-slide color-5" data-swiper-parallax="-400">Horizontal Slide 2-11</div>
+          <div class="swiper-slide color-3" data-swiper-parallax="-300">Horizontal Slide 2-12</div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination swiper-pagination-h"></div>
+        
+      <div class="content-container">
+ 
+          <div> 
+            Outro content 
+          </div>
+
+        </div>
+        
+        
+      </div>
+
+      
+    </div>
+    <div class="swiper-slide color-3 image-03" data-hash="slide3">
+    <div data-swiper-parallax="-800">Slide 3 example</div></div>
+    <div class="swiper-slide color-4 image-04" data-hash="slide4">
+    <div data-swiper-parallax="-800">Slide 4 example</div></div>
+  </div>
+  <div class="swiper-pagination swiper-pagination-v"></div>
+</div>
+        
+        
+    <script>
+    
+// https://idangero.us/swiper/demos/
+//https://idangero.us/swiper/api/#pagination
+var swiperV = new Swiper('.swiper-container-v', {
+  direction: 'vertical',
+  spaceBetween: 0,
+  hashNavigation: {
+    replaceState: true,
+    watchState: true,
+  },
+  mousewheel: true,
+  speed: 600,
+  parallax: true,
+  loop: true,
+  pagination: {
+    el: '.swiper-pagination-v',
+    clickable: true,
+  },
+});
+
+var swiperH = new Swiper('.swiper-container-h', {
+  direction: 'horizontal',
+  parallax: true,
+  loop: true,
+  speed: 600,
+  navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+  },
+  
+  pagination: {
+    el: '.swiper-pagination-h',
+    //type: 'fraction',
+    clickable: true,
+  },
+  slidesPerView: 1,
+  //slidesPerColumn: 2,
+  spaceBetween: 0,
+  // Responsive breakpoints
+  breakpointsInverse: true,
+  breakpoints: {
+    // when window width is >= 320px
+    320: {
+      slidesPerView: 1,
+      spaceBetween: 10
+    },
+    // when window width is >= 480px
+    560: {
+      slidesPerView: 3,
+      spaceBetween: 20
+    },
+    // when window width is >= 640px
+    960: {
+      slidesPerView: 5,
+      spaceBetween: 20
+    }
+  },
+  
+ keyboard: {
+    enabled: true,
+    onlyInViewport: false,
+  },
+  /*
+  
+  mousewheel: {
+  	enabled: false,
+  },
+  keyboard: {
+  	enabled: true,
+  },
+  */
+});    
+    </script>    
+    </body>
+    
+</html>

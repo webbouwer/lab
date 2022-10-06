@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- HTML meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!-- HTML doc title -->
+<title>SwiperJS Boilerplate v1.0</title>
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- SwiperJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min.js"></script>
+<!-- Custom Swiper JS - Default: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/css/swiper.min.css" /> -->
+<link rel="stylesheet" href="swiper.css" />
+<!-- Custom HTML elements -->
+<link rel="stylesheet" href="elements.css" />
+<!-- Custom HTML styles -->
+<link rel="stylesheet" href="colorstyle.css" />
+</head>
+<body>
+
+<div id="pagecontainer">
+
+<div id="topcontainer">
+    
+    <!-- custom controls -->
+    <div class="custom-control">
+        <div class="toggle"><label><input id="swipeboxToggle" name="swipeboxToggle" type="checkbox"><span class="togglebut" /> Box</label></div>
+        <div class="toggle"><label><input id="scrollbarToggle" name="scrollbarToggle" type="checkbox"><span class="togglebut" /> Scrollbar</label></div>
+        <div class="toggle"><label><input id="colorToggle" name="colorToggle" type="checkbox"><span class="togglebut" /> Theme</label></div>
+    </div>
+
+    <!-- Swiper menu/pagination container -->
+    <div class="swiper-pagination"></div>
+
+    <!-- Event result infobox -->
+    <div class="swiper-event-info"></div>
+</div>
+
+
+<!-- Slider main container -->
+<div class="swiper-container hidescrollbar">
+    
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+
+    <!-- Slides -->
+    <div class="swiper-slide" data-hash="slide1">
+
+      <!-- Slide scroll window -->
+      <div class="swiper-slide-wrap">
+
+        <!-- Slide scroll content -->
+        <div class="swiper-slide-content">
+
+          <!-- Slide content elements with parallax -->
+          <div class="box1 centercontent" data-swiper-parallax="-100">Slide 1 top</div>
+          <div class="box2 centercontent" data-swiper-parallax="-200">Slide 1 mid</div>
+          <div class="box3 centercontent" data-swiper-parallax="-300">Slide 1 bottom</div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="swiper-slide" data-hash="slide2">
+      <div class="swiper-slide-wrap">
+
+        <div class="swiper-slide-content">
+          <div class="box1 centercontent" data-swiper-parallax="-50">Slide 2 top</div>
+          <div class="box2 centercontent" data-swiper-parallax="-100">Slide 2 mid</div>
+          <div class="box3 centercontent" data-swiper-parallax="-200">Slide 2 bottom</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="swiper-slide" data-hash="slide3">
+      <div class="swiper-slide-wrap">
+
+        <div class="swiper-slide-content">
+          <div class="box4 centercontent fullheight">
+              <div class="innerbox">
+                  <h3>Slide 3</h3>
+                  <p>
+                    Full height set with javascript
+                  </p>
+                   <p>
+                    This slide should not scroll inside
+                  </p>
+                </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="swiper-slide" data-hash="slide4">
+      <div class="swiper-slide-wrap">
+
+        <div class="swiper-slide-content">
+          <div class="box1 centercontent" data-swiper-parallax="-50">Slide 4 top</div>
+          <div class="box2 centercontent" data-swiper-parallax="-100">Slide 4 mid</div>
+          <div class="box3 centercontent" data-swiper-parallax="-200">Slide 4 bottom</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+    <div class="swiper-scrollbar"></div>
+    
+</div>
+</div>
+<script src="swiper.js"></script>
+<script src="elements.js"></script>
+
+</body>
+</html>

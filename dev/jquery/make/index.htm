@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Make</title>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+
+<style>
+body
+{
+margin:0px;
+padding:0px;
+}
+#topbar
+{
+width:100vw;
+height:10vh;
+background-color: #003399;
+color:#ffffff;
+}
+
+#maincontainer
+{
+width:100vw;
+height:80vh;
+display:flex;
+background-color: #003366;
+color:#CCCCCC;
+}
+#sidebar
+{
+width:200px;
+height:80vh;
+}
+#workarea
+{
+position:relative;
+width:50vw;
+height:80vh;
+overflow-y:scroll;
+background-color: #000033;
+color:#ffffff;
+border-right:3px solid #cdcdcd;
+}
+#viewarea
+{
+width:calc(50vw - 203px);
+height:80vh;
+background-color: #ffffff;
+color:#ffffff;
+}
+
+#bottombar
+{
+width:100vw;
+height:10vh;
+background-color: #003399;
+color:#ffffff;
+}
+
+
+#codetabs
+{
+	display:flex;
+	height:5vh;
+}
+#codetabs .tabs
+{
+}
+
+#workarea iframe
+{
+	display:none;
+	position:absolute;
+	top:5vh;
+	height:75vh;
+	border:none;
+	background-color:#3d3d3d;
+}
+#viewarea iframe
+{
+	display:none;
+	height:80vh;
+	border:none;
+	background-color:#efefef;
+}
+
+
+
+.tab.active
+{
+background-color:green;
+}
+iframe.active
+{
+position:relative;
+}
+</style>
+<script>
+
+jQuery(function($){
+
+var iframeH = document.getElementById("htmlcode");
+var htmlsource = iframeH.contentDocument.write('HTML code here');
+
+var iframeC = document.getElementById("csscode");
+var csssource = iframeC.contentDocument.write('CSS code here');
+
+var iframeJ = document.getElementById("jscode");
+var jssource = iframeJ.contentDocument.write('Javascript code here');
+
+
+
+	$('#workarea').find('.tab').first().addClass('active');
+	$('#workarea').find('iframe').first().addClass('active').fadeIn();
+	
+	$('#workarea .tab').on('click', function(){
+		$('#workarea').find('.tab').removeClass('active');
+		$(this).addClass('active');
+		let idx = $(this).index();
+		$('#workarea').find('iframe').removeClass('active').fadeOut();
+		$('#workarea').find('iframe').eq( idx ).addClass('active').fadeIn();
+		
+	});
+	
+});
+
+</script>
+</head>
+
+<body>
+
+<div id="topbar"></div>
+
+<div id="maincontainer">
+	<div id="sidebar">more</div>
+	<div id="workarea">
+		<div id="codetabs"><div id="htmltab" class="tab">HTML</div><div id="csstab" class="tab">CSS</div><div id="jstab" class="tab">Javascript</div></div>
+		<iframe id="htmlcode" name="htmlcode" width="100%" src="htmldefault.htm">html</iframe>
+		<iframe id="csscode" name="csscode" width="100%" src="cssdefault.htm">css</iframe>
+		<iframe id="jscode" name="jscode" width="100%" src="jsdefault.htm">javascript</iframe> 
+	</div>
+	<div id="viewarea">
+		<iframe id="resultpage" width="100%"></iframe>
+	</div>
+</div>
+
+
+<div id="bottombar"></div>
+</div>
+</body>
+</html>

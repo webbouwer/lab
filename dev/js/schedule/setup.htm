@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<style>
+.table
+{
+	display:flex;
+	flex-wrap: wrap;
+}
+.hourbox
+{
+	flex: 1 0 10%; 
+}
+.segment
+{
+}
+</style>
+</head>
+
+<body>
+<div id="main">
+	<ul id="available"></ul>
+	<ul id="notavailable"></ul>
+</div>
+<script>
+var users = {
+	"1000": { name: 'Fam. Jansen', amount: 3, kids: 1 },
+	"1002": { title: 'Fam. Berenboel', amount: 5, kids: 3 },
+	"1003": { title: 'Jack en Michael', amount: 2, kids: 2 },
+	"1004":{ title: 'Team Boss', amount: 6, kids: 5 },
+	"1005":{ title: 'Fam. van Sam', amount: 4, kids: 2 },
+};
+
+var spaces = {
+	"100": { title: 'Dragon Dome', status: 1, max: 50, entry: 10, looptime:20, open: 10.00, closed: 17.00 },
+	"101": { title: 'Pirate Bay', status: 1, max: 50, entry: 20, looptime:20, open: 10.00, closed: 17.00 },
+	"102": { title: 'Scooter Bar', status: 1, max: 30, entry: 10, looptime:10, open: 10.00, closed: 17.00 },
+	"103":{ title: 'Ghost Castle', status: 0, max: 30, entry: 10, looptime:10, open: 10.00, closed: 17.00 },
+	"104":{ title: 'Jungle Road', status: -1, max: 30, entry: 10, looptime:15, open: 10.00, closed: 17.00 },
+	"105": { title: 'Waterland', status: 1, max: 120, entry: 20, looptime:30, open: 10.00, closed: 17.00 },
+};
+
+
+for (const key in spaces) {
+
+	if( spaces[key].status == 1){
+	
+		var html = '['+key+'] '+spaces[key].title+
+		': max.'+spaces[key].max+
+		' people, '+spaces[key].entry+
+		' per '+spaces[key].looptime+' minutes';
+		
+		
+		var opentime = (spaces[key].closed - spaces[key].open) * 60;
+		var hours = opentime / 60;
+		var hoursegments = 60 / spaces[key].looptime;
+		
+		var table = document.createElement('div');
+		table.setAttribute('class','table');
+		
+		let start = spaces[key].open;
+		let end = spaces[key].closed;
+		let perhour = 0;
+		for(i=0;i<hours;i++){
+			let hourbox = document.createElement('div');
+			hourbox.setAttribute('class','hourbox');
+			//let tit = document.createTextNode(spaces[key].open + i +':00');
+			//hourbox.appendChild(tit);
+			
+			for(c=0;c<hoursegments;c++){
+				let segment = document.createElement('div');
+				segment.setAttribute('class','segment');
+				let min = c * spaces[key].looptime;
+				if(c == 0) min = '00';
+				let txt = document.createTextNode(spaces[key].open + i + ':'+min);
+				segment.appendChild(txt);
+				hourbox.appendChild(segment)
+			}
+			table.appendChild(hourbox);
+		}
+		
+		var textnode = document.createTextNode(html);
+		var li = document.createElement('li');
+		var div = document.createElement('div');
+		div.appendChild(textnode);
+		li.appendChild(div);
+		li.appendChild(table);
+		document.getElementById('available').appendChild(li);
+		
+	}else{
+	
+		var textnode = document.createTextNode('['+key+'] '+spaces[key].title+': closed');
+		var li = document.createElement('li');
+		li.appendChild(textnode);
+		document.getElementById('notavailable').appendChild(li);
+		
+	}
+	
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Untitled Document</title>
+<style>
+.table
+{
+	display:flex;
+	flex-wrap: wrap;
+}
+.hourbox
+{
+	flex: 1 0 10%; 
+}
+.segment
+{
+position:relative;
+background-color:#CCFF99;
+}
+.segment:hover
+{
+background-color:#00CC66;
+}
+.segment.passedtime,
+.segment.full.passedtime
+{
+background-color:#999999;
+}
+.segment.full
+{
+background-color: #CC3366;
+}
+.segment .timebox 
+{
+display:block;
+padding:3px;
+font-size:15px;
+}
+.segment .countbox
+{
+padding:3px;
+font-size:12px;
+}
+</style>
+</head>
+
+<body>
+<div id="main">
+	<ul id="available"></ul>
+	<ul id="notavailable"></ul>
+</div>
+<script>
+var users = {
+	"1000": { name: 'Fam. Jansen', amount: 3, kids: 1 },
+	"1002": { title: 'Fam. Berenboel', amount: 5, kids: 3 },
+	"1003": { title: 'Jack en Michael', amount: 2, kids: 2 },
+	"1004":{ title: 'Team Boss', amount: 6, kids: 5 },
+	"1005":{ title: 'Fam. van Sam', amount: 4, kids: 2 },
+};
+
+var spaces = {
+	"100": { title: 'Dragon Dome', status: 1, max: 50, entry: 10, looptime:20, open: 10.00, closed: 17.00 },
+	"101": { title: 'Pirate Bay', status: 1, max: 50, entry: 20, looptime:20, open: 10.00, closed: 17.00 },
+	"102": { title: 'Scooter Bar', status: 1, max: 30, entry: 10, looptime:10, open: 10.00, closed: 17.00 },
+	"103":{ title: 'Ghost Castle', status: 0, max: 30, entry: 10, looptime:10, open: 10.00, closed: 17.00 },
+	"104":{ title: 'Jungle Road', status: -1, max: 30, entry: 10, looptime:15, open: 10.00, closed: 17.00 },
+	"105": { title: 'Waterland', status: 1, max: 120, entry: 20, looptime:30, open: 10.00, closed: 17.00 },
+};
+
+
+for (const key in spaces) {
+
+	if( spaces[key].status == 1){
+	
+		let html = '['+key+'] '+spaces[key].title+
+		': max.'+spaces[key].max+
+		' people, '+spaces[key].entry+
+		' per '+spaces[key].looptime+' minutes';
+		
+		
+		let opentime = (spaces[key].closed - spaces[key].open) * 60;
+		let hours = Math.floor( opentime / 60 );
+		let hoursegments = Math.floor( 60 / spaces[key].looptime );
+		
+		let table = document.createElement('div');
+		table.setAttribute('class','table');
+		
+		let start = spaces[key].open;
+		let end = spaces[key].closed;
+		let perhour = 0;
+		for(i=0;i<hours;i++){
+			let hourbox = document.createElement('div');
+			hourbox.setAttribute('class','hourbox');
+			
+			//let time = document.createTextNode(spaces[key].open + i +':00');
+			//hourbox.appendChild(tit);
+
+			
+			for(c=0;c<hoursegments;c++){
+				let segment = document.createElement('div');
+				segment.classList.add('segment');
+				segment.setAttribute('data-max',spaces[key].entry);
+				let amount = Math.floor(Math.random() * spaces[key].entry + 1);
+				segment.setAttribute('data-assigned', amount);
+				
+				let min = c * spaces[key].looptime;
+				if(c == 0) min = '00';
+				let time = spaces[key].open + i + ':'+min;
+				let timebox = document.createElement('span');
+				timebox.classList.add('timebox');
+				let txt = document.createTextNode(time);
+				timebox.appendChild(txt);
+				if( !checkTimeToday(time) ){
+					segment.classList.add('passedtime');
+				}
+				
+				let countbox = document.createElement('span');
+				countbox.classList.add('countbox');
+				let count = document.createTextNode(amount +'/'+ spaces[key].entry);
+				countbox.appendChild(count);
+				
+				if(amount == spaces[key].entry){
+					segment.classList.add('full');
+				}
+				
+				segment.appendChild(timebox);
+				segment.appendChild(countbox);
+				
+				hourbox.appendChild(segment)
+			}
+			table.appendChild(hourbox);
+		}
+		
+		let textnode = document.createTextNode(html);
+		let li = document.createElement('li');
+		let div = document.createElement('div');
+		div.appendChild(textnode);
+		li.appendChild(div);
+		li.appendChild(table);
+		document.getElementById('available').appendChild(li);
+		
+	}else{
+	
+		let textnode = document.createTextNode('['+key+'] '+spaces[key].title+': closed');
+		let li = document.createElement('li');
+		li.appendChild(textnode);
+		document.getElementById('notavailable').appendChild(li);
+		
+	}
+	
+}
+
+function checkTimeToday(time){
+
+	var q = new Date();
+	var m = q.getMonth();
+	var d = q.getDay();
+	var y = q.getFullYear();
+	var dd = y+'-'+m+'-'+d;
+
+	var date = new Date(dd+' '+time+':00');
+	var now = new Date(dd+' 12:30:00');
+	
+	if(date>now){
+		return true;
+	}
+	return false;
+}
+
+
+
+</script>
+</body>
+</html>

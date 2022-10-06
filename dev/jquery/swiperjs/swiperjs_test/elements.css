@@ -1,0 +1,90 @@
+/* Element styles */
+
+html, body
+{
+font-family: "Helvetica", arial, sans;
+font-size:0.87em;
+letter-spacing: 0.09em;
+}
+
+body
+{
+margin:0;
+padding:0;
+}
+
+#pagecontainer
+{
+position:absolute;
+height:100% !important;
+max-height:100%;
+width:100%;
+}
+
+#pagecontainer #topcontainer
+{
+position:fixed;
+width:100%;
+top:0px;
+z-index: 99;
+}
+
+.swiper-pagination{
+  width:100%;
+  text-align: center;
+  clear:both;
+  border-radius: 12px;
+}
+
+
+
+
+.custom-control
+{
+  display: block;
+  position: relative;
+  width:100%;
+  text-align: center;
+  clear:both;
+}
+
+.custom-control .toggle
+{
+  position: relative;
+  display:inline-block;
+  padding: 9px 5px;
+  border-radius: 0;
+  text-align: center;
+  opacity: 1;
+}
+.toggle input:checked + .togglebut {
+    text-decoration: underline;
+}
+.toggle input{
+  display: none;
+}
+
+
+
+
+
+.swiper-pagination-bullet {
+  display:inline-block;
+  padding: 9px 10px;
+  border-radius: 0;
+  width: auto;
+  text-align: center;
+  opacity: 1;
+}
+
+
+/* swipe content */
+.swiper-slide-content .box1,
+.swiper-slide-content .box2,
+.swiper-slide-content .box3 {
+height: 320px;
+}
+.box4
+{
+height: 100%;
+}
