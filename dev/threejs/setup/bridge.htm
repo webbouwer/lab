@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- HTML meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<!-- HTML doc title -->
+<title>ThreeJS Boilerplate</title>
+
+<!-- meta tags -->
+<meta name="description" content="Basic HTML5 boilerplate v1 2022">
+<meta name="author" content="Webbouwer">
+<meta name="keywords" content="HTML5, HTML, boilerplate, template, html template, basic, basic html">
+
+<!-- libraries -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://webbouwer.org/lib/js/threejs/r136/three.js"></script>
+<script src="https://webbouwer.org/lib/js/threejs/r136/OrbitControls.js"></script>
+<script src="https://webbouwer.org/lib/js/threejs/r136/GLTFLoader.js"></script>
+<!--
+<script src="https://cx20.github.io/gltf-test/libs/three.js/r136/build/three.js"></script>
+<script src="https://cx20.github.io/gltf-test/libs/three.js/r136/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cx20.github.io/gltf-test/libs/three.js/r136/examples/js/loaders/GLTFLoader.js"></script>
+-->
+<!--
+<script src="../../../lib/js/threejs/three.js"></script>
+<script src="../../../lib/js/threejs/three.min.js"></script>
+<script src="../../../lib/js/threejs/OrbitControls.min.js"></script>
+<script type="module" src="../../../lib/js/threejs/loaders/ObjectLoader.js"></script>
+<script type="module" rc="../../../lib/js/threejs/loaders/GLTFLoader.js"></script>
+<script type="module" src="../../../lib/js/threejs/setupModel.js"></script>
+-->
+
+<!-- Custom
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/controls/OrbitControls.min.js"></script>
+
+
+<script src="../../../lib/js/threejs/loaders/loaderApp.js"></script>
+ <script src="../../../lib/js/threejs/loaders/Loader.js"></script>
+<script src="../../../lib/js/threejs/loaders/ObjectLoader.js"></script>
+<script src="../../../lib/js/threejs/loaders/OBJLoader.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.min.js"></script>
+<link rel="stylesheet" href="elements.css" />
+
+
+ <script src="../../../lib/js/threejs/loaders/JSONLoader.js"></script>
+ <script src="../../../lib/js/threejs/loaders/OBJLoader.js"></script>
+  -->
+
+<!-- Custom view/page style -->
+<style>
+body
+{
+margin:0;
+padding:0;
+}
+#pagecontainer
+{
+  position:absolute;
+}
+</style>
+
+</head>
+<body>
+
+<!-- content display -->
+<div id="pagecontainer">
+
+<!-- variable content -->
+<h1>ThreeJS Load objects</h1>
+
+</div>
+
+
+<script>
+
+$(document).ready(function() {
+
+// Simple three.js example
+
+var mesh, renderer, scene, camera, controls;
+
+init();
+animate();
+
+function init() {
+
+    // renderer
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor( 0x889988 );
+    document.body.appendChild( renderer.domElement );
+
+    // scene
+    scene = new THREE.Scene();
+    var group1 = new THREE.Group();
+
+
+    // camera
+    camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+
+    camera.position.set( -10, 12, 20 );
+    scene.add( camera ); // required, since adding light as child of camera
+
+
+    // Orbit controls https://threejs.org/docs/#examples/en/controls/OrbitControls
+    controls = new THREE.OrbitControls( camera, renderer.domElement );
+    controls.enableZoom = false;
+    controls.enablePan = true;
+    controls.maxPolarAngle = Math.PI / 2;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.enableZoom = true;
+    //controls.autoRotate = true;
+
+    //controls = new PointerLockControls(camera, renderer.domElement);
+
+    // ambient
+    scene.add( new THREE.AmbientLight( 0x444444 ) );
+
+    // light
+    var light = new THREE.PointLight( 0xffffff, 0.4 );
+    camera.add( light );
+
+    // axes
+    scene.add( new THREE.AxesHelper( 20 ) );
+
+    /*
+    // geometry
+    var geometry = new THREE.BoxGeometry( 8, 4, 1 );
+
+    // material
+    var material1 = new THREE.MeshPhongMaterial( {
+        color: 'sandybrown'
+    } );
+
+    // mesh
+    mesh = new THREE.Mesh( geometry, material1 );
+    mesh.position.set( 0, 0, 0 );
+    scene.add( mesh );
+    */
+
+    const gltfLoader = new THREE.GLTFLoader();
+    let mixer = null;
+    let group = new THREE.Group();
+    let groupv = new THREE.Group();
+
+    for (let r = 0; r < 20; r++) {
+
+    for (let i = 0; i < 20; i++) {
+
+        let sModelName = "https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-top-v1.gltf";
+        gltfLoader.load( sModelName, function (gltf) {
+
+          gltf.scene.scale.set(1.1, 1.2, 1);
+          gltf.scene.position.set( r*2.4, 8.1, i*2.4 );
+          group.add(gltf.scene);
+
+        }, undefined, function (error) {
+            console.error(error);
+        })
+    }
+
+    for (let i = 0; i < 20; i++) {
+
+        let sModelName = "https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-middle-v1.gltf";
+        gltfLoader.load( sModelName, function (gltf) {
+
+          gltf.scene.scale.set(1.1, 1.2, 1);
+          gltf.scene.position.set( r*2.4, 5.4, i*2.4 );
+          group.add(gltf.scene);
+
+        }, undefined, function (error) {
+            console.error(error);
+        })
+    }
+
+    for (let i = 0; i < 20; i++) {
+
+        let sModelName = "https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-middle-v1.gltf";
+        gltfLoader.load( sModelName, function (gltf) {
+
+          gltf.scene.scale.set(1.1, 1.2, 1);
+          gltf.scene.position.set( r*2.4, 2.7, i*2.4 );
+          group.add(gltf.scene);
+
+        }, undefined, function (error) {
+            console.error(error);
+        })
+    }
+
+    for (let i = 0; i < 20; i++) {
+
+        let sModelName = "https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-middle-v1.gltf";
+        gltfLoader.load( sModelName, function (gltf) {
+
+          gltf.scene.scale.set(1.1, 1.2, 1);
+          gltf.scene.position.set( r*2.4, 0, i*2.4 );
+          group.add(gltf.scene);
+
+        }, undefined, function (error) {
+            console.error(error);
+        })
+    }
+    group.position.set( -10, 0, -10 );
+    scene.add(group);
+
+  }
+
+  for (let r = 0; r < 20; r++) {
+
+  for (let i = 0; i < 20; i++) {
+
+      let sModelName = "https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-top-v1.gltf";
+      gltfLoader.load( sModelName, function (gltf) {
+
+        gltf.scene.scale.set(1.1, 1.2, 1);
+        gltf.scene.position.set( r*2.4, 8.1, i*2.4 );
+        groupv.add(gltf.scene);
+
+      }, undefined, function (error) {
+          console.error(error);
+      })
+  }
+
+  for (let i = 0; i < 20; i++) {
+
+      let sModelName = "https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-middle-v1.gltf";
+      gltfLoader.load( sModelName, function (gltf) {
+
+        gltf.scene.scale.set(1.1, 1.2, 1);
+        gltf.scene.position.set( r*2.4, 5.4, i*2.4 );
+        groupv.add(gltf.scene);
+
+      }, undefined, function (error) {
+          console.error(error);
+      })
+  }
+
+  for (let i = 0; i < 20; i++) {
+
+      let sModelName = "https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-middle-v1.gltf";
+      gltfLoader.load( sModelName, function (gltf) {
+
+        gltf.scene.scale.set(1.1, 1.2, 1);
+        gltf.scene.position.set( r*2.4, 2.7, i*2.4 );
+        groupv.add(gltf.scene);
+
+      }, undefined, function (error) {
+          console.error(error);
+      })
+  }
+
+  for (let i = 0; i < 20; i++) {
+
+      let sModelName = "https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-middle-v1.gltf";
+      gltfLoader.load( sModelName, function (gltf) {
+
+        gltf.scene.scale.set(1.1, 1.2, 1);
+        gltf.scene.position.set( r*2.4, 0, i*2.4 );
+        groupv.add(gltf.scene);
+
+      }, undefined, function (error) {
+          console.error(error);
+      })
+  }
+  groupv.rotation.y = 90*Math.PI/180;
+  groupv.position.set( 20, 0, -10 );
+  scene.add(groupv);
+
+}
+
+
+
+    /*
+    var bridge_part = [];
+
+    for(i=0;i<10;i++){
+
+
+
+      gltfLoader.load(
+          //'https://cx20.github.io/gltf-test/sampleModels/Fox/glTF/Fox.gltf',
+          'https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-top-v1.gltf', //scene_threejs_castle2, minecraft_tradeInn
+          (gltf) => {
+
+
+                gltf.scene.scale.set(1.8, 1.2, 1.2);
+                gltf.scene.position.set( i, 8.1, 0 );
+                scene.add(gltf.scene);
+          }
+
+      );
+
+      gltfLoader.load(
+          //'https://cx20.github.io/gltf-test/sampleModels/Fox/glTF/Fox.gltf',
+          'https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-middle-v1.gltf', //scene_threejs_castle2, minecraft_tradeInn
+          (gltf) => {
+              gltf.scene.scale.set(1.8, 1.2, 1.2);
+              gltf.scene.position.set( i, 5.4, 0 );
+              scene.add(gltf.scene);
+          }
+
+      );
+
+      gltfLoader.load(
+          //'https://cx20.github.io/gltf-test/sampleModels/Fox/glTF/Fox.gltf',
+          'https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-middle-v1.gltf', //scene_threejs_castle2, minecraft_tradeInn
+          (gltf) => {
+              gltf.scene.scale.set(1.8, 1.2, 1.2);
+              gltf.scene.position.set( i, 2.7, 0 );
+              scene.add(gltf.scene);
+          }
+
+      );
+
+      gltfLoader.load(
+          //'https://cx20.github.io/gltf-test/sampleModels/Fox/glTF/Fox.gltf',
+          'https://webbouwer.org/lab/threejs/setup/objects/gltf/bridge-middle-v1.gltf', //scene_threejs_castle2, minecraft_tradeInn
+          (gltf) => {
+              gltf.scene.scale.set(1.8, 1.2, 1.2);
+              gltf.scene.position.set( i, 0, 0 );
+              scene.add(gltf.scene);
+          }
+
+      );
+
+
+
+    }
+
+    */
+
+/*
+    gltfLoader.load(
+        'https://cx20.github.io/gltf-test/sampleModels/Fox/glTF/Fox.gltf',
+        (gltf) => {
+
+            gltf.scene.scale.set(0.02, 0.02, 0.02);
+            gltf.scene.position.set( -6, 0.55, 3 );
+            scene.add(gltf.scene);
+
+            // Animation
+            mixer = new THREE.AnimationMixer(gltf.scene);
+            const action = mixer.clipAction(gltf.animations[0]);
+            action.play();
+
+        }
+
+    );
+*/
+    const clock = new THREE.Clock();
+    let previousTime = 0;
+
+    const tick = () =>
+    {
+        const elapsedTime = clock.getElapsedTime()
+        const deltaTime = elapsedTime - previousTime
+        previousTime = elapsedTime
+
+        // Mixer
+        if(mixer)
+        {
+    		    mixer.update(deltaTime)
+        }
+
+        // Update controls
+        controls.update()
+
+        // Render
+        renderer.render(scene, camera)
+
+        // Call tick again on the next frame
+        window.requestAnimationFrame(tick)
+    }
+
+    tick();
+
+}
+
+function animate() {
+
+    requestAnimationFrame( animate );
+
+    controls.update();
+
+    renderer.render( scene, camera );
+
+}
+
+window.addEventListener("keydown", function(event) {
+
+    switch (event.code) {
+        case 'KeyW':
+            //controls.moveForward(0.25)
+            camera.rotation.y += 2;
+            break
+        case 'KeyA':
+            //controls.moveRight(-0.25)
+            camera.rotation.x -= 2;
+            break
+        case 'KeyS':
+            //controls.moveForward(-0.25)
+            camera.rotation.y -= 2;
+            break
+        case 'KeyD':
+            //controls.moveRight(0.25)
+            camera.rotation.x += 2;
+            break
+    }
+});
+
+
+$(window).on('resize', function(){
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+});
+
+});
+</script>
+
+</body>
+</html>

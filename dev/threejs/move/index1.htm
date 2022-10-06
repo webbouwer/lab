@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- HTML meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<!-- HTML doc title -->
+<title>ThreeJS Boilerplate</title>
+
+<!-- meta tags -->
+<meta name="description" content="Basic HTML5 boilerplate v1 2022">
+<meta name="author" content="Webbouwer">
+<meta name="keywords" content="HTML5, HTML, boilerplate, template, html template, basic, basic html">
+
+<!-- libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/controls/OrbitControls.min.js"></script>
+
+
+
+<!-- Custom
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.min.js"></script>
+<link rel="stylesheet" href="elements.css" />
+ -->
+
+<!-- Custom view/page style -->
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+}
+</style>
+
+</head>
+<body>
+
+
+<script>
+
+$(document).ready(function() {
+
+// Simple three.js example
+
+var scene = new THREE.Scene();
+
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 50;
+
+var renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0xDDDDDD, 1);
+document.body.appendChild(renderer.domElement);
+
+var boxGeometry   = new THREE.BoxGeometry(10, 10, 10),
+    basicMaterial = new THREE.MeshBasicMaterial({color: 0x0095DD}),
+    cube          = new THREE.Mesh(boxGeometry, basicMaterial);
+
+cube.rotation.set(0.4, 0.2, 0);
+
+scene.add(cube);
+
+
+
+
+
+
+var dirx = 0.0;
+var diry = 0.0;
+
+document.addEventListener("keydown", onDocumentKeyDown, false);
+
+function onDocumentKeyDown(event) {
+
+    var keyCode = event.which;
+    // up
+    if (keyCode == 87) {
+        diry += 0.1;
+        // down
+    } else if (keyCode == 83) {
+        diry -= 0.1;
+        // left
+    } else if (keyCode == 65) {
+        dirx -= 0.1;
+        // right
+    } else if (keyCode == 68) {
+        dirx += 0.1;
+        // space
+    } else if (keyCode == 32) {
+        dirx = 0.0;
+        diry = 0.0;
+    }
+
+}
+
+function update( event ) {
+
+	cube.position.y += diry;
+	cube.position.x += dirx;
+
+
+	if(dirx > 0.05 || dirx < -0.05){
+  	dirx = dirx/1.05;
+  }else{
+  	dirx = 0.0;
+  }
+  if(diry > 0.05 || diry < -0.05){
+  	diry = diry/1.05; //slow down
+  }else{
+  	diry = 0.0; // to 0
+  }
+
+}
+
+
+
+function animate() {
+
+    requestAnimationFrame( animate );
+
+    update();
+
+    renderer.render( scene, camera );
+
+}
+
+animate();
+
+});
+
+</script>
+
+</body>
+</html>
