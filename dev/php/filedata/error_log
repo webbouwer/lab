@@ -1,0 +1,6 @@
+[03-Nov-2020 20:52:36 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; rwdata has a deprecated constructor in /home/oddsized/public_html/lab/filedata/rwdata.php on line 2
+[03-Nov-2020 20:52:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mcrypt_encrypt() in /home/oddsized/public_html/lab/filedata/rwdata.php:22
+Stack trace:
+#0 /home/oddsized/public_html/lab/filedata/index.php(12): rwdata->dataToFile(Array, 'contacts.json')
+#1 {main}
+  thrown in /home/oddsized/public_html/lab/filedata/rwdata.php on line 22

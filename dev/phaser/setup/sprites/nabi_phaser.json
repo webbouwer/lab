@@ -1,0 +1,41 @@
+{
+	"textures": [
+		{
+			"image": "nabi_walk.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 576,
+				"h": 96
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "nabi_walk.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 576,
+						"h": 96
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 576,
+						"h": 96
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 576,
+						"h": 96
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:1434d0242465b4ff584ac6ed9d3432aa:5b92355cf3b10f0a13ee4d67dba7f11e:9bde7ce1f23ef9fff05352e07e9e7ce1$"
+	}
+}
