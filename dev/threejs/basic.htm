@@ -1,0 +1,180 @@
+<html lang="en">
+    <head>
+		<title>three.js - test example</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main.css">
+        
+        <script src="https://threejs.org/build/three.min.js"></script>
+        <!-- https://cdnjs.cloudflare.com/ajax/libs/three.js/r77/three.min.js -->
+        <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+        <style>
+
+            html, body {
+                width: 100%;
+                height: 100%;
+            }
+
+            body {
+                background-color: #ffffff;
+                margin: 0;
+                overflow: hidden;
+                font-family: arial;
+            }
+            #mainstage {
+
+                position: absolute;
+
+                width: 100%;
+                height: 100%;
+
+                background-color: rgba(0,0,0,0.5);
+
+            }
+
+            #coverbox {
+
+                width: 100%;
+                height: 100%;
+
+                display: -webkit-box;
+                display: -moz-box;
+                display: box;
+
+                -webkit-box-orient: horizontal;
+                -moz-box-orient: horizontal;
+                box-orient: horizontal;
+
+                -webkit-box-pack: center;
+                -moz-box-pack: center;
+                box-pack: center;
+
+                -webkit-box-align: center;
+                -moz-box-align: center;
+                box-align: center;
+
+                color: #ffffff;
+                text-align: center;
+
+                cursor: pointer; 
+
+            }
+        </style>
+  </head>
+<body>	
+    <div id="mainstage">
+        <div id="coverbox">Info box</div>
+    </div>
+<script>
+
+    // default objects
+    var renderer = new THREE.WebGLRenderer();
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+    var ambientlight = new THREE.AmbientLight( 0xefefef );
+    var controls = new THREE.OrbitControls( camera, renderer.domElement );
+    var mesh1,mesh2;
+    
+    init();
+    
+    
+ function init(){
+    
+    var stage = document.getElementById( 'mainstage' );
+    var infobox = document.getElementById( 'coverbox' );
+
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            renderer.setClearColor( 0x232323 );
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+            document.body.appendChild( renderer.domElement );
+            
+            camera.position.set( 45, 20, 10, 20 ); // fov, aspect , near, far
+            
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.1;
+            
+            scene.add( camera ); 
+            scene.add( ambientlight );
+            
+            
+            light = new THREE.PointLight( 0x666666, 0.8 );
+            //light = new THREE.DirectionalLight( 0x666666, 0.9, 100 );
+            light.position.set( 30, 10, 0 ); 			//default; light shining from top
+            light.castShadow = true;            // // add shadow; default false
+            camera.add( light );
+            
+            light.shadow.mapSize.width = 512;  // default 512
+            light.shadow.mapSize.height = 512; // default 512
+            light.shadow.camera.near = 0.5;    // default 0.5
+            light.shadow.camera.far = 500;     // default 500
+            
+            
+            
+            var group = new THREE.Group();
+            group.position.set( 0 , 0, 0 );
+            
+            var geometry = new THREE.BoxGeometry( 3, 3, 3 );
+            var material = new THREE.MeshPhongMaterial({ color: 'gray' });
+            mesh1 = new THREE.Mesh( geometry, material );
+            mesh1.position.x = 0;
+            mesh1.position.y = 3;
+            mesh1.position.z = 0;
+            mesh1.castShadow = true;          
+            mesh1.receiveShadow = true;
+            group.add( mesh1 );
+            
+            
+            var geometry = new THREE.BoxGeometry( 30, 1, 30 );
+            var material = new THREE.MeshPhongMaterial({ 
+                color: 'green', 
+                transparent: true,
+                opacity: 0.5 
+            }); 
+            
+            mesh2 = new THREE.Mesh( geometry, material );
+            mesh2.position.x = -5;
+            mesh2.position.y = -5;
+            mesh2.position.z = 0;
+            mesh2.receiveShadow = true;
+            group.add( mesh2 );
+            
+            
+            scene.add( group );
+            
+            
+            window.addEventListener( 'resize', onWindowResize, false );
+    
+            infobox.addEventListener( 'click', function ( event ) {
+                stage.style.display = 'none';
+                infobox.style.display = 'none';
+                //controls = new THREE.OrbitControls( camera, renderer.domElement );
+            }); 
+     
+        animate();
+    
+ }
+    
+  
+    function animate() {
+        requestAnimationFrame( animate );
+        
+        // update controls here
+        mesh1.rotation.y += 0.005; //group.rotation.y += ( targetRotation - group.rotation.y ) * 0.05;
+        controls.update();
+        
+        renderer.render( scene, camera );
+        time = Date.now();
+    }
+    
+
+    
+    function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize( window.innerWidth, window.innerHeight );
+   }
+    
+</script>
+</body>
+</html>

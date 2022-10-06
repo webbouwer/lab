@@ -1,0 +1,25 @@
+[{
+
+  "title": "Survey test",
+  "introtext": "This is the introtext",
+  "outrotext": "Outrotext below the first question",
+  "questions": {
+    0: {
+      "title": "Question 1",
+      "desc":  "Please give a value of your appreciation",
+      "question": "Do you like our communication so far?",
+      "type": 5,
+    },
+    1: {
+      "title": "Question 2",
+      "desc":  "Select your choice",
+      "question": "Can we contact you after this survey?",
+      "type": "choice",
+      "answers": {
+        0: "yes",
+        1: "no"
+      }
+    }
+  }
+
+}]
