@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Collect and combine cards ">
+  <meta name="keywords" content="card, card collect, card collection, card search, combine cards, deck, deck builder">
+  <meta name="author" content="webbouwer">
+  <meta name="copyright" content="Webbouwer Oddsized Interactive">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+
+  <link rel="icon" href="https://webdesigndenhaag.net/wp-content/uploads/2019/04/cropped-webbouwer_logo_square-32x32.png" sizes="32x32" />
+  <link rel="icon" href="https://webdesigndenhaag.net/wp-content/uploads/2019/04/cropped-webbouwer_logo_square-192x192.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="https://webdesigndenhaag.net/wp-content/uploads/2019/04/cropped-webbouwer_logo_square-180x180.png" />
+
+  <title>World Data</title>
+  <style>
+  </style>
+  <!--
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
+-->
+</head>
+<body>
+<div class="outermargin">
+  <div id="worldmap">
+    <canvas id="mapcanvas"></canvas>
+  </div>
+</div>
+<script>
+
+    var container = document.querySelector('#worldmap');
+    var canvas = document.querySelector('#mapcanvas');
+    canvas.width = 1200;
+    canvas.height = 1000;
+
+    var context = canvas.getContext('2d');
+    var rect = canvas.getBoundingClientRect();
+
+
+      var root = this;
+      var geodata = [];
+      var maps = [];
+
+
+
+var alldata = function(){
+
+  fetch('countries.json')
+  .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+  .then(obj => this.countryData(obj)); //console.log(obj));
+
+  this.countryData = function(data){
+    let jsondata = data.body;
+    for (var c = 0; c < jsondata.length; c++) {
+      geodata[jsondata[c].iso3] = jsondata[c];
+    }
+    console.log(geodata);
+  }
+
+
+    fetch('polygons.json')
+    .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    .then(obj => this.polygonData(obj)); //console.log(obj));
+
+    this.polygonData = function(data){
+
+      let jsondata = data.body.features;
+      for (var c = 0; c < jsondata.length; c++) {
+        maps[jsondata[c].alpha3] = { 'geometry': jsondata[c].geometry, 'data': geodata[jsondata[c].alpha3] };
+
+        this.fillPolygon( jsondata[c].name, jsondata[c].geometry.type ,jsondata[c].geometry.coordinates[0], '#cccccc' ); // area.color
+
+        console.log(jsondata[c].geometry.coordinates[0]);
+      }
+      console.log(maps);
+
+
+    }
+
+    this.fillPolygon = function(title = 'example', type = 'Polygon', points, color) {
+
+      if (points.length > 0) {
+
+        context.fillStyle = color; // all css colors are accepted by this property
+        context.shadowColor = "black";
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.shadowBlur = 0;
+
+
+
+        if(type == 'MultiPolygon'){
+
+          var startpoint = points[0][0];
+          context.beginPath();
+          context.moveTo( (startpoint[0]+100)*4, (startpoint[1]+100)*4); // point 1
+
+          for (var i = 0; i < points.length; ++i) {
+            for (var m = 0; m < points[i].length; ++m) {
+              let point = points[i][m];
+              context.lineTo((point[0]+100)*4, (point[1]+100)*4);
+            }
+          }
+          context.closePath(); // go back to point 1
+          context.fill();
+
+        }
+
+        if(type == 'Polygon'){
+
+          var point = points[0];
+          context.beginPath();
+          context.moveTo( (point[0]+100)*4, (point[1]+100)*4); // point 1
+
+          for (var i = 0; i < points.length; ++i) {
+
+            point = points[i];
+            context.lineTo((point[0]+100)*4, (point[1]+100)*4);
+
+          }
+          context.closePath(); // go back to point 1
+          context.fill();
+
+        }
+      }
+    }
+
+}
+
+// draw map
+
+alldata();
+
+
+
+
+
+
+
+/*
+async function loadDataSource() {
+
+var url = '';
+var source = url +'countries.json'; // https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates%2Bcities.json
+
+fetch(source)
+.then(r =>  r.json().then(data => ({status: r.status, body: data})))
+.then(obj => dataDisplay(obj)); //console.log(obj));
+
+}
+
+function dataDisplay(json) {
+  var jsondata = json.body;
+  var datalist = '<ul id="listing">';
+  for (var c = 0; c < jsondata.length; c++) {
+     let a = jsondata[c]
+     datalist += '<li>'+a.name+' '+a.emoji+'</li>';
+  }
+  datalist += '</ul>';
+  document.getElementById('mainlist').innerHTML = '<div>Showing '+c+' countries</div>' + datalist;
+	console.log(jsondata);
+
+  loadPolygonSource();
+}
+
+async function loadPolygonSource() {
+
+var url = '';
+var source = url +'polygons.json'; // https://raw.githubusercontent.com/PinkyRabbit/osm-countries-polygons-and-slugs/master/ops-countries.json
+
+fetch(source)
+.then(r =>  r.json().then(data => ({status: r.status, body: data})))
+.then(obj => mapDisplay(obj)); //console.log(obj));
+
+}
+
+function mapDisplay(json) {
+ var jsonmap = json.body.features;
+ var maplist = '<ul id="maplist">';
+ for (var c = 0; c < jsonmap.length; c++) {
+    let a = jsonmap[c];
+    maplist += '<li>'+a.name.common+'</li>';
+ }
+ maplist += '</ul>';
+
+ document.getElementById('worldmap').innerHTML = '<div>Showing '+c+' countries</div>' + maplist;
+ console.log(jsonmap);
+
+}
+
+
+loadDataSource();
+*/
+
+</script>
+
+</body>
+
+</html>

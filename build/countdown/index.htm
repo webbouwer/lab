@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- HTML meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<!-- HTML doc title -->
+<title>Countdown applicatie</title>
+
+<!-- meta tags -->
+<meta name="description" content="Countdown applicatie - Countdown application">
+<meta name="author" content="Webbouwer">
+<meta name="keywords" content="countdown applicatie, count to, wait untill, countdown, javascript">
+
+<!-- jQuery and/or other libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<!-- Custom
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.min.js"></script>
+<link rel="stylesheet" href="elements.css" />
+ -->
+
+</head>
+<body>
+
+
+	<!-- variable content -->
+	<div id="introtext" style="position:fixed;bottom:40px;left:40px; background-color:white;">
+	<h1>Countdown applicatie</h1>
+	<p>Deze Countdown applicatie telt af tot een bepaalde tijd/datum en toont dan de pagina inhoud of activeert een nieuw script.</p>
+	<p>De applicatie is gemaakt voor diverse dooeleinden en oa. gebruikt in de countdown-to-launch wordpress plugin <a href="https://github.com/webbouwer/countdown-to-launch" target="_blank">@github</a> als splash-screen - original code <a href="https://jsfiddle.net/webbouwer/9wesqvd2/13/" target="_blank">@jsfiddle</a></p>
+	</div>
+
+<!-- content display -->
+<div id="pagecontainer">
+
+
+
+<!-- start application -->
+<div>
+<h1>
+Happy New Year!</h1>
+<p>
+All the best wishes for 2021
+</p>
+<ul>
+<li>Rock on!</li>
+</ul>
+</div>
+
+</div>
+<style>
+body
+{
+margin:0;
+padding:0;
+}
+#pagecontainer,
+#introtext
+{
+padding:20px 40px;
+}
+
+#page-container
+{
+  height:4800px;
+  background-color:red;
+}
+
+#clockdiv{
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+    margin-top:20vh;
+    font-size:5em;
+}
+
+#clockdiv > div{
+    padding: 10px;
+    border-radius: 3px;
+    background: #00BF96;
+    display: inline-block;
+    margin:5px;
+}
+
+#clockdiv div > span{
+    padding: 15px;
+    border-radius: 3px;
+    background: #00816A;
+    display: inline-block;
+}
+
+.smalltext{
+    padding-top: 5px;
+    font-size: 16px;
+}
+
+</style>
+<script>
+
+
+
+/*
+author: webbouwer.org
+source: https://jsfiddle.net/webbouwer/rbx8oq0L/6/
+*/
+
+jQuery(function($) { // jQuery(document).ready(function($) {
+
+var countDownCloak = function(options){
+
+	var root = this;
+
+	var vars = {
+  	cloakDivID 		: 'cloak-page-container',
+    pageDivID		: 'page-container',
+  	deadline		: new Date('2023-01-01 00:00:00'),
+  };
+
+  this.construct = function(options){
+
+  	$.extend(vars , options);
+    this.initClockworks(vars.deadline);
+
+  };
+
+  this.getcurrentTime = function(){
+  	return Date.parse(new Date());
+  };
+
+  this.getTimeRemaining = function(endtime) {
+    var t = Date.parse(endtime) - Date.parse(new Date());
+    var seconds = Math.floor((t / 1000) % 60);
+    var minutes = Math.floor((t / 1000 / 60) % 60);
+    var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+    var days = Math.floor(t / (1000 * 60 * 60 * 24));
+    return {
+      'total': t,
+      'days': days,
+      'hours': hours,
+      'minutes': minutes,
+      'seconds': seconds
+    };
+	}
+  this.initializeClock = function(id, endtime) {
+
+    var clock = document.getElementById(id);
+    var daysSpan = clock.querySelector('.days');
+    var hoursSpan = clock.querySelector('.hours');
+    var minutesSpan = clock.querySelector('.minutes');
+    var secondsSpan = clock.querySelector('.seconds');
+
+    function updateClock() {
+      var t = root.getTimeRemaining(endtime);
+      daysSpan.innerHTML = t.days;
+      hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+      if (t.total <= 0) { // exit countdown
+        clearInterval(timeinterval);
+        root.removeCloak();
+      }
+    }
+    updateClock();
+    var timeinterval = setInterval(updateClock, 1000);
+  }
+
+  this.removeCloak = function(){
+    $('#'+vars.pageDivID).show();
+    $('#'+vars.cloakDivID).fadeOut(600, function(){
+      $(this).hide().remove();
+    });
+  }
+
+  this.insertCloack = function(){
+
+    var box = $('<div id='+vars.cloakDivID+'>');
+    var content = '<h1>Nog even geduld a.u.b.</h1>';
+      content += '<div id="clockdiv">';
+      content += '<div><span class="days"></span><div class="smalltext">Days</div></div>';
+      content += '<div><span class="hours"></span><div class="smalltext">Hours</div></div>';
+      content += '<div><span class="minutes"></span><div class="smalltext">Minutes</div></div>';
+      content += '<div><span class="seconds"></span><div class="smalltext">Seconds</div></div>';
+      content += '</div><div>';
+
+    box.css({
+    	"position":"absolute",
+      "text-align":"center",
+      "top":"0px",
+    	"left":"0px",
+   	 	"width":"100%",
+    	"height":"100vh",
+    	"background-color": vars.bgcolor,
+    	"color": vars.textcolor,
+    });
+
+    box.html(content);
+    $('body').prepend(box);
+
+  }
+
+  this.initClockworks = function(deadline){
+
+    // check time to countdown
+  	var currentTime = root.getcurrentTime();
+    var chk = Date.parse(deadline) - Date.parse(new Date());
+    $('#'+vars.pageDivID).hide();
+    if( chk > 0 ){
+      root.insertCloack();
+      root.initializeClock('clockdiv', deadline);
+    }else{
+	  $('#'+vars.pageDivID).fadeIn();
+      root.removeCloak();
+    }
+  }
+
+  this.construct(options);
+
+}
+
+
+
+
+  // var deadline  new Date('2021-01-01 00:00:00') // new Date('2020-12-23 17:05:00') //new Date(Date.parse(new Date()) + 3000)
+	var countdown = new countDownCloak({
+  	deadline : new Date('2027-05-02 00:00:00'), // new Date(Date.parse(new Date()) + 3000), //
+    pageDivID		: 'page-container',
+  	cloakDivID 		: 'cloak-page-container',
+    bgcolor: 'black',
+    titlecolor: 'light_purple',
+    textcolor: 'gray',
+  });
+
+});
+
+</script>
+
+
+
+<!-- webbouwer infobar -->
+<div id="infobar" style="position:fixed;top:0px;right:0px;">
+	<a href="https://webbouwer.org"><img src="https://img.shields.io/badge/Webbouwer-Site-red.svg"/>
+	<a href="https://github.com/webbouwer/"><img src="https://img.shields.io/badge/Webbouwer-github-black.svg"/>
+	<a href="https://jsfiddle.net/user/webbouwer/fiddles/"><img src="https://img.shields.io/badge/Webbouwer-JSFiddle-blue.svg"/>
+	<!--
+  <a href="https://webbouwer.org" target="_blank">webbouwer.org</a>
+  <a href="https://github.com/webbouwer?tab=repositories" title="Webbouwer @ github.com" target="_blank">Github.com</a>
+  <a href="https://jsfiddle.net/user/webbouwer/fiddles/" title="Webbouwer @ JSFiddle.net" target="_blank">JSFiddle.net</a>
+	-->
+</div>
+
+
+</body>
+</html>

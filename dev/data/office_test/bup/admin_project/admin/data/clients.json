@@ -1,0 +1,20 @@
+{
+    "test1": {
+        "id": "test1",
+        "name": "New client test1",
+        "address": "Street + number",
+        "postbox": "num\/char",
+        "city": "City name",
+        "website": "website.nl",
+        "contactname": "name contact",
+        "contactemail": "contact@contact.com",
+        "contactphone": "8463784814",
+        "contactnotes": "info text",
+        "log": [
+            {
+                "desc": "Client created",
+                "date": "2018 02 01 21:04:27"
+            }
+        ]
+    }
+}

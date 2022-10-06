@@ -1,0 +1,44 @@
+{
+    "1": {
+        "clientID": 2,
+        "clientName": "Company name 2",
+        "clientAddress": "street + number",
+        "clientPostbox": "2562xc",
+        "clientCity": "Den Haag",
+        "contactperson": "Contact name",
+        "contactemail": "oddsized@gmail.com",
+        "contactphone": "0641611661",
+        "accountperson": "Contact name 2",
+        "accountemail": "oddsized@gmail.com",
+        "accountphone": "0641611661",
+        "accountwebsite": "oddsized.com"
+    },
+    "2": {
+        "clientID": 3,
+        "clientName": "Company name 2",
+        "clientAddress": "street + number",
+        "clientPostbox": "2562xc",
+        "clientCity": "Den Haag",
+        "contactperson": "Contact name",
+        "contactemail": "oddsized@gmail.com",
+        "contactphone": "0641611661",
+        "accountperson": "Contact name 2",
+        "accountemail": "oddsized@gmail.com",
+        "accountphone": "0641611661",
+        "accountwebsite": "oddsized.com"
+    },
+    "5": {
+        "clientID": 5,
+        "clientName": "New client 5",
+        "clientAddress": "Street + number",
+        "clientPostbox": "num\/char",
+        "clientCity": "City name",
+        "contactperson": "name contactperson",
+        "contactemail": "contact@contact.com",
+        "contactphone": "8463784814",
+        "accountperson": "name finance account contact",
+        "accountemail": "contact@contact.com",
+        "accountphone": "8463784814",
+        "accountwebsite": "webaddress"
+    }
+}

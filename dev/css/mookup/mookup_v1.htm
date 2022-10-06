@@ -1,0 +1,517 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Frontpage Mookup ZPWL</title>
+</head>
+<style>
+/* colors, styling & animation */
+body
+{
+	background-color:#efefef;
+}
+
+#maincontainer
+{
+	
+}
+#topcontainer
+{
+	background-color:red;
+}
+#topcontainer .topbarcontainer
+{
+	background-color:pink;
+}
+#rightcontainer
+{
+	background-color:green;
+	transition: all linear 0.3s;
+}
+
+#leftcontainer
+{
+	background-color:blue;
+	transition: all linear 0.3s;
+}
+
+#leftcontainer .contentplaceholder,
+#rightcontainer .contentplaceholder
+{
+	background-color:orange;
+	transition: all linear 0.3s;
+}
+
+.switchplaceholder
+{
+	background-color:brown;
+	opacity:0.8;
+}
+.switchplaceholder .switchbutton
+{
+	background-color:white;
+}
+
+.itemcontainer > .item
+{
+	transition: all linear 0.3s;
+}
+.itemcontainer > .item .itemcover
+{
+	background-color:blue;
+	opacity:0.3;
+}
+
+
+#bottomcontainer
+{
+	display:none;
+}
+
+
+
+
+/* positioning, spacing & sizing */
+*
+{
+margin:0px;
+padding:0px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+body
+{
+	width:100%;
+	height:100%;
+}
+#maincontainer
+{
+	width:100%;
+	min-height:100%;
+}
+
+#topcontainer
+{
+}
+#rightcontainer,
+#leftcontainer
+{
+}
+
+.itemcontainer
+{
+}
+.rightview #rightcontainer .itemcontainer > .item,
+.leftview #leftcontainer .itemcontainer > .item
+{
+}
+.itemcontainer > .item .itemcover
+{
+}
+
+/* Responsive */
+@media screen and (max-width: 960px) {
+	
+	#maincontainer
+	{
+		display:flex; 
+		flex-direction: column;
+		width:100vw;
+		min-height:100vh;
+		overflow:hidden;
+	}
+	
+	#topcontainer
+	{
+		position:relative;
+		width:100%;
+	}
+	#topcontainer .topbarcontainer
+	{
+		min-height:64px;
+		width:100%;
+		z-index:900;
+	}
+	
+	
+	#rightcontainer,
+	#leftcontainer
+	{	
+		position:relative;
+		width:100vw:
+	}
+	.rightview #rightcontainer,
+	.leftview #leftcontainer
+	{	
+		flex:1;
+		height:calc(100vh - 80px);
+	}
+	.rightview #leftcontainer,
+	.leftview #rightcontainer
+	{
+		height:24px;
+	}
+	
+	
+	#leftcontainer .contentplaceholder,
+	#rightcontainer .contentplaceholder
+	{
+		position:absolute;
+		width:100%;
+		overflow:auto;
+		z-index:300;
+	}
+	.rightview #leftcontainer .contentplaceholder,
+	.leftview #rightcontainer .contentplaceholder
+	{
+		height:0px;
+	}
+	.rightview #rightcontainer .contentplaceholder,
+	.leftview #leftcontainer .contentplaceholder
+	{
+		height:100%;
+	}
+	
+	
+	/* small item containers*/
+	#rightcontainer .itemcontainer,
+	#leftcontainer .itemcontainer
+	{
+		display:flex;
+		flex-direction: row;
+		justify-content: space-between;
+		flex-wrap: wrap;  
+		width:calc(100% - 10px);
+		margin:5px;
+	}
+	#rightcontainer .itemcontainer > .item
+	{
+		position:relative;
+		display:flex;
+		flex:50%;
+		padding:3px;
+		min-height:120px;
+	}
+	#leftcontainer .itemcontainer > .item
+	{
+		position:relative;
+		display:flex;
+		flex:100%;
+		padding:3px;
+		min-height:120px;
+	}
+	.itemcontainer > .item .itemcover
+	{
+		position:relative;
+		display:block;
+		width:100%;
+		height:100%;
+		margin:5px;
+	}
+	
+	
+	
+	/* small switch */
+	#rightcontainer .switchplaceholder,
+	#leftcontainer .switchplaceholder
+	{
+		position:absolute;
+		left:0px;
+		width:100%;
+		z-index:900;
+		height:24px;
+	}
+	#rightcontainer .switchplaceholder{
+		bottom:0px;
+	}
+	#leftcontainer .switchplaceholder
+	{
+		top:0px;
+	}
+	.switchplaceholder .switchbutton
+	{
+		position:relative;
+		width:240px;
+		height:24px;
+		margin:0px auto;
+		cursor:pointer;
+	}
+	
+}
+
+@media screen and (min-width: 960px) {
+	
+	#maincontainer
+	{
+		display:flex;
+		flex-direction: row-reverse; 
+		width:100vw;
+		min-height:100%;
+		height:100vh;
+	}
+	#topcontainer
+	{
+		position:absolute;
+		top:0px;
+		left:0px;
+		width:100%;
+		z-index:100;
+	}
+	#topcontainer .topbarcontainer
+	{
+		min-height:90px;
+		min-width:560px;
+		width: 68%; /* calc(100vw - 460px); */
+		max-width: 960px; /*max-width:calc(100% - 460px); */
+		margin:0px auto;
+		z-index:900;
+	}
+	
+		
+	.rightview #leftcontainer
+	{
+		position:relative;
+		flex: 79%; /* calc(100vw - 230px); */
+		height:100vh;
+	}
+	.rightview #rightcontainer
+	{		
+		position:relative;
+		flex: 21%;
+		height:100vh;
+	}
+	.leftview #rightcontainer
+	{
+		position:relative;
+		flex: 86%; /* calc(100vw - 230px); */
+		height:100vh;
+	}
+	.leftview #leftcontainer
+	{		
+		position:relative;
+		flex: 14%; /* 230px; */
+		height:100vh;
+	}
+
+	
+	
+	
+	#leftcontainer .contentplaceholder,
+	#rightcontainer .contentplaceholder
+	{
+		position:absolute;
+		top:90px;
+		width:100%;
+		height:calc(100vh - 90px);
+		overflow-y:auto;
+		z-index:300;
+	}
+	.rightview #leftcontainer .contentplaceholder,
+	.leftview #rightcontainer .contentplaceholder
+	{
+		width:100%;
+	}
+	.rightview #rightcontainer .contentplaceholder,
+	.leftview #leftcontainer .contentplaceholder
+	{
+		width:100%;
+	}
+	
+	
+	/* large item containers*/
+	.rightview #leftcontainer .itemcontainer,
+	.leftview #rightcontainer .itemcontainer
+	{
+		display:flex;
+		flex-direction: row;
+		justify-content: space-between;
+		flex-wrap: wrap;  
+		width:calc(100% - 20px);
+		margin:10px;
+	}
+	.leftview #leftcontainer .itemcontainer,
+	.rightview #rightcontainer .itemcontainer
+	{
+		display:flex;
+		float:right;
+		flex-direction: column;
+		justify-content: space-between;
+		flex-wrap: wrap;  
+		width:calc(100% - 20px);
+		max-width:320px;
+		margin:10px;
+	}
+	
+	.rightview #leftcontainer .itemcontainer > .item,
+	.leftview #rightcontainer .itemcontainer > .item
+	{
+		position:relative;
+		display:flex;
+		flex:25%;
+		min-height:120px;
+	}
+	.itemcontainer > .item .itemcover
+	{
+		position:relative;
+		display:block;
+		width:100%;
+		height:100%;
+		margin:5px;
+	}
+	
+	
+	/* large switch */
+	#rightcontainer .switchplaceholder,
+	#leftcontainer .switchplaceholder
+	{
+		position:absolute;
+		top:0px;
+		width:30px;
+		z-index:900;
+		height:100vh;
+	}
+	#rightcontainer .switchplaceholder{
+		left:0px;
+	}
+	#leftcontainer .switchplaceholder
+	{
+		right:0px;
+	}
+	.switchplaceholder .switchbutton
+	{
+		position:relative;
+		width:30px;
+		height:240px;
+		margin:31vh auto 0px;
+		cursor:pointer;
+	}
+	
+	#bottomcontainer
+	{
+		position:absolute;
+		bottom:0px;
+		left:0px;
+		width:100%;
+	}
+
+}
+
+
+
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<script>
+jQuery(function($){
+
+	$(document).ready(function(){
+	
+		$('#maincontent').removeClass('active');
+		
+		$('#navbar .menu-icon, #maincontent .closebutton').on('click', function(){
+			$('#maincontent').toggleClass('active');
+		});
+
+
+
+    var pagebox = $('#maincontainer');
+		
+		var rightcontent = $('#rightcontainer .itemcontainer');
+		var leftcontent = $('#leftcontainer .itemcontainer');
+		
+		function setContainerItems( container){
+			for(i=0;i<100;i++){
+				let item = '<div id="post-'+i+'" class="item"><div class="itemcover"><h3>Item ['+i+']</h3></div></div>';
+				container.append(item);
+			}
+		}
+		
+		setContainerItems( rightcontent );
+		setContainerItems( leftcontent );
+		
+    $('.switchbutton').on('click touchstart', function() {
+      if ( pagebox.hasClass("rightview") ){
+        pagebox.toggleClass("leftview rightview"); // switchClass(removeClassName, addClassName [, options ]);
+    	}else{
+				pagebox.toggleClass("rightview leftview");
+			}
+		});	
+		
+  });
+	
+});
+
+</script>
+
+<body>
+
+
+		
+<div id="maincontainer" class="site rightview">
+
+<!-- navbar -->
+<div id="topcontainer">
+		<div class="topbarcontainer">
+				<div class="outerspace">
+					
+				<div class="togglebox">
+				
+					<div class="menu-icon column">
+						<img src="images/menu.svg" />
+					</div>
+					<div class="logo column">
+						<img src="images/ZPWL_weblogo.gif" />
+					</div>
+					<div class="search column">
+						<input id="searchbox" class="basic-search" placeholder="Zoek" size="24" style="background-color: white;">
+					</div>
+					
+				</div>
+			</div>
+	</div>
+</div>
+
+<!-- right / top -->
+<div id="rightcontainer">
+
+	<div class="switchplaceholder">
+			<div class="switchbutton">
+				button-text
+			</div>
+	</div>
+	<div class="contentplaceholder">
+		<div class="itemcontainer">
+				<!-- html-content -->
+		</div>
+	</div>
+	
+</div>
+
+<!-- left / bottom -->
+<div id="leftcontainer">
+
+	<div class="switchplaceholder">
+			<div class="switchbutton">
+				button-text
+			</div>
+	</div>
+	<div class="contentplaceholder">
+		<div class="itemcontainer">
+				<!-- html-content -->
+		</div>
+	</div>
+	
+</div>
+
+<!-- footerbar -->
+<div id="bottomcontainer">
+		<div class="bottombarcontainer">
+			button-content
+	</div>
+</div>
+
+</div>
+</body>
+</html>

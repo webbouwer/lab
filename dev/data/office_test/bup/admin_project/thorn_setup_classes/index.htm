@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test</title>
+<script>
+
+function dataRequest(args){
+    var xmlhttp;
+	xhr = new XMLHttpRequest();
+	
+	xhr.open('POST', 'src/ajax.php'); 
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xhr.onload = function() {
+		if (xhr.status === 200 && xhr.responseText !== args[0]) {
+			clientMessage( xhr.responseText );
+		}
+		else if (xhr.status !== 200) {
+			clientMessage( 'Request failed.  Returned status of ' + xhr.status );
+		}
+	};
+	xhr.send(encodeURI( args ) ); 
+	// xhr.send(encodeURI('action='+action+'&limit='+limit)); 
+}
+
+function clientMessage( msg ){
+
+	if( b = document.getElementById('msgbox') ){
+		b.innerHTML = msg;
+	}else{ 
+		alert( msg ); 
+	}
+	
+}
+
+var type = 'labels'; 
+var action = 'list'; 
+var limit = 10;
+var req = 'type='+type+'&action='+action+'&limit='+limit;
+
+dataRequest( req );    
+</script>
+
+
+</head>
+
+<body>
+
+<div id="msgbox"></div>
+
+</body>
+</html>

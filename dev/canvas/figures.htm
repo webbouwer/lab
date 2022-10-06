@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        	<title>Phaser Template Javascript</title>
+		  	<meta name="description" content="Draw Tile Figures">
+  			<meta name="author" content="Oddsized">
+  			<meta name="keywords" content="HTML5, HTML, template, html template, basic, basic html">
+			<style>
+				body
+				{
+					display:flex;
+					align-items: center;
+  					justify-content: center;
+				}
+				#figure
+				{
+
+				}
+			</style>
+			</head>
+	<body>
+<canvas id="figure" width="800" height="800"></canvas>
+	<script type="text/javascript">
+
+/*
+source tilemapping canvas:
+https://technologies4.me/articles/tile-map-canvas-javascript-a1/canvas-tile-map-source-code-p2/
+*/
+
+
+/*
+ * drawFigure
+ */
+var drawTiledFigures = function(newdata){
+
+    var library = {};
+    var root = this;
+
+		var canvasid = 'figure';
+		var ctx = null;
+		var tileW = 80, tileH = 80;
+		var mapW = 10, mapH = 10;
+		var currentSecond = 0, frameCount = 0, framesLastSecond = 0;
+		var randomkey = 0;
+		var pauze = 1000;
+
+    this.construct = function(newdata){
+        library = extend(library, newdata);
+    };
+
+    this.newDraw = function(){ // public
+				ctx = document.getElementById(canvasid).getContext("2d");
+				requestAnimationFrame(drawNewFigure);
+        showData();
+		};
+
+    var drawNewFigure = function(){ // public
+			randomkey = getRandomKey(library);
+			var figureMap = Object.values(library)[randomkey]; //library.KEY;
+
+			if(ctx==null) { return; }
+
+			var sec = Math.floor(Date.now()/1000);
+			if(sec!=currentSecond)
+			{
+				currentSecond = sec;
+				framesLastSecond = frameCount;
+				frameCount = 1;
+			}
+			else { frameCount++; }
+
+
+				for(var y = 0; y < mapH; ++y)
+				{
+					for(var x = 0; x < mapW; ++x)
+					{
+						switch(figureMap[((y*mapW)+x)])
+						{
+							case 0:
+								ctx.fillStyle = "#ffffff";
+								break;
+							default:
+								ctx.fillStyle = "#000000";
+						}
+
+						ctx.fillRect( x*tileW, y*tileH, tileW, tileH);
+					}
+				}
+
+				ctx.fillStyle = "#ff0000";
+				ctx.font = "bold 10pt sans-serif";
+				ctx.fillText( Object.keys(library)[randomkey], 10, 20); // display key/name
+				//ctx.fillText( "FPS: " + framesLastSecond, 10, 50); // display framerate
+
+
+				setTimeout(function(){
+        	requestAnimationFrame(drawNewFigure);
+				}, pauze );
+
+    };
+
+    var showData = function() { // private
+        console.log( library );
+    };
+
+		var getRandomKey = function(arr){
+				var random = 0;
+				if( Object.keys(arr).length >= 2 ){
+					random = Math.floor(Math.random() * Object.keys(arr).length);
+					if(random == randomkey ){
+						return getRandomKey(arr);
+					}
+				}
+				return random;
+		}
+
+		var extend = function(a, b){
+    	for(var key in b)
+        if(b.hasOwnProperty(key))
+            a[key] = b[key];
+    	return a;
+		}
+
+    this.construct(newdata); // init
+
+};
+
+
+ var figureLibrary =  {
+ Pokemon :
+ [
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 1, 0, 0, 0, 0, 1, 1, 0,
+	0, 1, 1, 0, 0, 0, 0, 1, 1, 0,
+	0, 1, 1, 0, 0, 0, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 0, 1, 1, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 1, 1, 0, 0, 1, 1, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+],
+Wolf :
+ [
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 1, 0, 0, 0, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 0, 1, 1, 0, 0, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 0, 1, 1, 1, 1, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+],
+Skull :
+ [
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 0, 1, 1, 0, 0, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 0, 1, 1, 1, 1, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+],
+Alien :
+ [
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 0, 1, 1, 1, 1, 0, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 0, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 0, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 1, 1, 0, 1, 0, 1, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+]
+}
+
+var newFigure = new drawTiledFigures( figureLibrary );
+
+newFigure.newDraw();
+
+
+/*
+Chess :
+ [
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 0,
+	0, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 0,
+	0, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 0,
+	0, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 0,
+	0, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+],
+
+*/
+</script>
+	</body>
+</html>

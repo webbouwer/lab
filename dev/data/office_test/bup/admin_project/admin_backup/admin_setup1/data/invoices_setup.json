@@ -1,0 +1,85 @@
+[
+    {
+        "clientID": 1,
+        "projectID": 1,
+        "invoiceID": 1,
+	"title": "Factuur webdesign & ontwikkeling",
+	"text": "Bij deze het factuur betreffende..",
+	"date": "", 
+	"status" : 1,
+	"log": [],
+
+	"tasks": [
+		{
+			"desc":"task description",
+			"price": 45,
+			"hours": 2,
+			"taxlow": 0,
+			"taxhigh": 21
+		},
+		{
+			"desc":"task description",
+			"price": 45,
+			"hours": 2,
+			"taxlow": 0,
+			"taxhigh": 21
+		}
+	]
+    },
+    {
+        "clientID": 2,
+        "projectID": 2,
+        "invoiceID": 3,
+	"title": "Factuur webdesign & ontwikkeling",
+	"text": "Bij deze het factuur betreffende..",
+
+	"date": "",
+	"status" : 3,
+	"log": [],
+
+	"tasks": [
+		{
+			"desc":"task description",
+			"price": 45,
+			"hours": 2,
+			"taxlow": 0,
+			"taxhigh": 21
+		},
+		{
+			"desc":"task description",
+			"price": 45,
+			"hours": 2,
+			"taxlow": 0,
+			"taxhigh": 21
+		}
+	]
+    },
+    {
+        "clientID": 1,
+        "projectID": 2, 
+        "invoiceID": 2,
+	"title": "Factuur webdesign & ontwikkeling",
+	"text": "Bij deze het factuur betreffende..",
+
+	"date": "",
+	"status" : 4, 
+	"log": [],
+
+	"tasks": [
+		{
+			"desc":"task description",
+			"price": 45,
+			"hours": 2,
+			"taxlow": 0,
+			"taxhigh": 21
+		},
+		{
+			"desc":"task description",
+			"price": 45,
+			"hours": 2,
+			"taxlow": 0,
+			"taxhigh": 21
+		}
+	]
+    }
+]

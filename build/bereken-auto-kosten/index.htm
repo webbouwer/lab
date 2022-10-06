@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- HTML meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<!-- HTML doc title -->
+<title>Wat kost autorijden in nederland? Berekenen kosten autorijden Nederland</title>
+
+<!-- meta tags -->
+<meta name="description" content="Wat kost autorijden in nederland? Berekenen kosten autorijden Nederland - Calculate vehicle cost the Netherlands">
+<meta name="author" content="Webbouwer">
+<meta name="keywords" content="bereken, kosten, autorijden, auto, kostenberekeing">
+
+<!-- jQuery and/or other libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<!-- Custom
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.min.js"></script>
+<link rel="stylesheet" href="elements.css" />
+ -->
+
+</head>
+<body>
+
+
+
+
+<!-- content display -->
+<div id="pagecontainer">
+
+<!-- variable content -->
+<div id="introtext">
+<h1>Wat is de bijtelling voor autorijden in Nederland?</h1>
+<p>Reken applicatie voor de kosten van autorijden in Nederland</p>
+<p>De bijtelling rekenmodule is gemaakt voor <a href="https://eekharteneekhart.nl/bijtelling/" target="_blank">eekharteneekhart.nl</a>, original code <a href="https://jsfiddle.net/webbouwer/hjkb2ef3/" target="_blank">@jsfiddle</a></p>
+</div>
+<div id="calculatie-form">
+
+	  <form action="" method="post">
+    <ul>
+
+      <li>
+      <span class="labeltext">Consumentenprijs (incl. btw & fabrieksopties)</span><input type="text" id="consumentenprijs" name="consumentenprijs" value="" class="numerical">
+      </li>
+      <li><span class="labeltext">Eigen bijdrage per maand</span><input type="text" id="eigenbijdrage" name="eigenbijdrage" value="" class="numerical">
+      </li>
+
+      <li><span class="labeltext">Motor type</span><select id="motortype" name="motortype"></select>
+      </li>
+
+      <li><span class="labeltext">Bijtellingspercentage</span><select id="bijtelling" name="bijtelling"></select>
+      </li>
+
+      <li><span class="labeltext">Bruto inkomen per jaar (belastingschijf)</span><select id="belastingpercentage" name="belastingpercentage">
+      </select>
+      <br/>
+      <small>Uw gegevens worden niet opgeslagen.</small>
+
+      </li>
+
+      <li><input class="button" type="submit" name="berekenen" value="berekenen">
+      </li>
+
+    </ul>
+
+    <div id="calculatie-resultaat">
+		  <h2>Resultaat</h2>
+
+      <table class="result bijtelling">
+      </table>
+      <small>*aan de uitkomst kunnen geen rechten worden ontleend</small>
+
+    </div>
+
+	</form>
+</div>
+
+</div>
+<style>
+body
+{
+margin:0;
+padding:0;
+}
+#introtext,
+#calculatie-resultaat
+{
+padding:20px 40px;
+}
+#calculatie-resultaat,
+table.result
+{
+  max-width:100%;
+  line-height:1.8em !important;
+}
+#calculatie-form form ul li{
+  display:block;
+  margin:3px 0px 8px;
+  line-height:1.6em !important;
+}
+
+#calculatie-form form ul li small
+{
+  font-size:13px !important;
+  display:block;
+  margin:8px 0px 12px;
+  line-height:1.2em !important;
+}
+
+input,
+select
+{
+  padding: 6px 6px !important;
+  background-color:#efefef !important;
+  border: 1px solid #006ba1;
+   -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+input.button
+{
+  background-color: #76A841 !important;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 14px !important;
+  font-size: 17px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color: #fff;
+  cursor:pointer;
+  margin:15px 0px;
+}
+
+  table.result.bijtelling
+  {
+    border:none;
+    width:100%;
+  }
+  table.result tr,
+  table.result tr td
+  {
+    padding:0;
+    border:none;
+  }
+    table.result tr td
+  {
+    padding:5px 0px 3px;
+  }
+div.line
+{
+  border-bottom: 1px solid #006ba1;
+  border-radius: 2px;
+}
+
+  tr.subtotal td
+  {
+    padding-top:5px;
+  }
+
+
+</style>
+<script>
+
+
+
+/*
+copyright: eekharteneekhart.nl
+author: webbouwer.org
+source: https://jsfiddle.net/webbouwer/f21ebmh3/20/
+
+sources
+html/javascript form
+https://www.dyn-web.com/tutorials/forms/select/selected.php
+
+format numbers
+https://www.kevinleary.net/currency-formatting-javascript-typescript/
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
+https://stackoverflow.com/questions/7571553/javascript-parse-float-is-ignoring-the-decimals-after-my-comma
+*/
+
+
+jQuery(document).ready(function($) {
+
+
+/* bijtelling berekenen */
+
+var selectValues = {
+				"type": {
+        		"": "Maak een keuze",
+            "electric": "elektrisch",
+            "other": "overige"
+        },
+        "electric": {
+
+            "3": "4% (2017 t/m 2018)",
+            "4": "4% / 22% (2019)", // 50.000 40.000
+            "8": "8% / 22% (2020)", // 45.000 45.000
+            "12": "12% / 22% (2021)", // 40.000 40.000
+            "16": "16% / 22% (2022 t/m 2024)", // 35.000 35.000
+            "17": "17% / 22% (2025)"
+        },
+        "other": {
+            "7": "7%",
+            "8": "8%",
+            "12": "12%",
+            "14": "14%",
+            "15": "15%",
+            "16": "16%",
+            "17": "17%",
+            "19": "19%",
+            "20": "20%",
+            "21": "21%",
+            "22": "22%",
+            "25": "25%",
+            "35": "35%"
+        },
+        "taxbox": {
+        		"": "Maak een keuze",
+            "37.07": "€ t/m € 69.399 (37,07%)",
+            "49.50": "Meer dan € 69.399 (49,50%)"
+        }
+
+    };
+
+    $("#consumentenprijs,#eigenbijdrage,#motortype,#bijtelling,#belastingpercentage").css({'border': '1px solid gray'});
+
+    var $type = $('select#motortype');
+    var $waarden = $('select#bijtelling');
+    var $percentage = $('select#belastingpercentage');
+
+    $type.empty().append(function() {
+    	var output = '';
+      $.each(selectValues['type'], function(key, value) {
+         output += '<option value="'+key+'">' + value + '</option>';
+      });
+      return output;
+    });
+
+
+    $type.change(function() {
+
+        $waarden.empty().append(function() {
+            var output = '';
+            $.each(selectValues[$type.val()], function(key, value) {
+                output += '<option value="'+key+'">' + value + '</option>';
+            });
+            return output;
+        });
+
+        $percentage.empty().append(function() {
+            var output = '';
+            $.each(selectValues['taxbox'], function(key, value) {
+                output += '<option value="'+key+'">' + value + '</option>';
+            });
+            return output;
+        });
+
+        $("#motortype").css({'border': '1px solid gray'});
+
+    }).change();
+
+    $percentage.change(function() {
+        check();
+    });
+
+    $('input[type="text"]').blur(function() {
+    	if (this.value == ''){
+      	this.value = 0;
+      }
+      check();
+    });
+
+function check(){
+
+	var chk = 1;
+
+  $("#consumentenprijs,#eigenbijdrage,#motortype,#bijtelling,#belastingpercentage").css({'border': '1px solid gray'});
+
+	if( $("#consumentenprijs").val() < 1 && $("#consumentenprijs").val() != '' ){
+  		$("#consumentenprijs").css({'border': '1px solid red'});
+      chk = 0;
+  }else if($("#consumentenprijs").val() == ''){
+  		$("#consumentenprijs").css({'border': '1px solid red'});
+  		chk = 0;
+  }
+  if( $("#eigenbijdrage").val() < 0 && $("#eigenbijdrage").val() != '' ){
+  		$("#eigenbijdrage").css({'border': '1px solid red'});
+      chk = 0;
+  }else if($("#eigenbijdrage").val() == ''){
+  		$("#eigenbijdrage").css({'border': '1px solid red'});
+  		chk = 0;
+  }
+  if( $("#motortype").val() == '' && chk != 0 && $("#eigenbijdrage").val() != '' ){
+  		$("#motortype").css({'border': '1px solid red'});
+      chk = 0;
+  }
+  if( $("#belastingpercentage").val() == '' && chk != 0 && $("#consumentenprijs").val() != '' ){
+  		$("#belastingpercentage").css({'border': '1px solid red'});
+      chk = 0;
+  }
+
+  if( chk == 0 ){
+  	return false;
+  }
+  return true;
+
+}
+
+function localCurrency( number ){
+	return number.toLocaleString("nl-NL", { style: "currency", currency: "EUR" });
+}
+
+function calculate(){
+
+  var price = parseFloat( $("#consumentenprijs").val().replace('.', '').replace(/,/, '.') ); // parseFloat( $("#consumentenprijs").val() );
+
+  var monthly = parseFloat($("#eigenbijdrage").val().replace('.', '').replace(/,/, '.') ); //parseFloat( $("#eigenbijdrage").val() );
+
+  var percentage = $("#bijtelling").val();
+
+  var taxlevel = $("#belastingpercentage").val();
+
+  var past = 0;
+	if(percentage == 3){
+      	percentage = 4;
+        past = 1;
+  }
+
+
+  var counting = '';
+  $(".result.bijtelling").html( counting );
+
+  counting += '<tr><td>Consumentenprijs (incl. btw en fabrieksopties)</td><td align="right">'+ localCurrency(price)+'</td></tr>';
+
+  if( $("#motortype").val() == 'electric' && past != 1){
+
+
+    var maxlow = 40000;
+    var maxhigh = 40000;
+    var percenthigh = 22;
+
+    switch(percentage) {
+      case '4':
+        maxlow = 50000;
+        maxhigh = 50000;
+        percenthigh = 22;
+        break;
+      case '8':
+        maxlow = 45000;
+        maxhigh = 45000;
+        percenthigh = 22;
+        break;
+      case '12':
+        maxlow = 40000;
+        maxhigh = 40000;
+        percenthigh = 22;
+        break;
+      case '16':
+        maxlow = 35000;
+        maxhigh = 35000;
+        percenthigh = 22;
+        break;
+      default:
+        maxlow = 40000;
+        maxhigh = 40000;
+        percenthigh = 22;
+    }
+
+    if( price > maxlow ){
+
+    	var low = (maxlow/100) * percentage;
+      //if( (price - maxlow) < maxhigh){
+      	maxhigh = price - maxlow;
+      //}
+      var high = ( maxhigh / 100) * percenthigh;
+
+      var subtot = ( high + low );
+      var tot = subtot - (12 * monthly);
+
+    	// prijs > 50.000 ? laag: 50.000 * percentage 1 (percentage % ) en hoog: (prijs - 50.000) * percentage 2 (22%)
+  		counting += '<tr><td>Bij te tellen voor privégebruik t/m '+ maxlow.toLocaleString('nl') +' ('+percentage+'% van '+maxlow.toLocaleString('nl')+')</td><td align="right">'+ localCurrency(low) +'</td></tr>';
+  		counting += '<tr><td>Bij te tellen voor privégebruik boven '+maxlow.toLocaleString('nl')+' ('+percenthigh+'% van '+maxhigh.toLocaleString('nl')+')</td><td align="right">'+ localCurrency(high) +'</td></tr><tr><td colspan="3"><div class="line"></div></td></tr>';
+      counting += '<tr><td>Totaal bij te tellen voor privégebruik</td><td align="right">'+ localCurrency( subtot ) +'</td></tr>';
+      counting += '<tr><td>Eigen bijdrage per jaar</td><td align="right">'+  localCurrency((12 * monthly)) +'</td></tr><tr><td colspan="3"><div class="line"></div></td></tr>';
+      counting += '<tr><td>Totaal te verrekenen voor privégebruik</td><td align="right">'+localCurrency(parseFloat(tot))+'</td></tr>';
+    }else{
+
+    	// prijs < 50.000 ? laag: prijs * percentage 1 (variabele %) en hoog: 0
+      var low = (price/100) * percentage;
+      var tot = low - (12 * monthly) ;
+  		counting += '<tr><td>Bij te tellen voor privégebruik t/m '+maxlow+'</td><td align="right">'+ localCurrency(parseFloat(low)) +'</td></tr>';
+      counting += '<tr><td>Eigen bijdrage per jaar</td><td align="right">'+ localCurrency(parseFloat((12 * monthly))) +'</td></tr><tr><td colspan="3"><div class="line"></div></td></tr>';
+      counting += '<tr><td>Totaal te verrekenen voor privégebruik</td><td align="right">'+ localCurrency(parseFloat(tot)) +'</td></tr>';
+    }
+
+  }else{
+
+  	var low = (price/100) * percentage;
+    var tot = low - (12 * monthly);
+  	counting += '<tr><td>Bij te tellen voor privégebruik </td><td align="right">'+ localCurrency(parseFloat(low)) +'</td></tr>';
+    counting += '<tr><td>Eigen bijdrage per jaar</td><td align="right">'+ localCurrency(parseFloat( (12 * monthly) )) +'</td></tr><tr><td colspan="3"><div class="line"></div></td></tr>';
+    counting += '<tr class="subtotal"><td>Totaal te verrekenen voor privégebruik</td><td align="right">'+ localCurrency(parseFloat(tot)) +'</td></tr>';
+
+  }
+
+  var costs = tot/12;
+  var taxcosts = (costs/100)*taxlevel;
+  var total = parseFloat(monthly)+parseFloat(taxcosts);
+  counting += '<tr><td>Bruto kosten privegebruik per maand</td><td align="right">'+ localCurrency(parseFloat(costs)) +'</td></tr>';
+  counting += '<tr><td>Bruto inkomen per jaar (belastingschijf)</td><td align="right">'+ taxlevel +'%</td></tr><tr><td colspan="3"><div class="line"></div></td></tr>';
+  counting += '<tr><td>Loonheffing voor privegebruik</td><td align="right">'+ localCurrency(parseFloat(taxcosts)) +'</td></tr>';
+  counting += '<tr><td>Eigen bijdrage per maand</td><td align="right">'+ localCurrency(parseFloat(monthly)) +'</td></tr><tr><td colspan="3"><div class="line"></div></td></tr>';
+  counting += '<tr class="subtotal"><td><strong>Netto kosten privegebruik per maand</strong></td><td align="right"><strong>'+ localCurrency(parseFloat(total)) +'</strong></td></tr>';
+
+
+  $(".result.bijtelling").html( counting );
+
+
+}
+
+
+
+
+$('#calculatie-resultaat').hide();
+
+$('#calculatie-form form').submit(function(e) {
+ 	e.preventDefault();
+  if( check() ){
+ 		calculate();
+  	$('#calculatie-resultaat').fadeIn();
+
+  }
+});
+
+
+
+
+
+     /* Bart Froklage, toegevoegd om het veld consumenten-prijs te vullen dmv een
+       get parameter. */
+    var consumentenprijs = getUrlVars()["consumentenprijs"];
+    if (consumentenprijs != "") $("input[name=consumentenprijs]").val(consumentenprijs);
+
+    /* Functie om URL parameters uit te lezen. */
+    function getUrlVars()
+    {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+
+
+});
+</script>
+
+
+
+<!-- webbouwer infobar -->
+<div id="infobar" style="position:fixed;top:0px;right:0px;">
+	<a href="https://webbouwer.org"><img src="https://img.shields.io/badge/Webbouwer-Site-red.svg"/>
+	<a href="https://github.com/webbouwer/"><img src="https://img.shields.io/badge/Webbouwer-github-black.svg"/>
+	<a href="https://jsfiddle.net/user/webbouwer/fiddles/"><img src="https://img.shields.io/badge/Webbouwer-JSFiddle-blue.svg"/>
+	<!--
+  <a href="https://webbouwer.org" target="_blank">webbouwer.org</a>
+  <a href="https://github.com/webbouwer?tab=repositories" title="Webbouwer @ github.com" target="_blank">Github.com</a>
+  <a href="https://jsfiddle.net/user/webbouwer/fiddles/" title="Webbouwer @ JSFiddle.net" target="_blank">JSFiddle.net</a>
+	-->
+</div>
+
+</body>
+</html>

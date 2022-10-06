@@ -1,0 +1,647 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Frontpage Mookup ZPWL</title>
+
+<style>
+
+html {
+  height:100%;
+}
+body {
+  height:100%;
+	padding:0;
+	margin:0;
+	overflow:hidden;
+
+  display: flex;
+  flex-direction: column;
+  background: gray;
+  flex: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  margin: 0;
+}
+
+
+
+
+
+/* colors, styling & animation */
+body
+{
+	background-color:#efefef;
+}
+
+#maincontainer
+{
+  height:100%;
+}
+
+/* toparea placeholder */
+#maincontainer #toparea
+{
+	position:absolute;
+	top:0px;
+	width:100%;
+
+	z-index:600;
+
+	/*background-color:grey;*/
+}
+#toparea #topcontainer
+{
+	max-width:880px;
+	margin:0px auto;
+}
+.pagemenu #toparea #topcontainer
+{
+	background-color:white;
+	box-shadow: 0px 2px 15px -4px rgba(18,18,18,1);
+}
+#toparea #topcontainer #topbar
+{
+	height:76px;
+}
+#toparea #topcontainer #topbar .placeholder
+{
+	background-color:red;
+}
+#toparea #topcontainer #infocontainer
+{
+	/*background-color:turquoise;*/
+}
+
+
+/* mainarea content panels*/
+#maincontainer #mainarea
+{
+	width:100vw;
+	margin-top:76px;
+	height:calc(100% - 76px);
+
+	background-color: pink;
+}
+#toparea #topcontainer,
+#toparea #topcontainer #infocontainer,
+#maincontainer #leftmenu-toggle,
+#maincontainer #rightmenu-toggle,
+#maincontainer #rightmenu-container,
+#maincontainer #leftmenu-container,
+#mainarea #rightcontainer,
+#mainarea #contentswitch,
+#mainarea #leftcontainer,
+#mainarea #leftcontainer .placeholder
+{
+	transition: all linear 0.3s;
+}
+#mainarea #rightcontainer .placeholder .contentarea,
+#mainarea #leftcontainer .placeholder .contentarea
+{
+}
+#mainarea #rightcontainer .placeholder .contentarea .itemcontainer,
+#mainarea #leftcontainer .placeholder .contentarea .itemcontainer
+{
+	background-color:silver;
+}
+
+
+/* mainarea content */
+#mainarea #rightcontainer
+{
+	background-color:orange;
+}
+#mainarea #contentswitch
+{
+	background-color:silver;
+}
+#mainarea #contentswitch .placeholder
+{
+	opacity:0.3;
+
+	z-index:500;
+
+	background-color:brown;
+}
+#mainarea #leftcontainer
+{
+	background-color:green;
+}
+
+
+
+
+#maincontainer #rightmenu-toggle
+{
+	background-color:blue;
+	z-index:700;
+}
+#maincontainer #rightmenu-container
+{
+	background-color:blue;
+	z-index:400;
+}
+#maincontainer #leftmenu-toggle
+{
+	background-color:blue;
+	z-index:700;
+}
+#maincontainer #leftmenu-container
+{
+	background-color:blue;
+	z-index:400;
+}
+#leftmenu-container .innerbox
+{
+}
+
+
+
+
+
+/* Responsive */
+@media screen and (max-width: 960px) {
+
+#toparea #topcontainer
+{
+	max-width:100%;
+	width:100%;
+}
+#toparea #topcontainer #topbar
+{
+	height:76px;
+}
+#toparea #topcontainer #topbar .placeholder
+{
+	margin:0px;
+	background-color:red;
+}
+#toparea #topcontainer #infocontainer
+{
+	width:100%;
+}
+#toparea #topcontainer #infocontainer
+{
+	height:0;
+	overflow:hidden;
+}
+.pagemenu #toparea #topcontainer #infocontainer
+{
+	height:calc(100% - 76px);
+	overflow-y:auto;
+}
+
+#maincontainer #mainarea
+{
+  height:calc(100% - 76px);
+  display: flex;
+  flex-direction: column;
+}
+
+#mainarea #contentswitch
+{
+	flex: 0;
+}
+#mainarea #contentswitch .placeholder
+{
+	position:absolute;
+	margin-top:-25px;
+	width:100%;
+	height:50px;
+}
+
+#mainarea #rightcontainer
+{
+	flex: calc(100% - 25px);
+	overflow-y:auto;
+}
+#mainarea #leftcontainer
+{
+	flex: 25px;
+	overflow:hidden;
+}
+.leftview #mainarea #rightcontainer
+{
+	flex: 25px;
+	overflow:hidden;
+}
+.leftview #mainarea #leftcontainer
+{
+	flex: calc(100% - 25px);
+	overflow-y:auto;
+}
+
+
+
+#leftmenu-toggle,
+#rightmenu-toggle,
+#leftmenu-container,
+#rightmenu-container
+{
+	display: none;
+}
+
+}
+
+
+
+
+
+
+
+
+@media screen and (min-width: 960px) {
+
+#maincontainer #toparea
+{
+	position:absolute;
+	top:0px;
+	width:100%;
+	height:90px;
+}
+#toparea #topcontainer
+{
+	max-width:960px;
+	width:58%;
+}
+#toparea #topcontainer #topbar
+{
+	height:90px;
+}
+#toparea #topcontainer #topbar .placeholder
+{
+	margin:0px 60px;
+	height:90px;
+}
+#toparea #topcontainer #infocontainer .placeholder .contentmenu,
+#toparea #topcontainer #infocontainer .placeholder .contentarea
+{
+	height:0;
+	overflow:hidden;
+}
+
+.pagemenu #toparea #topcontainer #infocontainer
+{
+	height:auto;
+	min-height:calc(90vh - 90px);
+	background-color:#846320;
+}
+.pagemenu #toparea #topcontainer #infocontainer .placeholder
+{
+}
+.pagemenu #toparea #topcontainer #infocontainer .placeholder .contentmenu
+{
+	padding:0px 60px;
+	height:54px;
+}
+.pagemenu #toparea #topcontainer #infocontainer .placeholder .contentarea
+{
+	padding:0px 60px;
+	height:auto;
+	max-height:calc(100vh - 144px);
+	overflow-y:auto;
+}
+#maincontainer #mainarea
+{
+	display: flex;
+	width:100vw;
+	margin-top:0px;
+	height:100vh;
+	flex-direction: row-reverse; /* row */
+}
+
+#mainarea #contentswitch
+{
+	flex: 0;
+}
+#mainarea #contentswitch .placeholder
+{
+	position:absolute;
+	top:0px;
+	width:50px;
+	margin-left:-25px;
+	height:100vh;
+}
+
+#mainarea #rightcontainer
+{
+	position:relative;
+	flex: 85%;
+}
+#mainarea #leftcontainer
+{
+	flex:15%;
+}
+
+/* leftcontent */
+#mainarea #leftcontainer .placeholder
+{
+
+	position:absolute;
+	left:-50%;
+	width:60%;
+	background-color:#498732;
+	z-index:300;
+}
+.leftview #mainarea #leftcontainer .placeholder
+{
+	position:absolute;
+	left:0px;
+	width:100%;
+	z-index:300;
+}
+#mainarea #leftcontainer .placeholder .contentarea
+{
+	margin:90px auto 0px;
+	max-width:960px;
+	width:58%;
+}
+#mainarea #leftcontainer .placeholder .contentarea .itemcontainer
+{
+	margin:0px 60px;
+	height:calc(100vh - 90px);
+	overflow-y:auto;
+}
+
+/* rightcontent */
+#mainarea #rightcontainer .placeholder
+{
+	position:relative;
+	width:100%;
+	z-index:400;
+}
+#mainarea #rightcontainer .placeholder .contentarea
+{
+	height:100vh;
+	overflow-y:auto;
+}
+#mainarea #rightcontainer .placeholder .contentarea .itemcontainer
+{
+	margin-top:90px;
+	padding:20px 40px;
+}
+.leftview #mainarea #rightcontainer .placeholder .contentarea .itemcontainer
+{
+	margin-top:90px;
+	padding:20px 20px;
+}
+
+
+/* leftmenu open on rightview (default) */
+.leftmenu #mainarea #rightcontainer
+{
+	flex: 79%;
+}
+.leftmenu #mainarea #leftcontainer
+{
+	flex:21%;
+}
+/* leftview open (with or without menu) */
+.leftview #mainarea #rightcontainer
+{
+	flex: 21%;
+}
+.leftview #mainarea #leftcontainer
+{
+	flex:79%;
+}
+
+
+#maincontainer #rightmenu-toggle
+{
+	position:absolute;
+	top:0px;
+	min-width:190px;
+	width:21%;
+	max-width:240px;
+	right:0px;
+	text-align:right;
+}
+#maincontainer.rightmenu #rightmenu-toggle
+{
+	width:21%;
+	max-width:400px;
+}
+#maincontainer #rightmenu-toggle .placeholder
+{
+	height:90px;
+}
+
+#maincontainer #rightmenu-container
+{
+	position:absolute;
+	top:90px;
+	right:-400px;
+	width:21%;
+	max-width:400px;
+	height:calc(100vh - 90px);
+}
+#maincontainer.rightmenu #rightmenu-container
+{
+	right:0px;
+}
+
+
+#maincontainer #leftmenu-toggle
+{
+	position:absolute;
+	top:0px;
+	min-width:190px;
+	width:21%;
+	max-width:240px;
+}
+#maincontainer.leftmenu  #leftmenu-toggle
+{
+	width:21%;
+	max-width:400px;
+}
+#maincontainer #leftmenu-toggle .placeholder
+{
+	height:90px;
+}
+
+#maincontainer #leftmenu-container
+{
+	position:absolute;
+	top:90px;
+	left:-400px;
+	width:21%;
+	max-width:400px;
+	height:calc(100vh - 90px);
+}
+#maincontainer.leftmenu #leftmenu-container
+{
+	left:0px;
+}
+
+#leftmenu-container .innerbox
+{
+}
+
+
+
+}
+
+
+
+
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<script>
+
+jQuery(function($){
+
+	$(document).ready(function(){
+
+
+	  var pagebox = $('#maincontainer');
+		var leftmenu = $('#leftmenu-container');
+		var rightmenu = $('#rightmenu-container');
+
+		$('#menutoggle').on('click touchstart', function() {
+      		pagebox.toggleClass("pagemenu");
+			//pagebox.removeClass("leftview");
+		});
+
+		$('#contentswitch .placeholder').on('click touchstart', function() {
+			if( !pagebox.hasClass('leftview') && !pagebox.hasClass('leftmenu')){
+				pagebox.removeClass("rightmenu");
+				pagebox.addClass("leftmenu"); // switch left
+			}else if( pagebox.hasClass('leftview') && pagebox.hasClass('leftmenu') ){
+				pagebox.removeClass("leftmenu"); // switch right
+			}
+      		pagebox.toggleClass("leftview");
+			pagebox.removeClass("pagemenu");
+		});
+
+		$('#leftmenu-toggle .placeholder').on('click touchstart', function() {
+      		pagebox.toggleClass("leftmenu");
+		});
+		$('#rightmenu-toggle .placeholder').on('click touchstart', function() {
+      		pagebox.toggleClass("rightmenu");
+		});
+
+
+  	});
+
+});
+
+</script>
+</head>
+<body>
+<div id="maincontainer" class="">
+<!-- (rightview)leftview, leftmenu, rightmenu, pagemenu -->
+	<div id="toparea">
+
+
+		<div id="topcontainer">
+
+			<div id="topbar">
+				<div class="placeholder">
+					<div id="menutoggle">
+						menu
+					</div>
+					<div id="logo">
+						logo
+					</div>
+					<div id="searchbox">
+						search
+					</div>
+				</div>
+			</div>
+
+			<div id="infocontainer">
+				<div class="placeholder">
+					<div class="contentmenu">
+						menu
+					</div>
+					<div class="contentarea">
+						info pages
+						<div style="height:1300px;border:3px solid red;">
+						test
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div id="mainarea">
+
+		<div id="rightcontainer">
+			<div class="placeholder">
+				<div class="contentarea">
+					<div class="itemcontainer">
+						right-content
+						<div style="height:1300px;border:3px solid red;">
+						test
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="contentswitch">
+				<div class="placeholder">
+					switch
+				</div>
+		</div>
+
+		<div id="leftcontainer">
+			<div class="placeholder">
+				<div class="contentarea">
+					<div class="itemcontainer">
+						left-content
+						<div style="height:1300px;border:3px solid red;">
+						test
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="rightmenu-toggle" class="togglebox">
+			<div class="placeholder">
+				right-toggle
+			</div>
+	</div>
+
+	<div id="rightmenu-container">
+
+		<div class="placeholder">
+			right-menu
+		</div>
+
+	</div>
+
+	<div id="leftmenu-toggle" class="togglebox">
+			<div class="placeholder">
+				left-toggle
+			</div>
+	</div>
+
+	<div id="leftmenu-container">
+
+		<div class="placeholder">
+			left-menu
+		</div>
+
+	</div>
+
+
+
+</div>
+
+</body>
+</html>

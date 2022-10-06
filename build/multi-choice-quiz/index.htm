@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- HTML meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<!-- HTML doc title -->
+<title>Educatieve Quiz</title>
+
+<!-- meta tags -->
+<meta name="description" content="Multiple choice quiz applicatie nederlands - Multiple choice quiz dutch">
+<meta name="author" content="Webbouwer">
+<meta name="keywords" content="quiz applicatie, educatieMultiple choice, quiz, javascript, applicatie">
+
+<!-- jQuery and/or other libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<!-- Custom
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.min.js"></script>
+<link rel="stylesheet" href="elements.css" />
+ -->
+
+</head>
+<body>
+
+
+
+
+<!-- content display -->
+<div id="pagecontainer">
+
+<!-- variable content -->
+<div id="introtext">
+<h1>Quiz geschiedenis educatie</h1>
+<p>Deze Quiz applicatie bevat vragen naar aanleiding van de verhalen in de <a href="https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/" target="_blank">Kindertransport memory quilt exhibit</a></p>
+<p>De quiz is gemaakt voor <a href="https://www.voetstappennaareennieuwleven.nl/quiz/" target="_blank">voetstappennaareennieuwleven.nl</a>, original code <a href="https://jsfiddle.net/webbouwer/rbx8oq0L/6/" target="_blank">@jsfiddle</a></p>
+</div>
+
+<!-- start application -->
+<div id="questboard">
+</div>
+</div>
+<style>
+body
+{
+margin:0;
+padding:0;
+}
+#pagecontainer
+{
+padding:20px 40px;
+}
+
+
+#questboard {
+	font-size: 17px;
+	font-family: sans-serif;
+	color: #333;
+}
+
+#questboard h2
+{
+  padding:0;
+  margin:0;
+	font-size: 24px;
+  line-height:1.6em;
+}
+#questboard h3
+{
+  padding:0;
+  margin:0;
+	font-size: 20px;
+  line-height:1.6em;
+}
+
+#panels,
+#pagebar,
+#navbar,
+#infobar
+{
+  padding:5px 0px;
+}
+
+.group h2
+{
+}
+.group .imagebox
+{
+  width:120px;
+  text-align:center;
+}
+.group .imagebox img
+{
+  border-radius:100px;
+}
+.question
+{
+  padding:5px 0px 10px;
+}
+
+.navbut,
+.pagenr
+{
+  display:inline-block;
+  padding:3px;
+  text-align:center;
+	border-radius: 24px;
+  margin:0px 2px;
+	border:none;
+  cursor: pointer;
+}
+.pagenr
+{
+  width:25px;
+  height:25px;
+}
+.navbut
+{
+  padding:6px 10px;
+}
+
+button:disabled
+{
+  opacity:0.4;
+}
+
+.answers label{
+  display: block;
+  line-height:1.6em;
+  cursor: pointer;
+}
+
+.correct label,
+.incorrect .correct label
+{
+  color:green;
+}
+.incorrect label,
+.correct .incorrect label
+{
+  color:red;
+}
+
+.pagenr.active
+{
+  background-color:lightgrey;
+}
+
+.pagenr.done
+{
+  background-color:lightblue;
+}
+
+.pagenr.correct
+{
+  background-color:green;
+}
+.pagenr.incorrect
+{
+  background-color:orange;
+}
+
+input[type="radio"] {
+  background-color: #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  height: 15px;
+  margin-right: 10px;
+  margin-bottom: -3px;
+  position: relative;
+  width: 15px;
+  -webkit-appearance: none;
+}
+
+.correct label input[type="radio"]:checked,
+.incorrect .correct label input[type="radio"]:checked  {
+    background-color: green;
+}
+.incorrect label input[type="radio"]:checked,
+.correct .incorrect label input[type="radio"]:checked,
+input[type="radio"]:checked  {
+    background-color: #444;
+}
+</style>
+<script>
+
+
+
+/*
+author: webbouwer.org
+source: https://jsfiddle.net/webbouwer/rbx8oq0L/6/
+*/
+
+
+(function(){
+
+  var $container = $('#questboard');
+
+
+  var paneldata = [
+    {
+      group: "Vera Kittel",
+      info: "",
+      link: "https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-1/quilt-1-square-10/",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-1-Square-10-cropped.jpg",
+    },
+    {
+      group: "Ilse Camis Gross",
+      info: "",
+      link: "https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-1/quilt-1-square-15/",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-1-Square-15-cropped.jpg",
+    },
+    {
+      group: "Olga Levy Drucker",
+      info: "",
+      link: "https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-1/quilt-1-square-5/",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-1-Square-5-cropped.jpg",
+    },
+    {
+      group: "Urseula Meyer nee Eichmann",
+      info: "",
+      link: " https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-1/quilt-1-square-20/",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-1-Square-20-cropped.jpg",
+    },
+    {
+      group: "Erika Lange (Gorin)",
+      info: "",
+      link: "https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-2/quilt-2-square-5/",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-2-Square-5-cropped.jpg",
+    },
+    {
+      group: "Ilse Herz-Koven",
+      info: "",
+      link: "https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-2/quilt-2-square-3",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-2-Square-3-cropped.jpg",
+    },
+    {
+      group: "Karel Gross",
+      info: "",
+      link: "https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-3/quilt-3-square-3/",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-3-Square-3-cropped.jpg",
+    },
+    {
+      group: "Gerry Grossmann",
+      info: "",
+      link: "https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-3/quilt-3-square-12/",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-3-Square-12-cropped.jpg",
+    },
+    {
+      group: "Ruth Wassermann Segal",
+      info: "",
+      link: "https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-3/quilt-3-square-14/",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-3-Square-14-cropped.jpg",
+    },
+    {
+      group: "Lottie Nathan",
+      info: "",
+      link: "https://www.holocaustcenter.org/exhibitions/exhibits/kindertransport-memory-quilt-exhibit/kindertransport-quilt-3/quilt-3-square-7/",
+      image: "https://www.holocaustcenter.org/wp-content/uploads/Quilt-3-Square-7-cropped.jpg",
+    }
+  ];
+
+
+  var questdata = [
+    {
+      group: "Vera Kittel",
+      question: "Met wie reisde Vera van Breslau naar Londen?",
+      answers: {
+        a: "Met haar zusje Stephy",
+        b: "Met haar broertje Albert",
+        c: "Met haar nichtje Eva"
+      },
+      correctAnswer: "a"
+    },
+    {
+      group: "Vera Kittel",
+      question: "Wanneer vertrok zij?",
+      answers: {
+        a: "Op 14 januari 1939",
+        b: "Op 15 mei 1939",
+        c: "Op 25 juli 1939"
+      },
+      correctAnswer: "c"
+    },
+
+    {
+      group: "Ilse Camis Gross",
+      question: "Uit welke plaats vertrok Ilse?",
+      answers: {
+        a: "Uit Berlijn",
+        b: "Uit Hamburg",
+        c: "Uit Wenen"
+      },
+      correctAnswer: "c"
+    },
+    {
+      group: "Ilse Camis Gross",
+      question: "Wie zetten Ilse op de trein?",
+      answers: {
+        a: "Haar opa en oma",
+        b: "Haar oma en oom",
+        c: "Haar tante en opa"
+      },
+      correctAnswer: "b"
+    },
+    {
+      group: "Olga Levy Drucker",
+      question: "Waar werd Ola op de trein gezet?",
+      answers: {
+        a: "In Praag",
+        b: "In Stuttgart",
+        c: "In Gdansk"
+      },
+      correctAnswer: "b"
+    },
+    {
+      group: "Olga Levy Drucker",
+      question: "Waar zag ze later haar ouders terug?",
+      answers: {
+        a: "In Brussel",
+        b: "In New York",
+        c: "In Londen"
+      },
+      correctAnswer: "b"
+    },
+    {
+      group: "Urseula Meyer nee Eichmann",
+      question: "Hoe oud was Ursula toen ze op de trein werd gezet?",
+      answers: {
+        a: "9 jaar",
+        b: "11 jaar",
+        c: "13 jaar"
+      },
+      correctAnswer: "c"
+    },
+    {
+      group: "Urseula Meyer nee Eichmann",
+      question: "Wie van de familie vond ze na de oorlog terug?",
+      answers: {
+        a: "Haar zusje Hanna",
+        b: "Haar broertje Christoph",
+        c: "Niemand"
+      },
+      correctAnswer: "c"
+    },
+    {
+      group: "Erika Lange (Gorin)",
+      question: "Met wie reisde Erika naar Engeland?",
+      answers: {
+        a: "Met haar broertje van zes en een half",
+        b: "Met haar zus van bijna zestien",
+        c: "Met niemand, ze reisde alleen"
+      },
+      correctAnswer: "a"
+    },
+    {
+      group: "Erika Lange (Gorin)",
+      question: "In welk land kwam Erika uiteindelijk terecht?",
+      answers: {
+        a: "In de Verenigde Staten",
+        b: "In Israël",
+        c: "In Canada"
+      },
+      correctAnswer: "a"
+    },
+    {
+      group: "Ilse Herz-Koven",
+      question: "Wat zie je op de Quilt van Ilse?",
+      answers: {
+        a: "Het vertrek uit Berlijn",
+        b: "De overstap in Hoek van Holland",
+        c: "De aankomst in Londen"
+      },
+      correctAnswer: "b"
+    },
+    {
+      group: "Ilse Herz-Koven",
+      question: "Waar werd Ilse ondergebracht in Londen?",
+      answers: {
+        a: "In een zomerkamp",
+        b: "In een lege Joodse school",
+        c: "In een oud klooster"
+      },
+      correctAnswer: "a"
+    },
+    {
+      group: "Karel Gross",
+      question: "Wanneer maakte Karel de overtocht naar Engeland?",
+      answers: {
+        a: "Op 18 april 1939",
+        b: "Op 18 mei 1939",
+        c: "Op 18 juni 1939"
+      },
+      correctAnswer: "a"
+    },
+    {
+      group: "Karel Gross",
+      question: "Met welke boot voer Karel naar Engeland?",
+      answers: {
+        a: "Met de Vienna",
+        b: "Met de Berlin",
+        c: "Met de Praque"
+      },
+      correctAnswer: "c"
+    },
+    {
+      group: "Gerry Grossmann",
+      question: "Welke trein zie je op de Quilt van Gerry?",
+      answers: {
+        a: "Van Gdansk naar Hoek van Holland",
+        b: "Van Wenen naar Hoek van Holland",
+        c: "Van Düsseldorf naar Hoek van Holland"
+      },
+      correctAnswer: "c"
+    },
+    {
+      group: "Gerry Grossmann",
+      question: "Sinds 1966 woont Gerry in Canada. Waar woont zijn broer?",
+      answers: {
+        a: "In Londen",
+        b: "In Dusseldorf",
+        c: "In San Fransisco"
+      },
+      correctAnswer: "c"
+    },
+    {
+      group: "Ruth Wassermann Segal",
+      question: "Waarom verwerkte Ruth veel vogels in deze Quilt?",
+      answers: {
+        a: "Die vlogen rond hun huis bij het afscheid",
+        b: "Ze hoopte dat die post van haar moeder zouden brengen",
+        c: "Omdat vogels altijd weer op terugkomen op hun nest"
+      },
+      correctAnswer: "c"
+    },
+    {
+      group: "Ruth Wassermann Segal",
+      question: "Zag ze haar moeder terug na de oorlog?",
+      answers: {
+        a: "Nee, ze heeft haar moeder nooit meer teruggezien",
+        b: "Ja, ze ging na de oorlog weer terug naar Duitsland",
+        c: "Ja, ze vonden elkaar weer in de Verenigde Staten."
+      },
+      correctAnswer: "c"
+    },
+    {
+      group: "Lottie Nathan",
+      question: "Lottie vertrok met 27 andere kinderen. Waar kwamen die vandaan?",
+      answers: {
+        a: "Van een school in Dantzig",
+        b: "Van een kerkkoor in Berlijn",
+        c: "Uit de Joodse wijk in Hamburg "
+      },
+      correctAnswer: "a"
+    },
+    {
+      group: "Lottie Nathan",
+      question: "Waarom verwerkte Lotte dit jurkje in de Quilt?",
+      answers: {
+        a: "Het was een cadeautje van de mensen bij wie ze ging wonen",
+        b: "Dat droeg ze bij haar vertrek uit Duitsland",
+        c: "Dat was verbrand tijdens de Kristalnacht. Ze maakte het na "
+      },
+      correctAnswer: "b"
+    }
+  ];
+
+
+
+  var currentpanel,activepanels,pages,firstpanel,lastpanel,answerresult, automation;
+
+  function build(){
+
+    var grp = ''; // name of current(last) group in loop
+    var nmr = -1;  // index number of group
+    var anw = []; // array holding panels with answers
+
+    // insert main containers
+    $container.html('');
+    $container.append('<div id="titlebar"><h2>Quiz</h2></div>');
+    $container.append('<div id="infobar"></div>');
+    $container.append('<div id="pagebar"></div>');
+    $container.append('<div id="panels"></div>');
+    $container.append('<div id="navbar"></div>');
+
+    // insert nav buttons
+    $('#navbar').append( '<button class="navbut start">begin</button>');
+    $('#navbar').append( '<button class="navbut prev">vorige</button>');
+    $('#navbar').append( '<button class="navbut next">volgende</button>');
+    $('#navbar').append( '<button class="navbut end">eind</button>');
+    $('#navbar').append( '<button class="navbut reset">begin opnieuw</button>');
+
+    // loop question data
+    $.each( questdata, function( n, q) {
+
+    	// define panels(groups)
+      if( grp != q.group ){
+        nmr++;
+        // place panel (group) containers
+      	$('#panels').append('<div class="group panel'+(nmr+1)+'"></div>');
+        $('#pagebar').append('<button class="pagenr number p'+(nmr+1)+'" data-number="'+(nmr+1)+'">'+(nmr+1)+'</button>');
+
+        // insert panel data
+        var htmlinfo = '<h2>'+paneldata[nmr].group+'</h2>';
+        if( paneldata[nmr].link != '' ){
+          if( paneldata[nmr].image != '' ) {
+            htmlinfo += '<div class="imagebox"><a href="'+paneldata[nmr].link+'" target="_blank"><img src="'+paneldata[nmr].image+'" width="120" height="auto" /><br />bekijk info</a></div>';
+          }else{
+          	htmlinfo += '<a href="'+paneldata[nmr].link+'" target="_blank">Bekijk info</a>';
+          }
+        }else{
+        	if( paneldata[nmr].image != '' ) {
+        		htmlinfo += '<div class="imagebox"><img src="'+paneldata[nmr].image+'" width="120" height="auto" /></div>';
+        	}
+        }
+
+        $('#panels .panel'+(nmr+1)).append( htmlinfo );
+      	grp = q.group;
+      }
+
+
+      // insert question container
+      var qtxt = '';
+      qtxt += '<div class="question questionbox'+(n+1)+'" data-panel="'+(nmr+1)+'">';
+      qtxt += '<h3><span class="number">'+(n+1)+' </span>'+q.question+'</h3>';
+      qtxt += '</div>';
+      $('#panels .panel'+(nmr+1)).append(qtxt);
+
+      // insert answer container
+      var atxt = '<div class="answers answers'+(n+1)+'" data-number="'+(n+1)+'">';
+      for(idx in q.answers){
+      	atxt += '<label for="answer'+(n+1)+''+idx+'"><input id="answer'+(n+1)+''+idx+'" type="radio" name="question'+(n+1)+'" value="'+idx+'">';
+        atxt += idx+': '+q.answers[idx];
+        atxt += '</label>';
+      }
+      atxt += '</div>';
+      $('#panels .questionbox'+(n+1)).append(atxt);
+
+    });
+
+
+  	// set navigation defaults
+    currentpanel = 1;
+    activepanels = $('.group').removeClass('active').hide();
+    pages = $('.pagenr').removeClass('active');
+    firstpanel = 1;
+    lastpanel = $('.group').length;
+    automation = 1;
+
+    // navigation buttons
+    $("#navbar .start").on('click',function(){
+      currentpanel=1;
+      setnavigation();
+    });
+    $("#navbar .end").on('click',function(){
+      currentpanel=lastpanel;
+      setnavigation();
+    });
+    $("#navbar .next").on('click',function(){
+      currentpanel++;
+      setnavigation();
+    });
+    $("#navbar .prev").on('click',function(){
+      currentpanel--;
+      setnavigation();
+    });
+    $("#navbar .reset").on('click',function(){
+
+    	var chk = confirm( 'Wil je opnieuw beginnen?' );
+     	if (chk == true){
+      	currentpanel = 1;
+      	build();
+      }else{
+      	return false;
+      }
+
+    });
+
+    $("#pagebar").on('click', '.pagenr', function(){
+      currentpanel=$(this).attr('data-number');
+      setnavigation();
+    });
+
+    $(".answers").on('click', 'input', function(){
+  		setprogress($(this));
+  	});
+
+    // set navigation
+  	setnavigation();
+
+    $('button.reset').hide();
+
+    $('#infobar').html( ''+lastpanel+' onderwerpen, '+questdata.length+' vragen.' );
+
+  }
+
+  function setnavigation(){
+
+    // set panel
+    activepanels.removeClass('active').slideUp();
+    $("#panels .panel"+currentpanel).addClass('active').slideDown();
+    // set page nav
+    pages = $('.pagenr').removeClass('active');
+    $('#pagebar .pagenr.p'+currentpanel).addClass('active');
+
+    // available buttons
+    if( $(".group.active").hasClass("panel1") ){
+    	$("#navbar .prev, #navbar .start").prop("disabled",true);
+    }else{
+    	$("#navbar .prev, #navbar .start").prop("disabled",false);
+    }
+    if( $(".group.active").hasClass("panel"+lastpanel) ){
+    	$("#navbar .next, #navbar .end").prop("disabled",true);
+    }else{
+    	$("#navbar .next, #navbar .end").prop("disabled",false);
+    }
+
+  }
+
+  function setprogress(element){
+
+  	var g = element.parent().parent().parent();
+  	var a = g.parent().find('.question').length;
+    var b = g.parent().find('input:checked').length;
+
+    if( b == a ){
+
+    	$('#pagebar .p'+g.attr("data-panel") ).addClass('done');
+
+      // next panel
+      if( currentpanel != lastpanel && automation == 1){
+        setTimeout( function(){
+        currentpanel++;
+        setnavigation();
+        }, 200 );
+      }
+
+    }
+
+
+
+    if( $('#panels').find('input:checked').length === questdata.length ){
+
+      showresult();
+
+    }else{
+
+    	$('#infobar').html( $('#panels').find('input:checked').length +' van de '+questdata.length+' vragen beantwoord');
+
+    }
+
+  }
+
+  function showresult(){
+
+  	automation = 0;
+  	answerresult = 0;
+    $('.answers,.pagenr,.group').removeClass('incorrect correct');
+
+    $('button.reset').show();
+
+  	$('#panels input:checked').each( function(){
+
+      	var answer = $(this).attr('value');
+        var que = $(this).parent().parent().attr('data-number');
+
+        var panel = $('.answers'+que).parent().attr('data-panel');
+
+        if( answer === questdata[(que-1)].correctAnswer ){
+        	answerresult++;
+        	$('.answers'+que).addClass('correct');
+          $('#pagebar .p'+panel+', .panel'+panel ).addClass('correct');
+        }else{
+        	$('.answers'+que).addClass('incorrect');
+          $('#pagebar .p'+panel+', .panel'+panel ).addClass('incorrect');
+        }
+
+    });
+
+    $('#infobar').html( answerresult +' van de '+questdata.length+' antwoorden goed!');
+
+  }
+
+
+  build();
+
+
+
+
+
+
+})();
+
+</script>
+
+
+
+<!-- webbouwer infobar -->
+<div id="infobar" style="position:fixed;top:0px;right:0px;">
+	<a href="https://webbouwer.org"><img src="https://img.shields.io/badge/Webbouwer-Site-red.svg"/>
+	<a href="https://github.com/webbouwer/"><img src="https://img.shields.io/badge/Webbouwer-github-black.svg"/>
+	<a href="https://jsfiddle.net/user/webbouwer/fiddles/"><img src="https://img.shields.io/badge/Webbouwer-JSFiddle-blue.svg"/>
+	<!--
+  <a href="https://webbouwer.org" target="_blank">webbouwer.org</a>
+  <a href="https://github.com/webbouwer?tab=repositories" title="Webbouwer @ github.com" target="_blank">Github.com</a>
+  <a href="https://jsfiddle.net/user/webbouwer/fiddles/" title="Webbouwer @ JSFiddle.net" target="_blank">JSFiddle.net</a>
+	-->
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Topbar Mookup ZPWL</title>
+</head>
+<style>
+body
+{
+	width:100%;
+	margin:0px;
+	padding:0px;
+	font-family: "Helvetica", arial, serif;
+	color:black;
+	font-size:0.8em;
+}
+#header,
+#mainbody,
+#footer
+{
+	width:100%;
+}
+
+
+.outerspace
+{
+	padding:10px;
+	min-width:300px;
+}
+
+
+
+#header #navbar
+{
+	width:100vw;
+	max-width:1140px;
+	margin:0px auto;
+}
+
+#maincontent
+{	
+	display:none;
+	width:100vw;
+	max-width:1140px;
+	margin:0px auto;
+	transition: all linear 0.4s;
+}
+#maincontent.active
+{	
+	display:block;
+	width:100vw;
+	max-width:1140px;
+	height:80vh;
+	margin:0px auto;
+}
+
+#maincontent .wrapper
+{
+	position:absolute;
+}
+#maincontent .menubox,
+#maincontent .contentbox
+{
+}
+
+.closebutton
+{
+	display: block;
+  background-image: url('images/kruis.png');
+	width: 48px;
+	height: 48px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 30px 30px;
+}
+.closebutton span
+{
+	display:none;
+}
+
+
+#panelright
+{
+	background-color:red;
+	height:calc(100vh - 128px);
+}
+#panelright .sidebar
+{
+}
+
+#panelleft
+{
+}
+
+.spacebar
+{
+	height:64px;
+}
+
+
+#navbar .togglebox
+{
+	display:flex;
+	padding:5px 0px 8px;
+	border-bottom:3px solid black;
+}
+#navbar .togglebox .column
+{
+	flex:1 7 7;
+}
+
+#navbar .togglebox .menu-icon
+{
+	width:50px;
+}
+#navbar .togglebox .logo
+{
+	width:45%;
+}
+#navbar .togglebox .search
+{
+	width:calc(55% - 50px);
+	text-align:right;
+}
+
+#navbar .togglebox .menu-icon img,
+#navbar .togglebox .logo img
+{
+	height:24px;
+	width:auto;
+}
+
+#navbar .togglebox .search input
+{
+	text-align:left;
+	width:85%;
+	max-width:200px;
+	padding:2px 5px;
+	border:2px solid grey;
+}
+
+@media all and (min-width: 960px){
+	
+	#panelright .sidebar
+	{
+		width:200px;
+		float:right;
+	}
+	#panelright .contentbox
+	{
+		width:calc(100vw - 400px);
+		float:left;
+		
+	}
+	
+	#panelleft .sidebar
+	{
+		display:block;
+		width:200px;
+		float:left;
+	}
+	#panelleft .contentbox
+	{
+		width:0px;
+		float:left;
+		overflow:hidden;
+	}
+}
+
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<script>
+jQuery(function($){
+
+	$(document).ready(function(){
+	
+		$('#maincontent').removeClass('active');
+		
+		$('#navbar .menu-icon, #maincontent .closebutton').on('click', function(){
+			$('#maincontent').toggleClass('active');
+		});
+
+	});
+
+});
+
+</script>
+
+<body>
+<div id="header">
+	<div id="navbar">
+
+			<div class="outerspace">
+					
+				<div class="togglebox">
+				
+					<div class="menu-icon column">
+						<img src="images/menu.svg" />
+					</div>
+					<div class="logo column">
+						<img src="images/ZPWL_weblogo.gif" />
+					</div>
+					<div class="search column">
+						<input id="searchbox" class="basic-search" placeholder="Zoek" size="24" style="background-color: white;">
+					</div>
+					
+				</div>
+			</div>
+
+	</div>
+</div>
+
+<div id="mainbody">
+
+	<div id="maincontent">
+		<div class="wrapper">
+		
+			<div class="closebutton">
+				<span>close button</span>
+			</div>
+			
+			<div class="menubox">
+				<div class="outerspace">
+					info menu
+				</div>
+			</div>
+
+			<div class="contentbox">
+				<div class="outerspace">
+					info pages
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+	
+</body>
+</html>
