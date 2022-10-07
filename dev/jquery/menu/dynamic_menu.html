@@ -1,0 +1,274 @@
+
+<html>
+<head>
+
+<style>
+/* large screen */
+@media all and (min-width: 960px) {
+
+  #header
+  {
+    position:relative;
+    top:0px;
+    width:100%;
+  }
+
+  /* header mainbar */
+  #mainbar
+  {
+    position:relative;
+    width:100%;
+  }
+
+  #mainbar.display-left .innerbar
+  {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #mainbar.display-inline .innerbar
+  {
+    display: flex;
+  }
+
+  #mainbar.display-incenter .innerbar,
+  #mainbar.display-center .innerbar
+  {
+    display: flex;
+  	flex-direction: column;
+  	justify-content: center;
+  	align-items: center;
+  }
+
+  #mainbar.display-right .innerbar
+  {
+    display: flex;
+  	justify-content: space-between;
+  	flex-direction: row-reverse;
+  }
+
+  #site-titlebox,
+  #site-logobox
+  {
+    flex: 1;
+  }
+  #mainmenubox
+  {
+    flex: 1;
+  }
+  #mainbar_widgets
+  {
+    flex: 1;
+  }
+
+  .display-left #mainmenubox
+  {
+    flex: 3;
+    text-align:right;
+  }
+  .display-right #mainmenubox
+  {
+    flex: 3;
+    text-align:left;
+  }
+  .display-incenter #mainmenubox,
+  .display-center #mainmenubox,
+  .display-center #site-titlebox
+  {
+    flex: 3;
+    text-align:center;
+  }
+  .display-incenter #mainbar_widgets,
+  .display-center #mainbar_widgets,
+  .display-incenter #site-titlebox,
+  .display-center #site-titlebox
+  {
+    flex: none;
+  }
+
+
+  #mainbar #mainmenubox #mainmenu nav .innerpadding .menu > ul
+  {
+  }
+  #mainbar #mainmenubox #mainmenu nav .innerpadding .menu > ul > li
+  {
+    display:inline-block;
+  }
+
+}
+</style>
+
+
+<script>
+
+// Events listeners
+// source 1: https://stackoverflow.com/questions/8796988/binding-multiple-events-to-a-listener-without-jquery
+// source 2: https://www.w3schools.com/jsref/event_onresize.asp
+function listenOnMultiEvents(element, eventNames, listener) {
+  var events = eventNames.split(' ');
+  for (var i=0, iLen=events.length; i<iLen; i++) {
+    element.addEventListener(events[i], listener, false);
+  }
+}
+
+// eventhandlers
+// source 1: https://developer.mozilla.org/en-US/docs/Web/API/Window#event_handlers
+
+// hasclass 
+// source 1: https://stackoverflow.com/questions/5898656/check-if-an-element-contains-a-class-in-javascript
+// source 2: http://jsfiddle.net/fkling/zBKCC/
+function hasClass(element, cls) {
+    return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+// Count ul li elements
+// source 1: https://www.sitepoint.com/community/t/how-to-count-li-elements-from-a-list/388
+function countListElements( listel ){
+	var c = 0;
+  for (var i = 0; i < listel.childNodes.length; i++) {
+    if (listel.childNodes[i].nodeName == "LI") {
+      c++;
+    }
+  }
+  return c;
+}
+
+// add and remove item from list
+// source 1: https://memorynotfound.com/dynamically-addremove-items-list-javascript/
+// source 2: https://jsfiddle.net/Memorynotfound/obhq8x50/
+// source 3: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+function addItemOnEnd( listel, dynel, newid ){
+  var li = document.createElement("li");
+  li.setAttribute('id', newid );
+  li.appendChild(dynel);
+  listel.appendChild(li);
+}
+function addItemInMiddle( listel, dynel, newid ){
+  var li = document.createElement("li");
+  li.setAttribute('id', newid );
+  li.appendChild(dynel);
+	var placeindex = Math.round( countListElements( listel ) / 2 );
+  listel.insertBefore( li, listel.children[placeindex]);
+  
+}
+function removeItem( listel, remid ){
+	var ul = document.getElementById("dynamic-list");
+  var candidate = document.getElementById("candidate");
+  var item = document.getElementById( remid );
+  listel.removeChild(item);
+}
+
+
+// set menu
+listenOnMultiEvents( window, 'load resize', function(){
+
+	var mobminw = 960; 
+  var curwinw = document.documentElement.clientWidth;
+	var bar = document.getElementById('mainbar');
+  var menu = document.getElementById("mainmenu");
+  var menulist = menu.getElementsByTagName("ul")[0];
+  var logobox = document.getElementById('site-titlebox');
+  var widgetbox = document.getElementById('mainbar_widgets');
+  var menucenterid = 'item-logobox';
+  var widgetaddid = 'item-widgets';
+  
+  // add widgets inside menu	
+  if( hasClass( bar, 'display-incenter' ) || hasClass( bar, 'display-center' ) ){
+    if( !document.getElementById(widgetaddid) ){
+      addItemOnEnd( menulist, widgetbox, widgetaddid );
+    }
+  }
+  
+  // onresize/load check window width
+  if( curwinw > mobminw ){
+  
+    // large screen
+    
+    // place logo inside menu
+    if( hasClass( bar, 'display-incenter' ) ){
+      if( !document.getElementById(menucenterid) ){
+        addItemInMiddle( menulist, logobox, menucenterid );
+      }
+    }
+    // move widgets outside menu
+    if( ( hasClass( bar, 'display-left' ) || hasClass( bar, 'display-right' ) ) && document.getElementById( widgetaddid ) ){
+      console.log( 'mobile detected widgets to reverse' );
+      bar.getElementsByClassName( 'innerbar' )[0].append(widgetbox);
+      removeItem( menulist, widgetaddid );
+    }
+    
+    
+  }else{
+  	
+    // small screen
+
+    // place logobox outside menu 
+    if( hasClass( bar, 'display-incenter' ) && document.getElementById( menucenterid ) ){
+      bar.getElementsByClassName( 'innerbar' )[0].prepend(logobox);
+      removeItem( menulist, menucenterid );
+    }  
+    // place widgets inside menu 
+    if( hasClass( bar, 'display-left' ) || hasClass( bar, 'display-right' ) ){
+      if( !document.getElementById(widgetaddid) ){
+        addItemOnEnd( menulist, widgetbox, widgetaddid );
+      }
+    }
+    
+    // todo: inleft menu (logobox inline menu left, widgets right)
+    // todo: inright menu (logobox inline menu right, widgets left)
+
+    // todo: fold menu and add menu button
+   	
+    
+  }
+
+});
+
+</script>
+</head>
+<body>
+
+<div id="mainbar" class="display-left">
+  <div class="innerbar">
+    <div id="site-titlebox">
+      <div class="innerpadding">
+        <hgroup>
+          <h1 class="site-title"><a href="https://webdesigndenhaag.net/lab/project/proficium/" id="site-logo" title="Proficium" rel="home">Proficium</a></h1>
+          <h2 class="site-description">A multi purpose Wordpress Theme</h2>
+        </hgroup>
+      </div>
+    </div>
+    <div id="mainmenubox">
+      <div id="mainmenu" class="pos-default">
+        <nav>
+          <div class="innerpadding">
+            <div class="menu">
+              <ul>
+                <li class="page_item page-item-72"><a href="https://webdesigndenhaag.net/lab/project/proficium/contact/">Contact</a></li>
+                <li class="page_item page-item-74"><a href="https://webdesigndenhaag.net/lab/project/proficium/gallery/">Gallery</a></li>
+                <li class="page_item page-item-84"><a href="https://webdesigndenhaag.net/lab/project/proficium/info/">Info</a></li>
+                <li class="page_item page-item-2"><a href="https://webdesigndenhaag.net/lab/project/proficium/sample-page/">Sample Page</a></li>
+              </ul>
+            </div>
+            <div class="clr"></div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div id="mainbar_widgets">
+      <div id="custom_html-2" class="widget_text widget widget_custom_html">
+        <div class="widget_text innerpadding">
+          <div class="widget-titlebox">
+            <h3>Mainbar</h3>
+          </div>
+          <div class="widget-contentbox">
+            <div class="textwidget custom-html-widget"> add more</div>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

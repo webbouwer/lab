@@ -1,0 +1,271 @@
+
+<html>
+<head>
+<title>Dynamic Menu v2.0</title>
+<style>
+
+  #mainbar.display-left .innerbar,
+  #mainbar.display-inleft .innerbar
+  {
+    display: flex;
+    justify-content: space-between;
+  }
+  #mainbar.display-right .innerbar,
+  #mainbar.display-inright .innerbar
+  {
+    display: flex;
+  	justify-content: space-between;
+  	flex-direction: row-reverse;
+  }
+  #mainbar.display-incenter .innerbar,
+  #mainbar.display-center .innerbar
+  {
+    display: flex;
+  	flex-direction: column;
+  	justify-content: center;
+  	align-items: center;
+  }
+  #mainbar.mobile .innerbar
+  {
+    display:block;
+  }
+  
+  .display-incenter #mainmenubox,
+  .display-center #mainmenubox,
+  .display-center #site-titlebox
+  {
+    flex: 1;
+    text-align:center;
+  }
+  
+  #mainbar #mainmenubox #mainmenu nav .innerpadding .menu > ul
+  {
+    display: flex;
+  	justify-content: space-between;
+  }
+  #mainbar.display-right #mainmenubox #mainmenu nav .innerpadding .menu > ul,
+  #mainbar.display-inright #mainmenubox #mainmenu nav .innerpadding .menu > ul
+  {
+    display: flex;
+  	justify-content: space-between;
+  	flex-direction: row-reverse;
+  }
+  #mainbar.mobile #mainmenubox #mainmenu nav .innerpadding .menu > ul
+  {
+    display: block;
+  }
+  
+  #mainbar #mainmenubox #mainmenu nav .innerpadding .menu > ul > li
+  {
+  }  
+  
+</style>
+
+
+<script>
+// Multi event listener
+function listenOnMultiEvents(element, eventNames, listener) {
+  var events = eventNames.split(' ');
+  for (var i=0, iLen=events.length; i<iLen; i++) {
+    element.addEventListener(events[i], listener, false);
+  }
+}
+function hasClass(element, cls) {
+    return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+function addItemAtEnd( listel, dynel, newid ){
+  var li = document.createElement("li");
+  li.setAttribute('id', newid );
+  li.appendChild(dynel);
+  listel.appendChild(li);
+}
+function addItemAtStart( listel, dynel, newid ){
+  var li = document.createElement("li");
+  li.setAttribute('id', newid );
+  li.appendChild(dynel);
+  listel.insertBefore( li, listel.children[0]);
+}
+function addItemInMiddle( listel, dynel, newid ){
+  var li = document.createElement("li");
+  li.setAttribute('id', newid );
+  li.appendChild(dynel);
+	var placeindex = Math.round( countListElements( listel ) / 2 );
+  listel.insertBefore( li, listel.children[placeindex]);
+}
+function removeItem( listel, remid ){
+	var ul = document.getElementById("dynamic-list");
+  var candidate = document.getElementById("candidate");
+  var item = document.getElementById( remid );
+  listel.removeChild(item);
+}
+function countListElements( listel ){
+	var c = 0;
+  for (var i = 0; i < listel.childNodes.length; i++) {
+    if (listel.childNodes[i].nodeName == "LI") {
+      c++;
+    }
+  }
+  return c;
+}
+
+
+function setDynamicMenu(){
+	var mobminw = 760; 
+  var curwinw = document.documentElement.clientWidth;
+  
+	var bar = document.getElementById('mainbar');
+  var menu = document.getElementById("mainmenu");
+  var menulist = menu.getElementsByTagName("ul")[0];
+  
+  var logobox = document.getElementById('site-titlebox');
+  var widgetbox = document.getElementById('mainbar_widgets');
+  
+  var menuaddid = 'item-logobox';
+  var widgetaddid = 'item-widgets';
+
+  // mainbar large / small
+  if( curwinw > mobminw ){
+  	bar.classList.remove('mobile');
+  }else{
+  	bar.classList.add('mobile');
+  }
+
+  // mainbar logobox placement
+  if( curwinw > mobminw ){
+ 		// large screen 
+    // move logobox outside menu
+    if( ( hasClass( bar, 'display-center' ) || hasClass( bar, 'display-left' ) || hasClass( bar, 'display-right' )) && document.getElementById( menuaddid ) ){
+      bar.getElementsByClassName( 'innerbar' )[0].prepend(logobox);
+      removeItem( menulist, menuaddid );
+    } 
+    // move logobox inside menu centered
+    if( hasClass( bar, 'display-incenter' ) ){
+      if( document.getElementById(menuaddid) ){
+      	bar.getElementsByClassName( 'innerbar' )[0].prepend(logobox);
+      	removeItem( menulist, menuaddid );
+      }
+      addItemInMiddle( menulist, logobox, menuaddid );
+    }
+    // move logobox inside menu at start
+    if( hasClass( bar, 'display-inleft' ) || hasClass( bar, 'display-inright' )){
+      if( document.getElementById(menuaddid) ){
+      	bar.getElementsByClassName( 'innerbar' )[0].prepend(logobox);
+      	removeItem( menulist, menuaddid );
+      }
+      addItemAtStart( menulist, logobox, menuaddid );
+    }
+      
+  }else{
+  	// small screen
+    // move logobox outside menu
+    if( document.getElementById( menuaddid ) ){
+      bar.getElementsByClassName( 'innerbar' )[0].prepend(logobox);
+      removeItem( menulist, menuaddid );
+    }
+    
+  }
+
+
+  // mainbar widget placement
+  if( curwinw > mobminw ){
+ 		// large screen 
+    // move widgetbox outside menu
+  	if( hasClass( bar, 'display-inright' ) || hasClass( bar, 'display-inleft' ) ){
+      bar.getElementsByClassName( 'innerbar' )[0].append(widgetbox);
+      if(document.getElementById(widgetaddid)){
+        removeItem( menulist, widgetaddid );
+      }
+    }else{
+    	// move widgetbox inside menu
+      if( !document.getElementById(widgetaddid) ){
+        addItemAtEnd( menulist, widgetbox, widgetaddid );
+      }
+      
+    }
+  }else{
+  	// small screen 
+    // move widgetbox inside menu
+  	if( !document.getElementById(widgetaddid) ){
+      addItemAtEnd( menulist, widgetbox, widgetaddid );
+    }
+  } 
+}
+
+function testMenuActions(){
+		var tstmn = document.getElementById("testmenu");
+		for (var i = 0; i < tstmn.childNodes.length; i++) {
+			if (tstmn.childNodes[i].nodeName == "SPAN") {
+				tstmn.childNodes[i].addEventListener('click', ()=>{
+					setDynamicMenu();
+				});
+			}
+		}
+}
+
+listenOnMultiEvents( window, 'load resize', function(){
+	
+	// onload and resize
+	setDynamicMenu();
+	// on testmenu button clicks
+	testMenuActions()
+	
+});
+</script>
+</head>
+<body>
+<!-- test menu bar -->
+<div id="testmenu">
+  <span onclick="document.getElementById('mainbar').className = 'display-left';">left</span> |
+  <span onclick="document.getElementById('mainbar').className = 'display-inleft';">inline left</span> |
+  <span onclick="document.getElementById('mainbar').className = 'display-incenter';">inline center</span> |
+  <span onclick="document.getElementById('mainbar').className = 'display-center';">center</span> |
+  <span onclick="document.getElementById('mainbar').className = 'display-inright';">inline right</span> |
+  <span onclick="document.getElementById('mainbar').className = 'display-right';">right</span>
+</div>
+<!-- page menu bar -->
+<div id="mainbar" class="display-incenter">
+  <div class="innerbar">
+    <div id="site-titlebox">
+      <div class="innerpadding">
+        <hgroup>
+          <h1 class="site-title"><a href="https://webdesigndenhaag.net/lab/project/proficium/" id="site-logo" title="Proficium" rel="home">Proficium</a></h1>
+          <h2 class="site-description">A multi purpose Wordpress Theme</h2>
+        </hgroup>
+      </div>
+    </div>
+    <div id="mainmenubox">
+      <div id="mainmenu" class="pos-default">
+        <nav>
+          <div class="innerpadding">
+            <div class="menu">
+              <ul>
+                <li class="page_item page-item-72"><a href="https://webdesigndenhaag.net/lab/project/proficium/contact/">Contact</a></li>
+                <li class="page_item page-item-74"><a href="https://webdesigndenhaag.net/lab/project/proficium/gallery/">Gallery</a></li>
+                <li class="page_item page-item-84"><a href="https://webdesigndenhaag.net/lab/project/proficium/info/">Info</a></li>
+                <li class="page_item page-item-2"><a href="https://webdesigndenhaag.net/lab/project/proficium/sample-page/">Sample Page</a></li>
+              </ul>
+            </div>
+            <div class="clr"></div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div id="mainbar_widgets">
+      <div id="custom_html-2" class="widget_text widget widget_custom_html">
+        <div class="widget_text innerpadding">
+          <div class="widget-titlebox">
+            <h3>Mainbar</h3>
+          </div>
+          <div class="widget-contentbox">
+            <div class="textwidget custom-html-widget"> add more</div>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

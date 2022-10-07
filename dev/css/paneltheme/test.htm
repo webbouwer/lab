@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Reframe v0.0.3</title>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        
+        <style>
+        /*
+        Element base: 
+        - html and body size & spacings
+        - a pagecontainer full height relative
+        */
+        html
+        {
+          width: 100%;
+          height: 100%;
+        }
+        body
+        {
+          width: 100%;
+          height: 100%;
+          margin: 0px;
+          padding: 0px;
+        }
+        #pagecontainer
+        {
+          position:relative;
+          width:100%;
+          min-height:100%;
+          background-color: aqua;
+        }
+
+        /* CSS custom variables*/
+        :root
+        {
+            --minheight: 60px;
+
+            --barminheight: 90px;
+          --barbgcolor: #cc0000;
+        }
+
+        /* top section */
+        #topbar
+        {
+          min-height: var(--barminheight);
+          background-color: var(--barbgcolor);
+        }
+        #headerbar
+        {
+
+        }
+        /* main section */
+        #mainbar
+        {
+        }
+        #mainbar #sidebar
+        {
+        }
+        #mainbar #contentbar
+        {
+        }
+
+        #contentbar .contentcontainer
+        {
+
+        }
+        #contentbar .contentcontainer .innercontent
+        {
+
+        }
+        #contentbar .contentcontainer .innerbox 
+        {
+
+        }
+        /* footer section */
+        #bottombar
+        {
+          min-height: var(--barminheight);
+          background-color: var(--barbgcolor);
+        }
+            
+      
+        @media screen and (min-width: 480px) and ( orientation: landscape ){
+
+            /* small inner colums */ 
+            .contentcontainer{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                /*
+                align-items: center;
+                justify-content: center;
+                */
+            }
+            .innerbox
+            {
+                display: flex;
+                flex-direction: column;
+                flex-basis: 100%;
+                flex: 1; 
+                min-width:280px;
+            }
+            
+            .innercontent
+            {
+                display: flex;
+                min-width:50%;
+                flex-direction: column;
+                flex-basis: 100%;
+                flex: 1; 
+                min-width:480px;
+            }
+            
+        }
+            
+        @media screen and (min-width: 960px){
+        
+            /* medium sidebar */
+            #mainbar{
+                width: 100%; 
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                /*
+                align-items: center;
+                justify-content: center;
+                */
+                background-color: green;
+            }
+            #sidebar
+            {
+                display: flex;
+                flex-direction: column;
+                flex-basis: 100%;
+                flex: 1 0 0; 
+                min-width:280px;
+            }
+            #contentbar
+            {
+                display: flex;
+                flex-direction: column;
+                flex-basis: 100%;
+                flex: 4 0 0; 
+                min-width:280px;
+            }
+            .innercontent
+            {
+                min-width:46%;
+            }
+        }
+        </style>
+        
+    </head>
+    <body>
+        <div id="pagecontainer">
+
+          <div id="topbar">
+            top
+          </div>
+
+          <div id="headerbar">
+            header
+          </div>
+
+          <div id="mainbar">
+
+            <div id="sidebar">
+              side
+            </div>
+
+            <div id="contentbar">
+
+              <div class="contentcontainer">
+
+                <div class="innercontent">
+                  maincontent
+                </div>
+
+                <div class="innerbox">
+                  content
+                </div>
+
+                <div class="innerbox">
+                  content
+                </div>
+
+              </div>
+
+              <div class="contentcontainer">
+
+                <div class="innerbox">
+                  content
+                </div>
+
+                <div class="innerbox">
+                  content
+                </div>
+
+                <div class="innerbox">
+                  content
+                </div>
+
+                <div class="innerbox"> 
+                  content
+                </div>
+
+                <div class="innerbox">
+                  content
+                </div>
+
+                <div class="innerbox"> 
+                  content
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div id="bottombar">
+            footer
+          </div>
+
+        </div>
+        
+    </body>
+</html>
