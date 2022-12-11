@@ -1,0 +1,191 @@
+/* Global public */
+:root {
+  --font_base_family: 'Montserrat', sans-serif;
+  --font_base_size: 1em;
+  --border_radius_base: 6px;
+}
+
+:root[data-theme="theme-light"] {
+
+  /* light theme style.css */
+  --body_bg: #FFFFFF;
+  --body_text: #0D0C13;
+
+  --text_link: #0C53F6;
+  --text_link_hover: #012883;
+
+  --button_text: #EDEDEF;
+  --button_bg: #0066FF;
+  --button_text_hover: #FFFFFF;
+  --button_bg_hover: #0C53F6;
+
+  /* dark theme tables */
+  --row_bg_hover: #EDEDEF;
+
+  /* dark theme fields */
+  --input_bg: #EDEDEF;
+  --input_text_color: #24232B;
+  --input_bg_hover: #D0D0D5;
+  --input_text_color_hover: #0D0C13;
+
+}:root[data-theme="theme-dark"] {
+
+  /* dark theme style */
+  --body_bg: #040409;
+  --body_text: #D0D0D5;
+
+  --text_link: #0C53F6;
+  --text_link_hover: #0138B6;
+
+  --button_text: #14141B;
+  --button_bg: #0C53F6;
+  --button_text_hover: #EDEDEF;
+  --button_bg_hover: #0138B6;
+
+  /* dark theme tables */
+  --row_bg_hover: #0D0C13;
+
+  /* dark theme fields */
+  --input_bg: #0D0C13;
+  --input_text_color: #D0D0D5;
+  --input_bg_hover: #24232B;
+  --input_text_color_hover: #EDEDEF;
+
+}
+
+#logotitle
+{
+  display:inline-block;
+}
+#themetoggle
+{
+  display:inline-block;
+  float:right;
+  width:38px;
+	margin:2vh auto;
+}
+
+#themetoggle .slider
+{
+  width:38px;
+  height:20px;
+  border-radius:10px;
+  background-color: var(--body_text);
+}
+#themetoggle .slider .nob
+{
+  width:22px;
+  height:20px;
+  border-radius:30px;
+  background-color: var(--body_bg);
+  transition: all 0.5s ease-out;
+}
+
+[data-theme="theme-dark"] #themetoggle .nob
+{
+  margin-left: calc( 100% - 22px);
+}
+
+
+
+
+
+
+body
+{
+
+  margin:0;
+  padding:0;
+
+  font-family: var(--font_base_family);
+  font-size: var(--font_base_size);
+
+  letter-spacing: -0.02em;
+  font-weight:500;
+  line-height:1.6em;
+
+  color: var(--body_text);
+  background-color: var(--body_bg);
+}
+
+
+
+
+
+
+
+a
+{
+  color: var(--text_link);
+  text-decoration:none;
+}
+a:hover
+{
+  color: var(--text_link_hover);
+  text-decoration:underline;
+}
+input#go,
+button
+{
+  background-color:var(--button_bg);
+  color: var(--button_text);
+  padding:3px 6px;
+}
+input#go:hover,
+button:hover
+{
+  background-color:var(--button_bg_hover);
+  color: var(--button_text_hover);
+}
+
+
+#adminbar,
+.outermargin
+{
+  position:relative;
+  width:90%;
+  max-width:1158px;
+  margin: 0px auto;
+}
+
+input, textarea, button, select
+{
+
+  background-color: var(--input_bg);
+  color: var(--input_text_color);
+
+  font-family: var(--font_base_family);
+  font-size: var(--font_base_size);
+
+  /* matching body style */
+  letter-spacing: 0.01em;
+  font-weight:500;
+  line-height:1.6em;
+
+  border:none;
+  border-radius: var(--border_radius_base);
+
+  margin:0px 2px;
+  border:none;
+  padding:2px 8px;
+}
+.formrow,
+.formend,
+.entry
+{
+  padding:3px 0px;
+}
+.formfield span
+{
+  display:inline-block;
+  min-width:200px;
+  min-height:28px;
+  margin-right:10px;
+}
+
+
+/* large */
+@media all and (min-width: 560px){
+
+
+}

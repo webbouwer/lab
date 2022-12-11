@@ -1,0 +1,96 @@
+/* interactive table/section elements */
+
+/* datalist */
+table#datalist
+{
+  width:100%;
+}
+
+table#datalist, table#datalist tr, table#datalist th, table#datalist td {
+  border: none;
+  border-collapse: collapse;
+}
+
+table th
+{
+  text-align:left;
+}
+
+
+
+table#datalist .entry .field-id span
+{
+  display:inline-block;
+  min-width:40px;
+  min-height:28px;
+  margin-right:10px;
+}
+table#datalist
+{
+  width:100%;
+}
+table#datalist tr
+{
+  border:none;
+  transition: all 0.5s ease-out;
+}
+table#datalist td
+{
+  transition: all 0.5s ease-out;
+}
+table#datalist tr:hover td
+{
+  background-color:var(--row_bg_hover);
+  border:none;
+}
+
+/* configlist */
+.configlist .tabletop
+{
+  position:relative;
+}
+.configlist .tabletop .menu
+{
+  position:absolute;
+  top:-30px;
+  right:0px;
+}
+.configlist .profile .menu
+{
+  float:right;
+}
+
+.configlist .profile .titlebox:hover
+{
+  background-color: var(--row_bg_hover);
+}
+
+.configlist .profile .titlebox
+{
+  padding:10px 12px;
+  width:auto;
+  max-width:360px;
+}
+.configlist .profile .titlebox h3,
+.configlist .profile .titlebox p
+{
+  padding:2px 0px 0px;
+  margin:0;
+}
+
+.configlist .profile .editbox
+{
+  display:none;
+}
+
+
+/* email page */
+.formpreview
+{
+  display:flex;
+}
+
+.formpreview button
+{
+  margin-right:3px;
+}
