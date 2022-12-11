@@ -14,7 +14,7 @@ if( $activesurvey['pn'] ){
 
 }else{
 
-  $content = "No survey available at this moment.";
+  $content = "No data available at this moment.";
 
 }
 

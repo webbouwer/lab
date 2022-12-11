@@ -1,3 +1,0 @@
-<?php
-$this->theme = 'default';
-?>
