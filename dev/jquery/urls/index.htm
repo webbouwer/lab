@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <meta name="viewport" content="user-scalable=no, width=device-width" />
+
+  <title>Urls & Domain check</title>
+
+    <script type="text/javascript" src="../../../lib/js/jquery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../../lib/js/jquery/jquery-migrate.min.js"></script>
+
+    <style>
+
+    input.dname-input{
+      min-width:320px;
+      padding:3px 5px;
+      border-radius:5px;
+    }
+
+    .dname,
+    .add-button{
+        display:none;
+    }
+    .add-button.display,
+    .dname.display {
+        display:block;
+    }
+
+    .dname.display.valid
+    {
+        background-color:lightgreen;
+    }
+    .dname.display.invalid
+    {
+        background-color:rgb(230, 103, 103);
+    }
+
+    </style>
+</head>
+<body>
+<div>
+    <div class="dname">
+        <input class="dname-input" placeholder="Domain name" />
+        <span class="input-check">
+        </span>
+    </div>
+    <button id="add-dname" class="add-button">Add</button>
+</div>
+<script>
+
+jQuery(function ($) {
+    
+    $(document).ready(function(){
+
+        const extensionlist = ['com','org','net','nl','de','be','fr','it','uk','eu'];
+
+        var dnamebox = $('body').find('.dname').first().clone();
+        dnamebox.addClass('display');
+        $('body').find('.dname').first().parent().append( dnamebox );
+        $('body').find('.dname').first().parent().append( $('#add-dname') );
+
+
+        $('body').on( 'focus keyup blur', '.dname-input', function(event){
+
+            if(event.preventDefault){
+                event.preventDefault();
+            }else{
+                event.returnValue = false;
+            }
+
+            var obj = $(this).closest('.dname');
+            obj.find('.input-check').html('');
+
+            var str = $(this).val();
+            validateString( str, $(this));
+
+        });
+
+        $('body').on( 'click', '#add-dname', function(event){
+            var dnamebox = $('body').find('.dname').first().clone();
+            dnamebox.addClass('display');
+            $('body').find('.dname').first().parent().append( dnamebox );
+            $('body').find('.dname').first().parent().append( $('#add-dname') );
+        });
+
+        function validateString(str, el){
+
+            let response = 'not valid';
+            let chk = 0;
+            let checkdomain = $('<button class="checkbutton">check availability</button>');
+
+            let info = el.closest('.dname').find('.input-check');
+            let box = el.closest('.dname');
+            info.html('');
+
+            $('#add-dname').removeClass('display'); 
+
+            if( str != '' ){
+                if( isValidDomain(str) ){
+                    chk = 1; // but domain extension may not be available;
+                }
+                if( chk == 1){
+                    let domain = str;
+                    let extension = domain.split('.').reverse()[0].toLowerCase();
+                    if( isDomainExt(extension) ){
+                        response = checkdomain; // add check button 
+                        //-> https://www.hackandphp.com/blog/check-domain-name-availability-using-php-ajax
+                        //-> https://speedysense.com/php-domain-availablity-checker-script/ 
+
+                        box.removeClass('invalid');
+                        box.addClass('valid');
+                        $('#add-dname').addClass('display');   
+                    }else{
+                        chk = 0;
+                    }
+                }
+
+                if( chk != 1){
+                    box.removeClass('valid');
+                    box.addClass('invalid');
+                }
+                info.html(response);
+            }else{
+                box.removeClass('invalid');
+                box.removeClass('valid');
+                info.html('');
+            }
+
+        }
+
+        function isValidDomain(value) {
+            var domainPattern = /^([*]{1}[.][^-][\w-]+[.](?:[\w.]|xn--[\w]{2,})+|[^\W_][a-zA-Z\d\-.]*[^\W][.](?:[\w]|xn--[\w]){2,}|[a-zA-Z\d]{1,}[.](?:[\w]|xn--[\w]){2,})$/i;
+            if (value.match(domainPattern)) {
+                return true;
+            }
+            return false;
+            // https://jsfiddle.net/shavertech/zotx5a7k/6/
+        }
+
+        function isDomainExt(e){
+            if( jQuery.inArray( e, extensionlist) !== -1 ){
+            return true;
+            }
+            return false;
+        }
+
+        function infoboxContent( text = '', all = false ){
+            if( all ){
+                $('#infobox').html(text);
+            }else{
+                $('#infobox').append(text);
+            }
+        }
+
+
+        /*
+        const inputElement = '#sourceurl';
+        const extensionlist = ['com','org','net','nl','de','be','fr','it','uk','eu'];
+
+        $('body').on( 'keyup', inputElement, function(event){
+
+            if(event.preventDefault){
+                event.preventDefault();
+            }else{
+                event.returnValue = false;
+            }
+
+            infoboxContent( '', true );
+            var str = $(inputElement).val();
+            validateString( str );
+
+        });
+
+        function validateString(str){
+
+            var xurl = chkHTTPS( str ); // remove https or http str part
+
+            let response = 'not valid';
+            if( isUrl(xurl) ){
+                response = 'valid url';
+                let domain = (new URL(xurl));
+                domain = domain.hostname.replace('www.','');
+                let extension = domain.split('.').reverse()[0].toLowerCase();
+                if( isDomainExt(extension) ){
+                    response = 'valid domain';
+                }
+            }
+
+            infoboxContent( response, true );
+        }
+
+        function isUrl(s) {
+            var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+            return regexp.test(s);
+        }
+
+        function isDomainExt(e){
+            if( jQuery.inArray( e, extensionlist) !== -1 ){
+            return true;
+            }
+            return false;
+        }
+
+        function chkHTTPS(str){
+
+            let url = str;
+            let chk = str.substr(0,8);
+            let delFirstStr = function(str, searchstr){
+                var index = str.indexOf(searchstr);
+                if (index === -1) {
+                    return str;
+                }
+                return str.slice(0, index) + str.slice(index + searchstr.length);
+            }
+
+            if(str != ''){
+                    
+                if( chk.includes("https://") ){
+
+                }else if(chk.includes("http://")){
+                    url = 'https://'+str.replace('http://','');
+                } else {
+                    str = delFirstStr( str, 'https:/');
+                    str = delFirstStr( str, 'https:');
+                    str = delFirstStr( str, 'https');
+                    str = delFirstStr( str, 'http');
+                    url = 'https://'+str;
+                }
+                return url;
+            }
+        }
+
+        function infoboxContent( text = '', all = false ){
+            if( all ){
+                $('#infobox').html(text);
+            }else{
+                $('#infobox').append(text);
+            }
+        }
+
+        */
+
+    });
+
+});
+    
+</script>    
+</body>
+</html>
